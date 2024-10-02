@@ -106,7 +106,7 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
     }
 
     /**
-     * @see IMainContract.View#showStations(List)
+     * @see IMainContract.View#showStations(List) 
      * @param stations the list of charging stations
      */
     @Override
@@ -151,8 +151,5 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
     public void showInfoActivity() {
         Intent intent = new Intent(this, InfoView.class);
         startActivity(intent);
-
     }
-
-
 }
