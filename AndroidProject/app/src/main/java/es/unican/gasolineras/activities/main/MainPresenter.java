@@ -1,14 +1,9 @@
-
 package es.unican.gasolineras.activities.main;
-
-import android.util.Log;
 
 import java.util.List;
 
-import es.unican.gasolineras.common.DataAccessException;
-import es.unican.gasolineras.common.Filtros;
 import es.unican.gasolineras.model.Gasolinera;
-import es.unican.gasolineras.model.IDProvincias;
+import es.unican.gasolineras.model.IDCCAAs;
 import es.unican.gasolineras.repository.ICallBack;
 import es.unican.gasolineras.repository.IGasolinerasRepository;
 
@@ -19,7 +14,6 @@ public class MainPresenter implements IMainContract.Presenter {
 
     /** The view that is controlled by this presenter */
     private IMainContract.View view;
-    private List<Gasolinera> gasolineras;
 
     /**
      * @see IMainContract.Presenter#init(IMainContract.View)
@@ -50,35 +44,7 @@ public class MainPresenter implements IMainContract.Presenter {
     }
 
     /**
-     * @see IMainContract.Presenter#onFilterButtonClicked()
-     */
-    @Override
-    public void onFilterButtonClicked() {
-        view.showFiltersPopUp();
-    }
-
-    /**
-     * @see IMainContract.Presenter#onSearchStationsWhithFilters(String provincia, String municipio, boolean abierto)
-     */
-    @Override
-    public void onSearchStationsWithFilters(String provincia, String municipio, boolean abierto) throws DataAccessException {
-        List<Gasolinera> gasolinerasFiltradas = gasolineras;
-
-        String finalProvincia = "-".equals(provincia) ? null : provincia;
-        String finalMunicipio = "".equals(municipio) ? null : municipio;
-
-        if (finalProvincia != null || finalMunicipio != null) {
-            gasolinerasFiltradas = Filtros.filtrarPorProvinciaYMunicipio(gasolinerasFiltradas, finalProvincia, finalMunicipio);
-        }
-        if (abierto) {
-            gasolinerasFiltradas = Filtros.filtrarPorEstado(gasolinerasFiltradas);
-        }
-        view.showStations(gasolinerasFiltradas);
-        view.showLoadCorrect(gasolinerasFiltradas.size());
-    }
-
-    /**
-     Loads the gas stations from the repository, and sends them to the view
+     * Loads the gas stations from the repository, and sends them to the view
      */
     private void load() {
         IGasolinerasRepository repository = view.getGasolinerasRepository();
@@ -87,7 +53,6 @@ public class MainPresenter implements IMainContract.Presenter {
 
             @Override
             public void onSuccess(List<Gasolinera> stations) {
-                gasolineras = stations;
                 view.showStations(stations);
                 view.showLoadCorrect(stations.size());
             }
@@ -95,8 +60,10 @@ public class MainPresenter implements IMainContract.Presenter {
             @Override
             public void onFailure(Throwable e) {
                 view.showLoadError();
+                view.showLoadError();
             }
         };
-        repository.requestGasolineras(callBack);
+
+        repository.requestGasolineras(callBack, IDCCAAs.CANTABRIA.id);
     }
 }
