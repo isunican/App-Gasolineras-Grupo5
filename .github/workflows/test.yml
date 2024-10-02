@@ -1,0 +1,127 @@
+name: Android Tests
+
+on:
+  push:
+    branches:
+      - main
+      - develop
+      
+jobs:
+  # android-unit-tests:
+  #   name: Android Unit Tests
+  #   runs-on: ubuntu-22.04
+
+  #   steps:
+  #     - name: Checkout repository
+  #       uses: actions/checkout@v4
+
+  #     - name: Set up JDK 17
+  #       uses: actions/setup-java@v4
+  #       with:
+  #         distribution: "temurin"
+  #         java-version: 17
+  #         cache: "gradle"
+
+  #     - name: Gradle cache
+  #       uses: gradle/actions/setup-gradle@v3
+
+  #     - name: Make gradlew executable
+  #       working-directory: ./AndroidProject
+  #       run: chmod +x ./gradlew
+
+  #     - name: Android units tests
+  #       working-directory: ./AndroidProject
+  #       env:
+  #         GITHUB_TOKEN: ${{ secrets.TOKEN }}
+  #       run: ./gradlew clean jacocoTestReport sonarqube
+
+  #     - name: Android unit tests artifacts
+  #       if: always()
+  #       uses: actions/upload-artifact@v4
+  #       with:
+  #         name: unit-tests-artifacts
+  #         path: ./AndroidProject/app/build/reports/tests/testDebugUnitTest/
+
+  # Run unit and ui tests together, to capture the test coverage of both
+  android-tests:
+    name: Android Tests
+    runs-on: macos-13
+
+    steps:
+      - name: checkout
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: "temurin"
+          java-version: 17
+          cache: "gradle"
+
+      - name: Gradle cache
+        uses: gradle/actions/setup-gradle@v3
+
+      - name: Make gradlew executable
+        working-directory: ./AndroidProject
+        run: chmod +x ./gradlew
+
+      - name: Run Android tests
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: 29
+          working-directory: ./AndroidProject
+          profile: pixel_2
+          target: google_apis
+          disable-animations: true
+          emulator-options: -no-window -gpu off -no-snapshot -noaudio -no-boot-anim
+          script: ./gradlew clean jacocoTestReport sonar
+
+      - name: Android tests reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-reports
+          path: ./AndroidProject/app/build/reports/
+
+      - name: Android tests outputs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-outputs
+          path: ./AndroidProject/app/build/outputs/
+
+  # build:
+  #   name: Build APK
+  #   runs-on: ubuntu-22.04
+  #   needs: [android-tests]
+  #   if: github.ref == 'refs/heads/main'
+
+  #   steps:
+  #     - name: Checkout repository
+  #       uses: actions/checkout@v4
+
+  #     - name: Set up JDK 17
+  #       uses: actions/setup-java@v4
+  #       with:
+  #         distribution: "temurin"
+  #         java-version: 17
+  #         cache: "gradle"
+
+  #     - name: Gradle cache
+  #       uses: gradle/actions/setup-gradle@v3
+
+  #     - name: Make gradlew executable
+  #       working-directory: ./AndroidProject
+  #       run: chmod +x ./gradlew
+
+  #     - name: Build APK
+  #       working-directory: ./AndroidProject
+  #       run: ./gradlew assembleDebug
+
+  #     - name: Upload APK as artifact
+  #       uses: actions/upload-artifact@v4
+  #       with:
+  #         name: app-debug-apk
+  #         path: AndroidProject/app/build/outputs/apk/debug/app-debug.apk
+
+

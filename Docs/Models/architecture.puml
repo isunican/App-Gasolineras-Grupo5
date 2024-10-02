@@ -1,0 +1,44 @@
+@startuml clases
+
+hide empty members
+skinparam linetype polyline
+skinparam arrowLollipopColor #ADD1B2
+
+MainView -right(0- MainPresenter : IMainContract.Presenter
+MainView -right0)- MainPresenter : IMainContract.View
+MainView -up..-> InfoView : <<use>>
+MainView -down..> DetailsView : <<use>>
+MainPresenter -right(0- GasolinerasRepository : IGasolinerasRepository
+
+
+class MainPresenter {
+    -load()
+}
+
+interface IMainContract#View {
+    + init()
+    + getGasolinerasRepository() : IGasolinerasRepository
+    + showStations(List<Gasolinera> stations)
+    + showLoadCorrect(int stations)
+    + showLoadError()
+    + showStationDetails(Gasolinera station)
+    + showInfoActivity()
+}
+
+interface IMainContract#Presenter {
+    + init(View view)
+    + onStationClicked(Gasolinera station)
+    + onMenuInfoClicked()
+}
+
+interface IGasolinerasRepository {
+    + requestGasolineras(ICallBack cb, String ccaa)
+}
+
+interface ICallBack {
+    + onSuccess(List<Gasolinera> gasolineras)
+    + onFailure(Throwable e)
+}
+
+
+@enduml

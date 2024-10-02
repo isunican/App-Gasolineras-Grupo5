@@ -1,0 +1,43 @@
+@startjson
+{
+    "Fecha": "19\/08\/2024 14:36:51",
+    "ListaEESSPrecio": [
+        {
+            "C.P.": "39526",
+            "Dirección": "CARRETERA 6316 KM. 10,5",
+            "Horario": "L-D: 08:00-21:00",
+            "Latitud": "43,395944",
+            "Localidad": "NOVALES",
+            "Longitud (WGS84)": "-4,155194",
+            "Margen": "I",
+            "Municipio": "Alfoz de Lloredo",
+            "Precio Biodiesel": "",
+            "Precio Bioetanol": "",
+            "Precio Gas Natural Comprimido": "",
+            "Precio Gas Natural Licuado": "",
+            "Precio Gases licuados del petróleo": "",
+            "Precio Gasoleo A": "1,509",
+            "Precio Gasoleo B": "1,229",
+            "Precio Gasoleo Premium": "1,579",
+            "Precio Gasolina 95 E10": "",
+            "Precio Gasolina 95 E5": "1,679",
+            "Precio Gasolina 95 E5 Premium": "",
+            "Precio Gasolina 98 E10": "",
+            "Precio Gasolina 98 E5": "1,739",
+            "Precio Hidrogeno": "",
+            "Provincia": "CANTABRIA",
+            "Remisión": "dm",
+            "Rótulo": "CEPSA",
+            "Tipo Venta": "P",
+            "% BioEtanol": "0,0",
+            "% Éster metílico": "0,0",
+            "IDEESS": "1039",
+            "IDMunicipio": "5744",
+            "IDProvincia": "39",
+            "IDCCAA": "06"
+        }
+    ],
+    "Nota": "Archivo de todos ...",
+    "ResultadoConsulta": "OK"
+}
+@endjson

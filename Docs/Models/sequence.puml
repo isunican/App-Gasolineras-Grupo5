@@ -1,0 +1,67 @@
+@startuml
+
+hide footbox
+skinparam ParticipantPadding 20
+
+participant MainView
+participant MainPresenter
+participant GasolinerasRepository
+participant IGasolinerasAPI
+
+box "Internet" #lavenderblush
+database Ministerio #orange
+endbox
+
+[-> MainView : onCreate()
+activate MainView
+
+MainView -> MainPresenter : init()
+activate MainPresenter
+
+MainPresenter -> MainView : init()
+note left: initialize listeners
+|||
+
+MainPresenter <-- MainView : //finished//
+
+MainPresenter -> MainPresenter : load()
+
+MainPresenter -> GasolinerasRepository : requestGasolineras()
+
+deactivate MainView
+deactivate MainPresenter
+activate GasolinerasRepository
+
+GasolinerasRepository -> IGasolinerasAPI : gasolineras()
+deactivate GasolinerasRepository
+activate IGasolinerasAPI
+
+IGasolinerasAPI -->(20) Ministerio
+deactivate IGasolinerasAPI
+note right: Request data \nfrom service
+
+...waiting for data...
+
+Ministerio -->(20) IGasolinerasAPI
+activate IGasolinerasAPI
+note right: Data is provided
+
+IGasolinerasAPI --> GasolinerasRepository : [gasolineras]
+deactivate IGasolinerasAPI
+activate GasolinerasRepository
+
+GasolinerasRepository --> MainPresenter : [gasolineras]
+deactivate GasolinerasRepository
+activate MainPresenter
+
+MainPresenter -> MainView : showStations()
+activate MainView
+note left: updates UI\n with gas stations
+
+|||
+
+MainView --> MainPresenter
+deactivate MainView
+deactivate MainPresenter
+
+@enduml

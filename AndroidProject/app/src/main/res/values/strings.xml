@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">Gasolineras</string>
+    <string name="gasolina95label">Gasolina</string>
+    <string name="dieselAlabel">Diesel</string>
+    <string name="refresh">Recargar</string>
+    <string name="info">Info</string>
+    <string name="loadCorrect">Se han cargado %d gasolineras</string>
+    <string name="loadError">Ha habido un error cargando las gasolineras</string>
+    <string name="info_text">Aplicación creada para el Proyecto Integrado Curso 2024-2025</string>
+</resources>
