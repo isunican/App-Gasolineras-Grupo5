@@ -1,4 +1,3 @@
-
 package es.unican.gasolineras.activities.main;
 
 import static java.util.Collections.emptyList;
@@ -13,9 +12,6 @@ import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import es.unican.gasolineras.common.DataAccessException;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -24,7 +20,6 @@ import java.util.List;
 
 import es.unican.gasolineras.R;
 import es.unican.gasolineras.model.Gasolinera;
-import es.unican.gasolineras.common.Horario;
 
 /**
  * Adapter that renders the gas stations in each row of a ListView
@@ -93,20 +88,6 @@ public class GasolinerasArrayAdapter extends BaseAdapter {
                 ImageView view = convertView.findViewById(R.id.ivLogo);
                 view.setImageResource(imageID);
             }
-        }
-        // status
-        {
-            TextView tv = convertView.findViewById(R.id.tvEstado);
-            try  {
-                tv.setText(gasolinera.compruebaEstado(gasolinera.getHorario()));
-            } catch (IllegalArgumentException e) {
-                Toast.makeText(context, "Error de argumento: " + e.getMessage(), Toast.LENGTH_SHORT).show();
-                tv.setText("Error de argumento: " + e.getMessage());
-            } catch (DataAccessException e) {
-                Toast.makeText(context, "Error de acceso de datos: " + e.getMessage(), Toast.LENGTH_SHORT).show();
-                tv.setText("Error de acceso de datos: " + e.getMessage());
-            }
-
         }
 
         // name

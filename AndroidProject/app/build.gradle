@@ -32,7 +32,6 @@ task jacocoTestReport(type: JacocoReport, dependsOn: ['testDebugUnitTest', 'conn
     executionData.setFrom(fileTree(dir: project.buildDir, includes: ['outputs/unit_test_code_coverage/debugUnitTest/testDebugUnitTest.exec', 'outputs/code_coverage/debugAndroidTest/connected/*/coverage.ec']))
 }
 
-
 sonar {
     properties {
         property "sonar.host.url", "https://sonarcloud.io"
@@ -99,9 +98,7 @@ dependencies {
     implementation libs.material
     implementation libs.activity
     implementation libs.constraintlayout
-    implementation libs.multidex
     testImplementation libs.junit
-    testImplementation libs.junit.jupiter
     androidTestImplementation libs.ext.junit
     androidTestImplementation libs.espresso.core
 

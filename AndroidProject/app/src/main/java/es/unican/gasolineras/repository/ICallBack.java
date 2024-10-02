@@ -1,4 +1,3 @@
-
 package es.unican.gasolineras.repository;
 
 import java.util.List;
@@ -8,7 +7,7 @@ import es.unican.gasolineras.model.Gasolinera;
 /**
  * The callback used by the repository to asynchronously retrieve gas stations.
  */
-public interface    ICallBack {
+public interface ICallBack {
 
     /**
      * This method is automatically called when the gas stations were successfully retrieved

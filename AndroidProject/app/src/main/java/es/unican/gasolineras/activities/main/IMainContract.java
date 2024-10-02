@@ -1,9 +1,7 @@
-
 package es.unican.gasolineras.activities.main;
 
 import java.util.List;
 
-import es.unican.gasolineras.common.DataAccessException;
 import es.unican.gasolineras.model.Gasolinera;
 import es.unican.gasolineras.repository.IGasolinerasRepository;
 
@@ -39,19 +37,7 @@ public interface IMainContract {
          */
         public void onMenuInfoClicked();
 
-        /**
-         * The presenter is informed that the filter button has been clicked
-         * Only the View should call this method
-         */
-        public void onFilterButtonClicked();
-
-        /**
-         * The presenter is informed that the user wants to filter gas stations
-         * Only the View should call this method
-         */
-        public void onSearchStationsWithFilters(String provincia, String municipio, boolean abierto) throws DataAccessException;
     }
-
 
     /**
      * Methods that must be implemented in the Main View.
@@ -111,12 +97,6 @@ public interface IMainContract {
          * Only the Presenter should call this method
          */
         public void showInfoActivity();
-
-        /**
-         * The view is requested to open the filters popup
-         * Only the Presenter should call this method
-         */
-        public void showFiltersPopUp();
 
     }
 }

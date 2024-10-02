@@ -1,4 +1,3 @@
-
 package es.unican.gasolineras.activities.info;
 
 import android.os.Bundle;
