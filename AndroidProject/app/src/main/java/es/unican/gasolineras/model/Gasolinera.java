@@ -34,6 +34,16 @@ public class Gasolinera {
     @SerializedName("Precio Gasolina 95 E5")        protected double gasolina95E5;
 
     public double calculateSummarizedPrice(){
+        if (gasoleoA == 0 || gasoleoA < 0) {
+            return gasolina95E5;
+        }
+        if (gasolina95E5 == 0 || gasolina95E5 < 0) {
+            return gasoleoA;
+        }
+        // en caso de que ambos precios sean 0, se devuelve 0
+        if (gasolina95E5 == 0 && gasoleoA == 0) {
+            return 0;
+        }
         return (gasoleoA + gasolina95E5 * 2) / 3;
     }
 }

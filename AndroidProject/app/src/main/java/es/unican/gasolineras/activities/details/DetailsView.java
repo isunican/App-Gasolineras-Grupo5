@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
@@ -67,8 +68,26 @@ public class DetailsView extends AppCompatActivity {
         tvDireccion.setText(gasolinera.getDireccion());
         tvHorario.setText(gasolinera.getHorario());
         tvPrecioSumario.setText(toString().valueOf(gasolinera.calculateSummarizedPrice()));
-        tvPrecioDiesel.setText(toString().valueOf(gasolinera.getGasoleoA()));
-        tvPrecioGasolina.setText(toString().valueOf(gasolinera.getGasolina95E5()));
+
+        // Si el precio de un combustible es 0, se muestra - en vez de 0
+        if (gasolinera.getGasoleoA() == 0 || gasolinera.getGasoleoA() < 0.0) {
+            tvPrecioDiesel.setText("-");
+            Toast.makeText(this, "Error: Datos no disponibles.", Toast.LENGTH_SHORT).show();
+        } else {
+            tvPrecioDiesel.setText(toString().valueOf(gasolinera.getGasoleoA()));
+        }
+        if (gasolinera.getGasolina95E5() == 0 || gasolinera.getGasolina95E5() < 0.0) {
+            tvPrecioGasolina.setText("-");
+            Toast.makeText(this, "Error: Datos no disponibles.", Toast.LENGTH_SHORT).show();
+        } else {
+            tvPrecioGasolina.setText(toString().valueOf(gasolinera.getGasolina95E5()));
+        }
+        if (gasolinera.getGasoleoA() == 0 && gasolinera.getGasolina95E5() == 0) {
+            tvPrecioSumario.setText("-");
+            Toast.makeText(this, "Error: Datos no disponibles.", Toast.LENGTH_SHORT).show();
+        }
+
+
     }
 
     /**
