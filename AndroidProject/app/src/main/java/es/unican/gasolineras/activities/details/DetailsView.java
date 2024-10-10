@@ -72,13 +72,13 @@ public class DetailsView extends AppCompatActivity {
         // Si el precio de un combustible es 0, se muestra - en vez de 0
         if (gasolinera.getGasoleoA() == 0 || gasolinera.getGasoleoA() < 0.0) {
             tvPrecioDiesel.setText("-");
-            Toast.makeText(this, "Error: Datos no disponibles.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Error: Datos de diesel no disponibles.", Toast.LENGTH_SHORT).show();
         } else {
             tvPrecioDiesel.setText(toString().valueOf(gasolinera.getGasoleoA()));
         }
         if (gasolinera.getGasolina95E5() == 0 || gasolinera.getGasolina95E5() < 0.0) {
             tvPrecioGasolina.setText("-");
-            Toast.makeText(this, "Error: Datos no disponibles.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Error: Datos de gasolina no disponibles.", Toast.LENGTH_SHORT).show();
         } else {
             tvPrecioGasolina.setText(toString().valueOf(gasolinera.getGasolina95E5()));
         }
