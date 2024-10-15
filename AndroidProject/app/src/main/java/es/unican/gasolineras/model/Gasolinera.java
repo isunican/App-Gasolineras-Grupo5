@@ -37,13 +37,15 @@ public class Gasolinera {
         if (gasoleoA == 0 || gasoleoA < 0) {
             return gasolina95E5;
         }
-        if (gasolina95E5 == 0 || gasolina95E5 < 0) {
+        else if (gasolina95E5 == 0 || gasolina95E5 < 0) {
             return gasoleoA;
         }
         // en caso de que ambos precios sean 0, se devuelve 0
-        if (gasolina95E5 == 0 && gasoleoA == 0) {
+        else if (gasolina95E5 == 0 && gasoleoA == 0) {
             return 0;
+        } else {
+            return (gasoleoA + gasolina95E5 * 2) / 3;
         }
-        return (gasoleoA + gasolina95E5 * 2) / 3;
     }
+
 }

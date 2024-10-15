@@ -28,115 +28,129 @@
         app:layout_constraintTop_toBottomOf="@+id/toolbar"
         tools:srcCompat="@drawable/generic" />
 
-    <TextView
-        android:id="@+id/tvRotulo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="28dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ivRotulo"
-        tools:text="Rotulo" />
-
-    <TextView
-        android:id="@+id/tvMunicipio"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        app:layout_constraintEnd_toEndOf="@+id/tvRotulo"
-        app:layout_constraintStart_toStartOf="@+id/tvRotulo"
-        app:layout_constraintTop_toBottomOf="@+id/tvRotulo"
-        tools:text="Municipio" />
-
-    <TextView
-        android:id="@+id/tvDireccion"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        app:layout_constraintEnd_toEndOf="@+id/tvMunicipio"
-        app:layout_constraintStart_toStartOf="@+id/tvMunicipio"
-        app:layout_constraintTop_toBottomOf="@+id/tvMunicipio"
-        tools:text="Dirección" />
-
-    <TextView
-        android:id="@+id/tvHorario"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        app:layout_constraintEnd_toEndOf="@+id/tvDireccion"
-        app:layout_constraintStart_toStartOf="@+id/tvDireccion"
-        app:layout_constraintTop_toBottomOf="@+id/tvDireccion"
-        tools:text="Horario" />
 
     <TextView
         android:id="@+id/tvPrecioSumario"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.455"
+        app:layout_constraintBottom_toBottomOf="@+id/tPrecioSumario"
         app:layout_constraintStart_toStartOf="@+id/tvHorario"
-        app:layout_constraintTop_toBottomOf="@+id/tvHorario"
-        tools:text="1.499" />
+        tools:text="Null" />
 
     <TextView
         android:id="@+id/tvPrecioDiesel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintBottom_toBottomOf="@+id/tPrecioDiesel"
         app:layout_constraintStart_toStartOf="@+id/tvPrecioSumario"
-        app:layout_constraintTop_toBottomOf="@+id/tvPrecioSumario"
-        tools:text="1.399" />
+        tools:text="Null" />
+
 
     <TextView
         android:id="@+id/tvPrecioGasolina"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintBottom_toBottomOf="@+id/tPrecioGasolina"
         app:layout_constraintStart_toStartOf="@+id/tvPrecioDiesel"
-        app:layout_constraintTop_toBottomOf="@+id/tvPrecioDiesel"
-        tools:text="1.599" />
+        tools:text="Null" />
 
     <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:id="@+id/tPrecioGasolina"
+        android:layout_width="101dp"
+        android:layout_height="18dp"
+        android:layout_marginTop="40dp"
         android:text="Precio Gasolina:"
-        app:layout_constraintBottom_toBottomOf="@+id/tvPrecioGasolina"
-        app:layout_constraintEnd_toStartOf="@+id/tvPrecioGasolina"
-        app:layout_constraintHorizontal_bias="0.506"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView3"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintStart_toStartOf="@+id/tPrecioDiesel"
+        app:layout_constraintTop_toBottomOf="@+id/tPrecioDiesel" />
 
     <TextView
-        android:id="@+id/textView3"
+        android:id="@+id/tPrecioDiesel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
         android:text="Precio Diesel:"
-        app:layout_constraintBottom_toBottomOf="@+id/tvPrecioDiesel"
-        app:layout_constraintEnd_toStartOf="@+id/tvPrecioDiesel"
-        app:layout_constraintHorizontal_bias="0.506"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView4"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintStart_toStartOf="@+id/tPrecioSumario"
+        app:layout_constraintTop_toBottomOf="@+id/tPrecioSumario" />
 
     <TextView
-        android:id="@+id/textView4"
+        android:id="@+id/tPrecioSumario"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:layout_marginTop="40dp"
+        android:text="Precio Sumario:"
+        app:layout_constraintStart_toStartOf="@+id/tHorario"
+        app:layout_constraintTop_toBottomOf="@+id/tHorario"
+        />
+
+    <TextView
+        android:id="@+id/tRotulo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Precio Sumario:"
-        app:layout_constraintBottom_toBottomOf="@+id/tvPrecioSumario"
-        app:layout_constraintEnd_toStartOf="@+id/tvPrecioSumario"
-        app:layout_constraintHorizontal_bias="0.506"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="200dp"
+        android:text="Rotulo:"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvHorario"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintTop_toBottomOf="@+id/toolbar" />
+
+    <TextView
+        android:id="@+id/tMunicipio"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:text="Municipio:"
+        app:layout_constraintStart_toStartOf="@+id/tDireccion"
+        app:layout_constraintTop_toBottomOf="@+id/tDireccion" />
+
+    <TextView
+        android:id="@+id/tHorario"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:text="Horario:"
+        app:layout_constraintStart_toStartOf="@+id/tMunicipio"
+        app:layout_constraintTop_toBottomOf="@+id/tMunicipio" />
+
+    <TextView
+        android:id="@+id/tvRotulo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="100dp"
+        android:text="Null"
+        app:layout_constraintBottom_toBottomOf="@+id/tRotulo"
+        app:layout_constraintStart_toEndOf="@+id/tRotulo" />
+
+    <TextView
+        android:id="@+id/tvMunicipio"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Null"
+        app:layout_constraintBottom_toBottomOf="@+id/tMunicipio"
+        app:layout_constraintStart_toStartOf="@+id/tvDireccion" />
+
+    <TextView
+        android:id="@+id/tvHorario"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Null"
+        app:layout_constraintBottom_toBottomOf="@+id/tHorario"
+        app:layout_constraintStart_toStartOf="@+id/tvMunicipio" />
+
+    <TextView
+        android:id="@+id/tDireccion"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:text="Direccion:"
+        app:layout_constraintStart_toStartOf="@+id/tRotulo"
+        app:layout_constraintTop_toBottomOf="@+id/tRotulo" />
+
+    <TextView
+        android:id="@+id/tvDireccion"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Null"
+        app:layout_constraintBottom_toBottomOf="@+id/tDireccion"
+        app:layout_constraintStart_toStartOf="@+id/tvRotulo" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
