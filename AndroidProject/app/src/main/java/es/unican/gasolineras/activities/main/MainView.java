@@ -151,5 +151,8 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
     public void showInfoActivity() {
         Intent intent = new Intent(this, InfoView.class);
         startActivity(intent);
+
     }
+
+
 }
