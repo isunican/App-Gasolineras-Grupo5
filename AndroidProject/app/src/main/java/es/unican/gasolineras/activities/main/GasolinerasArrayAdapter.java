@@ -20,6 +20,7 @@ import java.util.List;
 
 import es.unican.gasolineras.R;
 import es.unican.gasolineras.model.Gasolinera;
+import es.unican.gasolineras.common.Horario;
 
 /**
  * Adapter that renders the gas stations in each row of a ListView
@@ -88,6 +89,11 @@ public class GasolinerasArrayAdapter extends BaseAdapter {
                 ImageView view = convertView.findViewById(R.id.ivLogo);
                 view.setImageResource(imageID);
             }
+        }
+        // status
+        {
+            TextView tv = convertView.findViewById(R.id.tvEstado);
+            tv.setText(gasolinera.compruebaEstado(gasolinera.getHorario()));
         }
 
         // name

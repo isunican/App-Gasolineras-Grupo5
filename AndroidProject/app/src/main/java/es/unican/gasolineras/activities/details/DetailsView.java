@@ -54,6 +54,7 @@ public class DetailsView extends AppCompatActivity {
         TextView tvPrecioGasolina = findViewById(R.id.tvPrecioGasolina);
 
 
+
         // Get Gas Station from the intent that triggered this activity
         Gasolinera gasolinera = Parcels.unwrap(getIntent().getExtras().getParcelable(INTENT_STATION));
 
@@ -68,6 +69,8 @@ public class DetailsView extends AppCompatActivity {
         tvDireccion.setText(gasolinera.getDireccion());
         tvHorario.setText(gasolinera.getHorario());
         tvPrecioSumario.setText(toString().valueOf(gasolinera.calculateSummarizedPrice()));
+
+
 
         // Si el precio de un combustible es 0, se muestra - en vez de 0
         if (gasolinera.getGasoleoA() == 0 || gasolinera.getGasoleoA() < 0.0) {
