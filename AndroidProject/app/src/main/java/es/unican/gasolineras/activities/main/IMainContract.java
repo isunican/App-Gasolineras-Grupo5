@@ -37,7 +37,20 @@ public interface IMainContract {
          */
         public void onMenuInfoClicked();
 
+        /**
+         * The presenter is informed that the filter button has been clicked
+         * Only the View should call this method
+         */
+        public void onFilterButtonClicked();
+
+        /**
+         * The presenter is informed that the user wants to filter gas stations
+         * Only the View should call this method
+         */
+        public void buscarGasolinerasConFiltros(String provincia, String municipio);
     }
+
+
 
     /**
      * Methods that must be implemented in the Main View.

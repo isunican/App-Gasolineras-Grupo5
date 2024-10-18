@@ -21,13 +21,23 @@ public class GasolinerasRepository implements IGasolinerasRepository {
 
     /**
      * Request gas stations from the Gasolineras real API.
-     * @see IGasolinerasRepository#requestGasolineras(ICallBack, String)
+     * @see IGasolinerasRepository#requestGasolineras(ICallBack, String, String)
      * @param cb the callback that will asynchronously process the returned gas stations
-     * @param ccaa id of the "comunidad autonoma"
+     * @param provincia the province to filter the gas stations
+     *                  (if null, no filter is applied)
+     * @param municipio the municipality to filter the gas stations
+     *                  (if null, no filter is applied)
      */
     @Override
-    public void requestGasolineras(ICallBack cb, String ccaa) {
-        Call<GasolinerasResponse> call = GasolinerasService.api.gasolineras(ccaa);
+    public void requestGasolineras(ICallBack cb, String provincia, String municipio) {
+        Call<GasolinerasResponse> call = null;
+        if (provincia != null && municipio != null) {
+            call = GasolinerasService.api.gasolinerasPorMunicipio(municipio);
+        } else if (provincia != null && municipio == null) {
+            call = GasolinerasService.api.gasolinerasPorProvincia(provincia);
+        } else {
+            call = GasolinerasService.api.gasolineras();
+        }
         call.enqueue(new Callback<GasolinerasResponse>() {
             @Override
             public void onResponse(@Nonnull Call<GasolinerasResponse> call, @Nonnull Response<GasolinerasResponse> response) {

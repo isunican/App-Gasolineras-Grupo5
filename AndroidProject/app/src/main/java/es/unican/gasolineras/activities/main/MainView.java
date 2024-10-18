@@ -87,7 +87,7 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
             return true;
         }
         if (itemId == R.id.menuFilterButton) {
-            //presenter.onFilterButtonClicked();
+            presenter.onFilterButtonClicked();
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -189,7 +189,7 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
                     String localidad = etLocalidad.getText().toString().trim();
 
                     // Call the presenter to handle the search logic
-                    //presenter.buscarGasolinerasConFiltros(provincia, localidad);
+                    presenter.buscarGasolinerasConFiltros(provincia, localidad);
                 })
                 .setNegativeButton("Cancelar", (dialog, which) -> {
                     dialog.dismiss();  // Close the dialog without action

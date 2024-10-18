@@ -8,8 +8,9 @@ public interface IGasolinerasRepository {
         /**
          * Asynchronously requests a list of gas stations.
          * @param cb the callback that will asynchronously process the returned gas stations
-         * @param ccaa id of the "comunidad autonoma", as defined in IDCCAAs
+         * @param provincia the province to filter the gas stations
+         * @param municipio the municipality to filter the gas stations
          */
-        public void requestGasolineras(ICallBack cb, String ccaa);
+        public void requestGasolineras(ICallBack cb, String provincia, String municipio);
 
 }
