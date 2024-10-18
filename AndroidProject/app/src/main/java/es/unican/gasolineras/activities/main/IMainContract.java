@@ -98,5 +98,7 @@ public interface IMainContract {
          */
         public void showInfoActivity();
 
+        public void showFiltersPopUp();
+
     }
 }
