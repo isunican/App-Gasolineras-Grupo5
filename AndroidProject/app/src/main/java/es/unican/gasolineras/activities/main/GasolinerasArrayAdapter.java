@@ -12,6 +12,9 @@ import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import es.unican.gasolineras.common.DataAccessException;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -93,7 +96,16 @@ public class GasolinerasArrayAdapter extends BaseAdapter {
         // status
         {
             TextView tv = convertView.findViewById(R.id.tvEstado);
-            tv.setText(gasolinera.compruebaEstado(gasolinera.getHorario()));
+            try  {
+                tv.setText(gasolinera.compruebaEstado(gasolinera.getHorario()));
+            } catch (IllegalArgumentException e) {
+                Toast.makeText(context, "Error de argumento: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                tv.setText("Error de argumento: " + e.getMessage());
+            } catch (DataAccessException e) {
+                Toast.makeText(context, "Error de acceso de datos: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                tv.setText("Error de acceso de datos: " + e.getMessage());
+            }
+
         }
 
         // name
