@@ -135,7 +135,7 @@ public class Horario {
         * @return true si el dia actual esta en la franja horaria
         * @throws DataAccessException si el dia actual no es válido
      */
-    public static boolean estaEnFranjaDia (String letraletraDiaActual, String horario) throws DataAccessException,IllegalArgumentException {
+    public static boolean estaEnFranjaDia (String letraletraDiaActual, String horario) throws IllegalArgumentException {
         if (horario == null || horario.isEmpty() || letraletraDiaActual == null || letraletraDiaActual.isEmpty()) {
             throw new IllegalArgumentException("El horario o la letra del día actual no puede ser nulo o vacío");
         }

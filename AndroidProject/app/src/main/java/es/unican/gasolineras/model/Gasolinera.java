@@ -46,6 +46,8 @@ public class Gasolinera {
     @SerializedName("Precio Gasolina 95 E5")
     protected double gasolina95E5;
 
+    private String estado;
+
     public double calculateSummarizedPrice() {
         if (gasoleoA == 0 || gasoleoA < 0) {
             return gasolina95E5;
@@ -61,6 +63,7 @@ public class Gasolinera {
     }
 
     public String compruebaEstado(String horario) throws IllegalArgumentException, DataAccessException {
+        this.estado = estaAbierto(horario);
         return estaAbierto(horario);
     }
 }
