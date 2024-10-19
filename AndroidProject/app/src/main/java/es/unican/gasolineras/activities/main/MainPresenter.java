@@ -76,23 +76,6 @@ public class MainPresenter implements IMainContract.Presenter {
      * Loads the gas stations from the repository, and sends them to the view
      */
     private void load() {
-        IGasolinerasRepository repository = view.getGasolinerasRepository();
-
-        ICallBack callBack = new ICallBack() {
-
-            @Override
-            public void onSuccess(List<Gasolinera> stations) {
-                view.showStations(stations);
-                view.showLoadCorrect(stations.size());
-            }
-
-            @Override
-            public void onFailure(Throwable e) {
-                view.showLoadError();
-                view.showLoadError();
-            }
-        };
-
-        repository.requestGasolineras(callBack, null, null);
+        buscarGasolinerasConFiltros(null, null);
     }
 }

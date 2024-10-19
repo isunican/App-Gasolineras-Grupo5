@@ -69,6 +69,7 @@ public enum IDProvincias {
     }
 
     public static String getCodigoByProvincia(String nombreProvincia) {
+        if (nombreProvincia == null) { return null; }
         for (IDProvincias provincia : IDProvincias.values()) {
             if (provincia.nombre.equalsIgnoreCase(nombreProvincia)) {
                 return provincia.id;
