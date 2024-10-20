@@ -98,6 +98,10 @@ public interface IMainContract {
          */
         public void showInfoActivity();
 
+        /**
+         * The view is requested to open the filters popup
+         * Only the Presenter should call this method
+         */
         public void showFiltersPopUp();
 
     }
