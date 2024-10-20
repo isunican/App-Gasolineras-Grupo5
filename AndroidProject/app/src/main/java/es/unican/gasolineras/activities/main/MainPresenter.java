@@ -49,7 +49,7 @@ public class MainPresenter implements IMainContract.Presenter {
     }
 
     @Override
-    public void buscarGasolinerasConFiltros(String provincia, String municipio) {
+    public void buscarGasolinerasConFiltros(String provincia, String localidad) {
         IGasolinerasRepository repository = view.getGasolinerasRepository();
 
         String codigoProvincia = IDProvincias.getCodigoByProvincia(provincia);
@@ -69,7 +69,7 @@ public class MainPresenter implements IMainContract.Presenter {
             }
         };
 
-        repository.requestGasolineras(callBack, codigoProvincia, null);
+        repository.requestGasolineras(callBack, codigoProvincia, localidad);
     }
 
     /**

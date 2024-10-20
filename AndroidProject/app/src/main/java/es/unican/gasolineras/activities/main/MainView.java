@@ -187,7 +187,9 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
                     // Get the values entered by the user
                     String provincia = spnProvincias.getSelectedItem().toString();
                     String localidad = etLocalidad.getText().toString().trim();
-
+                    if (localidad.isEmpty()){
+                        localidad = null;
+                    }
                     // Call the presenter to handle the search logic
                     presenter.buscarGasolinerasConFiltros(provincia, localidad);
                 })
