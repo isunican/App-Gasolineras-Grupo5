@@ -1,12 +1,9 @@
 package es.unican.gasolineras.model;
 
-import static es.unican.gasolineras.common.Horario.estaAbierto;
-
 import com.google.gson.annotations.SerializedName;
-import es.unican.gasolineras.common.Horario;
+
 import org.parceler.Parcel;
-import java.util.Date;
-import java.util.Calendar;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -25,29 +22,23 @@ import lombok.Setter;
 @Setter
 public class Gasolinera {
 
-    @SerializedName("IDEESS")
-    protected String id;
+    @SerializedName("IDEESS")                       protected String id;
 
-    @SerializedName("Rótulo")
-    protected String rotulo;
-    @SerializedName("C.P.")
-    protected String cp;
-    @SerializedName("Dirección")
-    protected String direccion;
-    @SerializedName("Municipio")
-    protected String municipio;
-    @SerializedName("Horario")
-    protected String horario;
+    @SerializedName("Rótulo")                       protected String rotulo;
+    @SerializedName("C.P.")                         protected String cp;
+    @SerializedName("Dirección")                    protected String direccion;
+    @SerializedName("Municipio")                    protected String municipio;
+    @SerializedName("Localidad")                    protected String localidad;
+    @SerializedName("Horario")                      protected String horario;
 
-    @SerializedName("Precio Gasoleo A")
-    protected double gasoleoA;
-    @SerializedName("Precio Gasolina 95 E5")
-    protected double gasolina95E5;
+    @SerializedName("Precio Gasoleo A")             protected double gasoleoA;
+    @SerializedName("Precio Gasolina 95 E5")        protected double gasolina95E5;
 
-    public double calculateSummarizedPrice() {
+    public double calculateSummarizedPrice(){
         if (gasoleoA == 0 || gasoleoA < 0) {
             return gasolina95E5;
-        } else if (gasolina95E5 == 0 || gasolina95E5 < 0) {
+        }
+        else if (gasolina95E5 == 0 || gasolina95E5 < 0) {
             return gasoleoA;
         }
         // en caso de que ambos precios sean 0, se devuelve 0
@@ -58,9 +49,4 @@ public class Gasolinera {
         }
     }
 
-    public String compruebaEstado(String horario) {
-        return estaAbierto(horario);
-    }
 }
-
-
