@@ -27,24 +27,17 @@ import lombok.Setter;
 @Setter
 public class Gasolinera {
 
-    @SerializedName("IDEESS")
-    protected String id;
+    @SerializedName("IDEESS")                       protected String id;
 
-    @SerializedName("Rótulo")
-    protected String rotulo;
-    @SerializedName("C.P.")
-    protected String cp;
-    @SerializedName("Dirección")
-    protected String direccion;
-    @SerializedName("Municipio")
-    protected String municipio;
-    @SerializedName("Horario")
-    protected String horario;
+    @SerializedName("Rótulo")                       protected String rotulo;
+    @SerializedName("C.P.")                         protected String cp;
+    @SerializedName("Dirección")                    protected String direccion;
+    @SerializedName("Municipio")                    protected String municipio;
+    @SerializedName("Localidad")                    protected String localidad;
+    @SerializedName("Horario")                      protected String horario;
 
-    @SerializedName("Precio Gasoleo A")
-    protected double gasoleoA;
-    @SerializedName("Precio Gasolina 95 E5")
-    protected double gasolina95E5;
+    @SerializedName("Precio Gasoleo A")             protected double gasoleoA;
+    @SerializedName("Precio Gasolina 95 E5")        protected double gasolina95E5;
 
     private String estado;
 
