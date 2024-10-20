@@ -1,7 +1,7 @@
 package es.unican.gasolineras.common;
 
 import java.util.Calendar;
-
+import es.unican.gasolineras.common.DataAccessException;
 public class Horario {
     /**
      * Parsea el horario obtenido de la API en formato String
@@ -12,15 +12,21 @@ public class Horario {
      *
      */
 
-    public static String[] obtenerHorario(String horario) {
-        // Se separa el horario por días
+    public static String[] obtenerHorario (String horario) throws IllegalArgumentException {
+        if (horario == null || horario.isEmpty()) {
+            throw new IllegalArgumentException("El horario no puede ser nulo o vacío");
+        }
         String[] horarios = horario.split(";");
         return horarios;
     }
-    public static String letraDiaActual() {
+    public static String letraDiaActual () throws DataAccessException {
         // Obtener el día actual
         Calendar calendar = Calendar.getInstance();
         int letraDiaActual = calendar.get(Calendar.DAY_OF_WEEK);
+        if (letraDiaActual < 1 || letraDiaActual > 7) {
+            throw new DataAccessException("El día actual no es válido");
+        }
+
         String letraletraDiaActual = "";
         switch (letraDiaActual) {
             case Calendar.MONDAY:
@@ -48,20 +54,26 @@ public class Horario {
         return letraletraDiaActual;
     }
 
-    public static int horaActual() {
+    public static int horaActual() throws DataAccessException {
         // Obtener la hora actual
         Calendar calendar = Calendar.getInstance();
         int horaActual = calendar.get(Calendar.HOUR_OF_DAY);
+        if (horaActual < 0 || horaActual > 23) {
+            throw new DataAccessException("La hora actual no es válida");
+        }
         return horaActual;
     }
-    public static int minutoActual() {
+    public static int minutoActual() throws DataAccessException {
         // Obtener el minuto actual
         Calendar calendar = Calendar.getInstance();
         int minutoActual = calendar.get(Calendar.MINUTE);
+        if (minutoActual < 0 || minutoActual > 59) {
+            throw new DataAccessException("El minuto actual no es válido");
+        }
         return minutoActual;
     }
 
-    public static String estaAbierto(String horario) {
+    public static String estaAbierto(String horario) throws DataAccessException,IllegalArgumentException {
 
         // Caso 24h
         if (horario.contains("L-D: 24H")) {
@@ -87,7 +99,7 @@ public class Horario {
         * @return true si el horario de la gasolinera está abierto
         * @return false si el horario de la gasolinera está cerrado
      */
-    public static boolean compruebaHorario (String horario, String letraletraDiaActual, int horaActual) {
+    public static boolean compruebaHorario (String horario, String letraletraDiaActual, int horaActual) throws DataAccessException,IllegalArgumentException {
         // Separar los horarios por días
         String[] horarios = obtenerHorario(horario);
         // Si el horario contiene el día actual
@@ -121,8 +133,12 @@ public class Horario {
         *              (ejemplo: "L-S: 07:00-22:00; D: 08:00-14:00")
         *             (ejemplo: "L-V: 07:00-22:00; S: 08:00-14:00"; D: 08:00-14:00")
         * @return true si el dia actual esta en la franja horaria
+        * @throws DataAccessException si el dia actual no es válido
      */
-    public static boolean estaEnFranjaDia (String letraletraDiaActual, String horario) {
+    public static boolean estaEnFranjaDia (String letraletraDiaActual, String horario) throws IllegalArgumentException {
+        if (horario == null || horario.isEmpty() || letraletraDiaActual == null || letraletraDiaActual.isEmpty()) {
+            throw new IllegalArgumentException("El horario o la letra del día actual no puede ser nulo o vacío");
+        }
         // array de 7 posiciones, una por cada dia de la semana a cero inicialmente
         int [] dias = new int[7];
         // Del string de horario existen dos casos, que sea un solo dia, es decir, una sola letra
