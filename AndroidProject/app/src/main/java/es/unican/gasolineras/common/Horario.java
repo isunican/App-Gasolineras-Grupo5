@@ -103,6 +103,9 @@ public class Horario {
         // Separar los horarios por días
         String[] horarios = obtenerHorario(horario);
         // Si el horario contiene el día actual
+        if (horaActual > 24 || horaActual < 0  ){
+            throw new IllegalArgumentException("La hora no esta bien introducida");
+        }
         for (String horario2 : horarios) {
             if (estaEnFranjaDia(letraletraDiaActual, horario2)) {
                 // Parseo el horario para obtener la hora de apertura y cierre

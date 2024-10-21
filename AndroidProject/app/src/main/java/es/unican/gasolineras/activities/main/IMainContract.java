@@ -37,6 +37,9 @@ public interface IMainContract {
          */
         public void onMenuInfoClicked();
 
+        public void onFilterButtonClicked();
+
+        public void buscarGasolinerasConFiltros(boolean estado);
     }
 
     /**
@@ -98,5 +101,10 @@ public interface IMainContract {
          */
         public void showInfoActivity();
 
+        /**
+         * The view is requested to open the info activity.
+         * Only the Presenter should call this method
+         */
+        public void showFiltersPopUp();
     }
 }

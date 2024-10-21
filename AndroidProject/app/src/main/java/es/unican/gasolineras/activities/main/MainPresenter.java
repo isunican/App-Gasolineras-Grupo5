@@ -2,6 +2,7 @@ package es.unican.gasolineras.activities.main;
 
 import java.util.List;
 
+import es.unican.gasolineras.common.Filtros;
 import es.unican.gasolineras.model.Gasolinera;
 import es.unican.gasolineras.model.IDCCAAs;
 import es.unican.gasolineras.repository.ICallBack;
@@ -14,7 +15,7 @@ public class MainPresenter implements IMainContract.Presenter {
 
     /** The view that is controlled by this presenter */
     private IMainContract.View view;
-
+    private List<Gasolinera> gasolinerasFiltradas;
     /**
      * @see IMainContract.Presenter#init(IMainContract.View)
      * @param view the view to control
@@ -43,6 +44,23 @@ public class MainPresenter implements IMainContract.Presenter {
         view.showInfoActivity();
     }
 
+    @Override
+    public void onFilterButtonClicked() {
+        view.showFiltersPopUp();
+    }
+
+
+
+    @Override
+    public void buscarGasolinerasConFiltros(boolean estado) {
+
+                gasolinerasFiltradas = Filtros.filtrarPorEstado(gasolinerasFiltradas,estado);
+                view.showStations(gasolinerasFiltradas);
+                view.showLoadCorrect(gasolinerasFiltradas.size());
+
+    }
+
+
     /**
      * Loads the gas stations from the repository, and sends them to the view
      */
@@ -53,6 +71,7 @@ public class MainPresenter implements IMainContract.Presenter {
 
             @Override
             public void onSuccess(List<Gasolinera> stations) {
+                gasolinerasFiltradas = stations;
                 view.showStations(stations);
                 view.showLoadCorrect(stations.size());
             }
@@ -64,6 +83,6 @@ public class MainPresenter implements IMainContract.Presenter {
             }
         };
 
-        repository.requestGasolineras(callBack, IDCCAAs.CANTABRIA.id);
+        repository.requestGasolineras(callBack);
     }
 }

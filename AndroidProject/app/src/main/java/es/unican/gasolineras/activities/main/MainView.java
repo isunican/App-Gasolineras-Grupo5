@@ -2,13 +2,20 @@ package es.unican.gasolineras.activities.main;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.CheckBox;
+import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
@@ -73,11 +80,16 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
      *
      * @return true if we have handled the selection
      */
+
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         int itemId = item.getItemId();
         if (itemId == R.id.menuItemInfo) {
             presenter.onMenuInfoClicked();
+            return true;
+        }
+        if (itemId == R.id.menuFilterButton) {
+            presenter.onFilterButtonClicked();
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -152,6 +164,42 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
         Intent intent = new Intent(this, InfoView.class);
         startActivity(intent);
 
+    }
+
+    @Override
+    public void showFiltersPopUp() {
+        // Inflate the layout for the dialog
+        LayoutInflater inflater = LayoutInflater.from(this);
+        View view = inflater.inflate(R.layout.filters_popup, null);
+
+        // Get references to the EditText fields
+        Spinner spnProvincias = view.findViewById(R.id.spnProvincias);
+        EditText etLocalidad = view.findViewById(R.id.etLocalidad);
+        CheckBox checkEstado = view.findViewById(R.id.cbAbierto);
+        String[] provinciasArray = getResources().getStringArray(R.array.provincias_espana);
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, provinciasArray);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spnProvincias.setAdapter(adapter);
+
+        // Create the dialog using AlertDialog.Builder
+        new AlertDialog.Builder(this)
+                .setTitle("Filtrar Gasolineras")
+                .setView(view)  // Set the custom view
+                .setPositiveButton("Buscar", (dialog, which) -> {
+                    // Get the values entered by the user
+                    Boolean estado = checkEstado.isChecked();
+                    // Call the presenter to filter the gas stations
+                    presenter.buscarGasolinerasConFiltros(estado);
+
+                    dialog.dismiss();  // Close the dialog
+
+
+                })
+                .setNegativeButton("Cancelar", (dialog, which) -> {
+                    dialog.dismiss();  // Close the dialog without action
+                })
+                .create()
+                .show();
     }
 
 

@@ -7,4 +7,59 @@
     <string name="loadCorrect">Se han cargado %d gasolineras</string>
     <string name="loadError">Ha habido un error cargando las gasolineras</string>
     <string name="info_text">Aplicación creada para el Proyecto Integrado Curso 2024-2025</string>
+    <string-array name="provincias_espana">
+        <item>-</item>
+        <item>ALBACETE</item>
+        <item>ALICANTE</item>
+        <item>ALMERÍA</item>
+        <item>ARABA/ÁLAVA</item>
+        <item>ASTURIAS</item>
+        <item>ÁVILA</item>
+        <item>BADAJOZ</item>
+        <item>BALEARS (ILLES)</item>
+        <item>BARCELONA</item>
+        <item>BIZKAIA</item>
+        <item>BURGOS</item>
+        <item>CÁCERES</item>
+        <item>CÁDIZ</item>
+        <item>CANTABRIA</item>
+        <item>CASTELLÓN / CASTELLÓ</item>
+        <item>CEUTA</item>
+        <item>CIUDAD REAL</item>
+        <item>CÓRDOBA</item>
+        <item>CORUÑA (A)</item>
+        <item>CUENCA</item>
+        <item>GIPUZKOA</item>
+        <item>GIRONA</item>
+        <item>GRANADA</item>
+        <item>GUADALAJARA</item>
+        <item>HUELVA</item>
+        <item>HUESCA</item>
+        <item>JAÉN</item>
+        <item>LEÓN</item>
+        <item>LLEIDA</item>
+        <item>LUGO</item>
+        <item>MADRID</item>
+        <item>MÁLAGA</item>
+        <item>MELILLA</item>
+        <item>MURCIA</item>
+        <item>NAVARRA</item>
+        <item>OURENSE</item>
+        <item>PALENCIA</item>
+        <item>PALMAS (LAS)</item>
+        <item>PONTEVEDRA</item>
+        <item>RIOJA (LA)</item>
+        <item>SALAMANCA</item>
+        <item>SANTA CRUZ DE TENERIFE</item>
+        <item>SEGOVIA</item>
+        <item>SEVILLA</item>
+        <item>SORIA</item>
+        <item>TARRAGONA</item>
+        <item>TERUEL</item>
+        <item>TOLEDO</item>
+        <item>VALENCIA / VALÈNCIA</item>
+        <item>VALLADOLID</item>
+        <item>ZAMORA</item>
+        <item>ZARAGOZA</item>
+    </string-array>
 </resources>
