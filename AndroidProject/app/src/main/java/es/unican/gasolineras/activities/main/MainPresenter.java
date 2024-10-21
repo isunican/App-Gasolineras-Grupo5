@@ -3,7 +3,7 @@ package es.unican.gasolineras.activities.main;
 import java.util.List;
 
 import es.unican.gasolineras.model.Gasolinera;
-import es.unican.gasolineras.model.IDCCAAs;
+import es.unican.gasolineras.model.IDProvincias;
 import es.unican.gasolineras.repository.ICallBack;
 import es.unican.gasolineras.repository.IGasolinerasRepository;
 
@@ -43,11 +43,16 @@ public class MainPresenter implements IMainContract.Presenter {
         view.showInfoActivity();
     }
 
-    /**
-     * Loads the gas stations from the repository, and sends them to the view
-     */
-    private void load() {
+    @Override
+    public void onFilterButtonClicked() {
+        view.showFiltersPopUp();
+    }
+
+    @Override
+    public void buscarGasolinerasConFiltros(String provincia, String localidad) {
         IGasolinerasRepository repository = view.getGasolinerasRepository();
+
+        String codigoProvincia = IDProvincias.getCodigoByProvincia(provincia);
 
         ICallBack callBack = new ICallBack() {
 
@@ -64,6 +69,13 @@ public class MainPresenter implements IMainContract.Presenter {
             }
         };
 
-        repository.requestGasolineras(callBack, IDCCAAs.CANTABRIA.id);
+        repository.requestGasolineras(callBack, codigoProvincia, localidad);
+    }
+
+    /**
+     * Loads the gas stations from the repository, and sends them to the view
+     */
+    private void load() {
+        buscarGasolinerasConFiltros(null, null);
     }
 }

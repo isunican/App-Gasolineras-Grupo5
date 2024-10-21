@@ -13,12 +13,20 @@ public interface IGasolinerasAPI {
 
     /**
      * Retrieve gas stations filtered by "comunidad autónoma"
-     * <a href="https://sedeaplicaciones.minetur.gob.es/ServiciosRESTCarburantes/PreciosCarburantes/help/operations/PreciosEESSTerrestresFiltroCCAA">API</a>
+     * <a href="https://sedeaplicaciones.minetur.gob.es/ServiciosRESTCarburantes/PreciosCarburantes/help/operations/PreciosEESSTerrestresFiltroCCAA">API</a>*
      *
-     * @param ccaa id of comunidad autónoma. Id's are defined in a separate <a href="https://sedeaplicaciones.minetur.gob.es/ServiciosRESTCarburantes/PreciosCarburantes/help/operations/ComunidadesAutonomas">service</a>
      * @return retrofit call object
      */
-    @GET("EstacionesTerrestres/FiltroCCAA/{IDCCAA}")
-    Call<GasolinerasResponse> gasolineras(@Path("IDCCAA") String ccaa);
+    @GET("EstacionesTerrestres/")
+    Call<GasolinerasResponse> gasolineras();
 
+    /**
+     * Retrieve gas stations filtered by "provincia"
+     * <a href="https://sedeaplicaciones.minetur.gob.es/ServiciosRESTCarburantes/PreciosCarburantes/help/operations/PreciosEESSTerrestresFiltroProvincia">API</a>*
+     *
+     * @param provincia id of provincia. Id's are defined in a separate <a href="https://sedeaplicaciones.minetur.gob.es/ServiciosRESTCarburantes/PreciosCarburantes/help/operations/Provincias">service</a>
+     * @return retrofit call object
+     */
+    @GET("EstacionesTerrestres/FiltroProvincia/{IDProvincia}")
+    Call<GasolinerasResponse> gasolinerasPorProvincia(@Path("IDProvincia") String provincia);
 }
