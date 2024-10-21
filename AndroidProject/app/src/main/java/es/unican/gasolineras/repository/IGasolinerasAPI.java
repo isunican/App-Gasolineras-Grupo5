@@ -19,14 +19,4 @@ public interface IGasolinerasAPI {
      */
     @GET("EstacionesTerrestres/")
     Call<GasolinerasResponse> gasolineras();
-
-    /**
-     * Retrieve gas stations filtered by "provincia"
-     * <a href="https://sedeaplicaciones.minetur.gob.es/ServiciosRESTCarburantes/PreciosCarburantes/help/operations/PreciosEESSTerrestresFiltroProvincia">API</a>*
-     *
-     * @param provincia id of provincia. Id's are defined in a separate <a href="https://sedeaplicaciones.minetur.gob.es/ServiciosRESTCarburantes/PreciosCarburantes/help/operations/Provincias">service</a>
-     * @return retrofit call object
-     */
-    @GET("EstacionesTerrestres/FiltroProvincia/{IDProvincia}")
-    Call<GasolinerasResponse> gasolinerasPorProvincia(@Path("IDProvincia") String provincia);
 }

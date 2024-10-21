@@ -186,12 +186,14 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
                 .setPositiveButton("Buscar", (dialog, which) -> {
                     // Get the values entered by the user
                     String provincia = spnProvincias.getSelectedItem().toString();
-                    String localidad = etLocalidad.getText().toString().trim();
-                    if (localidad.isEmpty()){
-                        localidad = null;
-                    }
-                    // Call the presenter to handle the search logic
-                    presenter.buscarGasolinerasConFiltros(provincia, localidad);
+                    String municipio = etLocalidad.getText().toString().trim();
+
+                    // Call the presenter to filter the gas stations
+                    presenter.buscarGasolinerasConFiltros(provincia, municipio);
+
+                    dialog.dismiss();  // Close the dialog
+
+
                 })
                 .setNegativeButton("Cancelar", (dialog, which) -> {
                     dialog.dismiss();  // Close the dialog without action

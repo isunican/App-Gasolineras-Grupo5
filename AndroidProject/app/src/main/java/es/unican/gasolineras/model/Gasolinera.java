@@ -28,7 +28,7 @@ public class Gasolinera {
     @SerializedName("C.P.")                         protected String cp;
     @SerializedName("Dirección")                    protected String direccion;
     @SerializedName("Municipio")                    protected String municipio;
-    @SerializedName("Localidad")                    protected String localidad;
+    @SerializedName("Provincia")                    protected String provincia;
     @SerializedName("Horario")                      protected String horario;
 
     @SerializedName("Precio Gasoleo A")             protected double gasoleoA;

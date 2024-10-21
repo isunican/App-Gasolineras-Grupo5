@@ -31,41 +31,20 @@ public class GasolinerasRepository implements IGasolinerasRepository {
 
     /**
      * Request gas stations from the Gasolineras real API.
-     * @see IGasolinerasRepository#requestGasolineras(ICallBack, String, String)
+     * @see IGasolinerasRepository#requestGasolineras(ICallBack)
      * @param cb the callback that will asynchronously process the returned gas stations
-     * @param provincia the province to filter the gas stations
-     *                  (if null, no filter is applied)
-     * @param localidad the locality to filter the gas stations
-     *                  (if null, no filter is applied)
+     *
      */
     @Override
-    public void requestGasolineras(ICallBack cb, String provincia, String localidad) {
-        Call<GasolinerasResponse> call = null;
-        if (provincia == null) {
-            call = GasolinerasService.api.gasolineras();
-        } else{
-            call = GasolinerasService.api.gasolinerasPorProvincia(provincia);
-        }
+    public void requestGasolineras(ICallBack cb) {
+        Call<GasolinerasResponse> call = GasolinerasService.api.gasolineras();
+
         call.enqueue(new Callback<GasolinerasResponse>() {
             @Override
             public void onResponse(@Nonnull Call<GasolinerasResponse> call, @Nonnull Response<GasolinerasResponse> response) {
                 GasolinerasResponse body = response.body();
                 assert body != null;  // para evitar advertencias
-
-                if (provincia != null && localidad != null) {
-                    List<Gasolinera> encontradas = body.getGasolineras();
-
-                    Iterator<Gasolinera> iterator = encontradas.iterator();
-                    while (iterator.hasNext()) {
-                        Gasolinera g = iterator.next();
-                        if (!g.getLocalidad().equalsIgnoreCase(localidad)) {
-                            iterator.remove();
-                        }
-                    }
-                    cb.onSuccess(encontradas);
-                } else {
-                    cb.onSuccess(body.getGasolineras());
-                }
+                cb.onSuccess(body.getGasolineras());
             }
 
             @Override

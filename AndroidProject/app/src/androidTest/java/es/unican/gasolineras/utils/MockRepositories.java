@@ -28,7 +28,7 @@ public class MockRepositories {
             ICallBack callBack = invocation.getArgument(0);
             callBack.onSuccess(Utils.parseGasolineras(context, jsonId));
             return null;
-        }).when(mock).requestGasolineras(any(ICallBack.class), any(String.class), any(String.class));
+        }).when(mock).requestGasolineras(any(ICallBack.class));
         return mock;
     }
 

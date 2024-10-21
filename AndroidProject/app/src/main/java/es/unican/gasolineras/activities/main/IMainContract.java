@@ -47,7 +47,7 @@ public interface IMainContract {
          * The presenter is informed that the user wants to filter gas stations
          * Only the View should call this method
          */
-        public void buscarGasolinerasConFiltros(String provincia, String localidad);
+        public void buscarGasolinerasConFiltros(String provincia, String municipio);
     }
 
 
