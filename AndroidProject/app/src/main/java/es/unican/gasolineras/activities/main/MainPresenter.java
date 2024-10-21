@@ -15,6 +15,7 @@ public class MainPresenter implements IMainContract.Presenter {
 
     /** The view that is controlled by this presenter */
     private IMainContract.View view;
+    private List<Gasolinera> gasolineras;
 
     /**
      * @see IMainContract.Presenter#init(IMainContract.View)
@@ -51,43 +52,24 @@ public class MainPresenter implements IMainContract.Presenter {
 
     @Override
     public void buscarGasolinerasConFiltros(String provincia, String municipio) {
-        IGasolinerasRepository repository = view.getGasolinerasRepository();
+        List<Gasolinera> gasolinerasFiltradas = gasolineras;
 
-        String codigoProvincia = IDProvincias.getCodigoByProvincia(provincia);
+        String finalProvincia = "-".equals(provincia) ? null : provincia;
+        String finalMunicipio = municipio.isEmpty() ? null : municipio;
 
-        ICallBack callBack = new ICallBack() {
-
-            @Override
-            public void onSuccess(List<Gasolinera> stations) {
-                List<Gasolinera> gasolinerasFiltradas = stations;
-                if (!provincia.equals("-") && (municipio == null || municipio.isEmpty())) {
-                    gasolinerasFiltradas = Filtros.filtrarPorProvincia(gasolinerasFiltradas, provincia);
-                    view.showStations(gasolinerasFiltradas);
-                    view.showLoadCorrect(gasolinerasFiltradas.size());
-                } else if (!provincia.equals("-") && municipio != null) {
-                    gasolinerasFiltradas = Filtros.filtrarPorProvinciaYMunicipio(gasolinerasFiltradas, provincia, municipio);
-                    view.showStations(gasolinerasFiltradas);
-                    view.showLoadCorrect(gasolinerasFiltradas.size());
-                } else {
-                    view.showStations(stations);
-                    view.showLoadCorrect(stations.size());
-                }
-
-            }
-
-            @Override
-            public void onFailure(Throwable e) {
-                view.showLoadError();
-                view.showLoadError();
-            }
-        };
-
-        repository.requestGasolineras(callBack);
+        if (finalProvincia != null || finalMunicipio != null) {
+            gasolinerasFiltradas = Filtros.filtrarPorProvinciaYMunicipio(gasolinerasFiltradas, finalProvincia, finalMunicipio);
+            view.showStations(gasolinerasFiltradas);
+            view.showLoadCorrect(gasolinerasFiltradas.size());
+        } else {
+            view.showStations(gasolineras);
+            view.showLoadCorrect(gasolineras.size());
+        }
     }
 
     /**
-
-     Loads the gas stations from the repository, and sends them to the view*/
+     Loads the gas stations from the repository, and sends them to the view
+     */
     private void load() {
         IGasolinerasRepository repository = view.getGasolinerasRepository();
 
@@ -95,6 +77,7 @@ public class MainPresenter implements IMainContract.Presenter {
 
             @Override
             public void onSuccess(List<Gasolinera> stations) {
+                gasolineras = stations;
                 view.showStations(stations);
                 view.showLoadCorrect(stations.size());
             }
@@ -105,9 +88,6 @@ public class MainPresenter implements IMainContract.Presenter {
                 view.showLoadError();
             }
         };
-
         repository.requestGasolineras(callBack);
     }
-
-
 }

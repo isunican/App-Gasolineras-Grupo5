@@ -144,6 +144,14 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
     }
 
     /**
+     * @see IMainContract.View#showMunicipioError()
+     */
+    @Override
+    public void showMunicipioError() {
+        Toast.makeText(this, "Debe introducir una provincia", Toast.LENGTH_SHORT).show();
+    }
+
+    /**
      * @see IMainContract.View#showStationDetails(Gasolinera)
      * @param station the charging station
      */
@@ -166,11 +174,9 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
 
     @Override
     public void showFiltersPopUp() {
-        // Inflate the layout for the dialog
         LayoutInflater inflater = LayoutInflater.from(this);
         View view = inflater.inflate(R.layout.filters_popup, null);
 
-        // Get references to the EditText fields
         Spinner spnProvincias = view.findViewById(R.id.spnProvincias);
         EditText etLocalidad = view.findViewById(R.id.etLocalidad);
 
@@ -179,24 +185,18 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spnProvincias.setAdapter(adapter);
 
-        // Create the dialog using AlertDialog.Builder
         new AlertDialog.Builder(this)
                 .setTitle("Filtrar Gasolineras")
-                .setView(view)  // Set the custom view
+                .setView(view)
                 .setPositiveButton("Buscar", (dialog, which) -> {
-                    // Get the values entered by the user
                     String provincia = spnProvincias.getSelectedItem().toString();
                     String municipio = etLocalidad.getText().toString().trim();
 
-                    // Call the presenter to filter the gas stations
                     presenter.buscarGasolinerasConFiltros(provincia, municipio);
-
-                    dialog.dismiss();  // Close the dialog
-
-
+                    dialog.dismiss();
                 })
                 .setNegativeButton("Cancelar", (dialog, which) -> {
-                    dialog.dismiss();  // Close the dialog without action
+                    dialog.dismiss();
                 })
                 .create()
                 .show();
