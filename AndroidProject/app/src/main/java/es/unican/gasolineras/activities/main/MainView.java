@@ -29,6 +29,7 @@ import dagger.hilt.android.AndroidEntryPoint;
 import es.unican.gasolineras.R;
 import es.unican.gasolineras.activities.info.InfoView;
 import es.unican.gasolineras.activities.details.DetailsView;
+import es.unican.gasolineras.common.DataAccessException;
 import es.unican.gasolineras.model.Gasolinera;
 import es.unican.gasolineras.repository.IGasolinerasRepository;
 
@@ -189,7 +190,11 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
                     // Get the values entered by the user
                     Boolean estado = checkEstado.isChecked();
                     // Call the presenter to filter the gas stations
-                    presenter.buscarGasolinerasConFiltros(estado);
+                    try {
+                        presenter.buscarGasolinerasConFiltros(estado);
+                    } catch (DataAccessException e) {
+                        throw new RuntimeException(e);
+                    }
 
                     dialog.dismiss();  // Close the dialog
 

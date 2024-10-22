@@ -1,5 +1,7 @@
 package es.unican.gasolineras.common;
 
+import android.util.Log;
+
 import java.util.Calendar;
 import es.unican.gasolineras.common.DataAccessException;
 public class Horario {
@@ -79,6 +81,63 @@ public class Horario {
         if (horario.contains("L-D: 24H")) {
             return "Abierto 24h";
         }
+        if (horario.contains("L-D: 00:00-23:59"))
+        {
+            return "Abierto 24h";
+        }
+        if (horario.contains("L: 24H")) {
+            if (letraDiaActual().equals("L")) {
+                return "Abierto";
+            }
+            return "Cerrado";
+        }
+        if (horario.contains("M: 24H")) {
+            if (letraDiaActual().equals("M")) {
+                return "Abierto";
+            }
+            return "Cerrado";
+        }
+        if (horario.contains("X: 24H")) {
+            if (letraDiaActual().equals("X")) {
+                return "Abierto";
+            }
+            return "Cerrado";
+        }
+        if (horario.contains("J: 24H")) {
+            if (letraDiaActual().equals("J")) {
+                return "Abierto";
+            }
+            return "Cerrado";
+        }
+        if (horario.contains("V: 24H")) {
+            if (letraDiaActual().equals("V")) {
+                return "Abierto";
+            }
+            return "Cerrado";
+        }
+        if (horario.contains("S: 24H")) {
+            if (letraDiaActual().equals("S")) {
+                return "Abierto";
+            }
+            return "Cerrado";
+        }
+        if (horario.contains("D: 24H")) {
+            if (letraDiaActual().equals("D")) {
+                return "Abierto";
+            }
+            return "Cerrado";
+        }
+
+        if (horario.contains("S-D: 24H")) {
+            if (letraDiaActual().equals("D") || letraDiaActual().equals("S")) {
+                return "Abierto";
+            }
+            return "Cerrado";
+        }
+
+        if (horario.contains("y")) {
+            return "Formato erroneo";
+        }
         // Obtener la letra del día actual
         String letraletraDiaActual = letraDiaActual();
         // Obtener la hora actual
@@ -107,8 +166,16 @@ public class Horario {
             throw new IllegalArgumentException("La hora no esta bien introducida");
         }
         for (String horario2 : horarios) {
+            // Elimino los espacios en blanco
+            if (horario2.startsWith(" ")) {
+                horario2 = horario2.substring(1);
+            }
+            Log.d("CUENTA:", horario2);
             if (estaEnFranjaDia(letraletraDiaActual, horario2)) {
                 // Parseo el horario para obtener la hora de apertura y cierre
+                if (horario2.contains("24H")) {
+                    return true;
+                }
                 String horario3 = horario2.split("\\s+")[1];
                 String [] horaCierreApertura = horario3.split("-");
                 int horaApertura = Integer.parseInt(horaCierreApertura[0].split(":")[0]);
@@ -139,6 +206,7 @@ public class Horario {
         * @throws DataAccessException si el dia actual no es válido
      */
     public static boolean estaEnFranjaDia (String letraletraDiaActual, String horario) throws IllegalArgumentException {
+        Log.d("CUENTA", "Franja dia Recibe" + horario);
         if (horario == null || horario.isEmpty() || letraletraDiaActual == null || letraletraDiaActual.isEmpty()) {
             throw new IllegalArgumentException("El horario o la letra del día actual no puede ser nulo o vacío");
         }
@@ -217,6 +285,10 @@ public class Horario {
                 for (int i = 0; i < 7; i++) {
                     dias[i] = 1;
                 }
+                break;
+
+                // Si el caso es un valor no valido, no pasa nada
+            default:
                 break;
         }
         // Compruebo si el dia actual esta en la franja horaria
