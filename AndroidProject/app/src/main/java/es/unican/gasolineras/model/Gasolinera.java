@@ -41,6 +41,13 @@ public class Gasolinera {
 
     private String estado;
 
+    /**
+     * Calcula el precio medio de los carburantes de la gasolinera.
+     * Si uno de los dos precios es 0, se devuelve el otro.
+     * Si ambos precios son 0, se devuelve 0.
+     * En caso contrario, se devuelve la media de los dos precios.
+     * @return el precio medio de los carburantes de la gasolinera
+     */
     public double calculateSummarizedPrice() {
         if (gasoleoA == 0 || gasoleoA < 0) {
             return gasolina95E5;
@@ -54,7 +61,13 @@ public class Gasolinera {
             return (gasoleoA + gasolina95E5 * 2) / 3;
         }
     }
-
+    /**
+     * Comprueba si la gasolinera está abierta en el horario actual.
+     *
+     * @param horario el horario de la gasolinera
+     * @return el estado de la gasolinera
+     * @throws IllegalArgumentException si el horario no es válido
+     */
     public String compruebaEstado(String horario) throws IllegalArgumentException, DataAccessException {
         this.estado = estaAbierto(horario);
         return estaAbierto(horario);

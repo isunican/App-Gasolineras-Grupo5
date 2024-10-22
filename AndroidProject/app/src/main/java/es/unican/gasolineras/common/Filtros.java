@@ -21,12 +21,7 @@ public class Filtros {
         List<Gasolinera> resultado = new ArrayList<>();
 
         for (Gasolinera gasolinera : gasolineras) {
-            // enseña por log.d el numero de iteracion acutal
-            Log.d("CUENTA", "Iteración: " + gasolineras.indexOf(gasolinera) + " gasolinera con horario:" + gasolinera.getHorario());
-            //si estoy en la iteracion 157
-            if (gasolineras.indexOf(gasolinera) == 387) {
-                gasolinera.setEstado(estaAbierto(gasolinera.getHorario()));
-            }
+
             gasolinera.setEstado(estaAbierto(gasolinera.getHorario()));
 
             if (gasolinera.getEstado() == "Abierto" || gasolinera.getEstado() == "Abierto 24h") {

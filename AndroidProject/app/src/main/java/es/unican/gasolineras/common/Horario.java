@@ -4,16 +4,20 @@ import android.util.Log;
 
 import java.util.Calendar;
 import es.unican.gasolineras.common.DataAccessException;
+/**
+ * Clase que contiene métodos para comprobar si una gasolinera está abierta
+ */
 public class Horario {
-    /**
-     * Parsea el horario obtenido de la API en formato String
-     * @param horario el horario en formato String
-     *                (ejemplo: "L-D: 06:00-22:00")
-     *                (ejemplo: "L-S: 07:00-22:00; D: 08:00-14:00")
-     *                (ejemplo: "L-V: 07:00-22:00; S: 08:00-14:00"; D: 08:00-14:00")
-     *
-     */
 
+    /*
+        * Obtiene los horarios de una gasolinera
+        * @param horario el horario en formato String
+        *               (ejemplo: "L-D: 06:00-22:00")
+        *              (ejemplo: "L-S: 07:00-22:00; D: 08:00-14:00")
+        *             (ejemplo: "L-V: 07:00-22:00; S: 08:00-14:00"; D: 08:00-14:00")
+        * @return un array con los horarios
+        * @throws IllegalArgumentException si el horario es nulo o vacío
+     */
     public static String[] obtenerHorario (String horario) throws IllegalArgumentException {
         if (horario == null || horario.isEmpty()) {
             throw new IllegalArgumentException("El horario no puede ser nulo o vacío");
@@ -21,6 +25,12 @@ public class Horario {
         String[] horarios = horario.split(";");
         return horarios;
     }
+
+    /*
+        * Obtiene la letra del día actual
+        * @return la letra del día actual
+        * @throws DataAccessException si el día actual no es válido
+     */
     public static String letraDiaActual () throws DataAccessException {
         // Obtener el día actual
         Calendar calendar = Calendar.getInstance();
@@ -56,6 +66,11 @@ public class Horario {
         return letraletraDiaActual;
     }
 
+    /*
+        * Obtiene la hora actual
+        * @return la hora actual
+        * @throws DataAccessException si la hora actual no es válida
+     */
     public static int horaActual() throws DataAccessException {
         // Obtener la hora actual
         Calendar calendar = Calendar.getInstance();
@@ -65,6 +80,12 @@ public class Horario {
         }
         return horaActual;
     }
+
+    /*
+        * Obtiene el minuto actual
+        * @return el minuto actual
+        * @throws DataAccessException si el minuto actual no es válido
+     */
     public static int minutoActual() throws DataAccessException {
         // Obtener el minuto actual
         Calendar calendar = Calendar.getInstance();
@@ -75,6 +96,16 @@ public class Horario {
         return minutoActual;
     }
 
+    /*
+        * Comprueba si el horario de la gasolinera está abierto
+        * @param horario el horario en formato String
+        *               (ejemplo: "L-D: 06:00-22:00")
+        *              (ejemplo: "L-S: 07:00-22:00; D: 08:00-14:00")
+        *             (ejemplo: "L-V: 07:00-22:00; S: 08:00-14:00"; D: 08:00-14:00")
+        * @return "Abierto" si el horario de la gasolinera está abierto
+        * @return "Cerrado" si el horario de la gasolinera está cerrado
+        * @throws DataAccessException si el horario no es válido
+     */
     public static String estaAbierto(String horario) throws DataAccessException,IllegalArgumentException {
 
         // Caso 24h
@@ -135,9 +166,6 @@ public class Horario {
             return "Cerrado";
         }
 
-        if (horario.contains("y")) {
-            return "Formato erroneo";
-        }
         // Obtener la letra del día actual
         String letraletraDiaActual = letraDiaActual();
         // Obtener la hora actual
@@ -152,9 +180,13 @@ public class Horario {
     /*
         * Comprueba si el horario de la gasolinera está abierto
         * @param horario el horario en formato String
-        *              (ejemplo: "L-D: 06:00-22:00")
-        *            (ejemplo: "L-S: 07:00-22:00; D: 08:00-14:00")
-        *          (ejemplo: "L-V: 07:00-22:00; S: 08:00-14:00"; D: 08:00-14:00")
+        * (ejemplo: "L-D: 06:00-22:00")
+        * (ejemplo: "L-S: 07:00-22:00; D: 08:00-14:00")
+        * (ejemplo: "L-V: 07:00-22:00; S: 08:00-14:00"; D: 08:00-14:00")
+        * (ejemplo: "L-D: 24H")
+        *
+        * @param letraletraDiaActual la letra del día actual
+        * @param horaActual la hora actual
         * @return true si el horario de la gasolinera está abierto
         * @return false si el horario de la gasolinera está cerrado
      */
@@ -170,12 +202,43 @@ public class Horario {
             if (horario2.startsWith(" ")) {
                 horario2 = horario2.substring(1);
             }
-            Log.d("CUENTA:", horario2);
+
             if (estaEnFranjaDia(letraletraDiaActual, horario2)) {
                 // Parseo el horario para obtener la hora de apertura y cierre
                 if (horario2.contains("24H")) {
                     return true;
                 }
+                // Caso de un horario partido en dos partes
+                // Ejemplo: "L-S: 07:00-14:00 y 16:00-22:00"
+                // Se subdivide en dos partes: "07:00-14:00" y "16:00-22:00"
+                // Hay que eliminar espacios en blanco para poder parsear correctamente
+                if (horario2.contains("y")) {
+                    String [] horariosPartidos = horario2.split("y");
+                    // Renombro el hroario 0 como split a partir del espacio
+                    horariosPartidos[0] = horariosPartidos[0].split("\\s+")[1];
+                    for (String horarioPartido : horariosPartidos) {
+                        String [] horaCierreApertura = horarioPartido.split("-");
+                        Log.d("CUENTA", "horaCierreApertura[0]: " + horaCierreApertura[0]);
+                        Log.d("CUENTA", "horaCierreApertura[1]: " + horaCierreApertura[1]);
+                        // Elimino el espacio si lo hay del string en horaCierreApertura[0], sino quedaría " 15:00"
+                        if (horaCierreApertura[0].startsWith(" ")) {
+                            horaCierreApertura[0] = horaCierreApertura[0].substring(1);
+                        }
+                        int horaApertura = Integer.parseInt(horaCierreApertura[0].split(":")[0]);
+                        int horaCierre = Integer.parseInt(horaCierreApertura[1].split(":")[0]);
+                        int minutoApertura = Integer.parseInt(horaCierreApertura[0].split(":")[1]);
+                        int minutoCierre = Integer.parseInt(horaCierreApertura[1].split(":")[1]);
+                        // Compruebo si la hora actual está entre la hora de apertura y cierre
+                        if (horaActual > horaApertura && horaActual < horaCierre) {
+                            return true;
+                        } else if (horaActual == horaApertura && minutoActual() >= minutoApertura) {
+                            return true;
+                        } else if (horaActual == horaCierre && minutoActual() <= minutoCierre) {
+                            return true;
+                        }
+                    }
+                }
+                // Caso de un horario normal, separación por espacio
                 String horario3 = horario2.split("\\s+")[1];
                 String [] horaCierreApertura = horario3.split("-");
                 int horaApertura = Integer.parseInt(horaCierreApertura[0].split(":")[0]);
@@ -206,7 +269,6 @@ public class Horario {
         * @throws DataAccessException si el dia actual no es válido
      */
     public static boolean estaEnFranjaDia (String letraletraDiaActual, String horario) throws IllegalArgumentException {
-        Log.d("CUENTA", "Franja dia Recibe" + horario);
         if (horario == null || horario.isEmpty() || letraletraDiaActual == null || letraletraDiaActual.isEmpty()) {
             throw new IllegalArgumentException("El horario o la letra del día actual no puede ser nulo o vacío");
         }
