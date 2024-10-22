@@ -16,7 +16,7 @@ public class MainPresenter implements IMainContract.Presenter {
 
     /** The view that is controlled by this presenter */
     private IMainContract.View view;
-    private List<Gasolinera> gasolinerasFiltradas;
+    private List<Gasolinera> gasolineras;
     /**
      * @see IMainContract.Presenter#init(IMainContract.View)
      * @param view the view to control
@@ -55,9 +55,15 @@ public class MainPresenter implements IMainContract.Presenter {
     @Override
     public void buscarGasolinerasConFiltros(boolean estado) throws DataAccessException {
 
-                gasolinerasFiltradas = Filtros.filtrarPorEstado(gasolinerasFiltradas,estado);
-                view.showStations(gasolinerasFiltradas);
-                view.showLoadCorrect(gasolinerasFiltradas.size());
+                List<Gasolinera>gasolinerasFiltradas = gasolineras;
+                if (estado) {
+                    gasolinerasFiltradas = Filtros.filtrarPorEstado(gasolinerasFiltradas);
+                    view.showStations(gasolinerasFiltradas);
+                    view.showLoadCorrect(gasolinerasFiltradas.size());
+                }else{
+                    view.showStations(gasolineras);
+                    view.showLoadCorrect(gasolineras.size());
+                }
 
     }
 
@@ -72,7 +78,7 @@ public class MainPresenter implements IMainContract.Presenter {
 
             @Override
             public void onSuccess(List<Gasolinera> stations) {
-                gasolinerasFiltradas = stations;
+                gasolineras = stations;
                 view.showStations(stations);
                 view.showLoadCorrect(stations.size());
             }

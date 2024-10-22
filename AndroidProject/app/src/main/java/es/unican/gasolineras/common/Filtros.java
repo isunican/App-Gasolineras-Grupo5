@@ -24,7 +24,7 @@ public class Filtros {
 
             gasolinera.setEstado(estaAbierto(gasolinera.getHorario()));
 
-            if (gasolinera.getEstado() == "Abierto" || gasolinera.getEstado() == "Abierto 24h") {
+            if (gasolinera.getEstado().equals("Abierto") || gasolinera.getEstado().equals("Abierto 24h")) {
                 resultado.add(gasolinera);
             }
 

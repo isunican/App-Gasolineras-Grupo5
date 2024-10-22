@@ -169,8 +169,8 @@ public class Horario {
         // Obtener la letra del día actual
         String letraletraDiaActual = letraDiaActual();
         // Obtener la hora actual
-        int horaActual = horaActual();
-        if (compruebaHorario(horario, letraletraDiaActual, horaActual)) {
+
+        if (compruebaHorario(horario, letraletraDiaActual)) {
             return "Abierto";
         } else {
             return "Cerrado";
@@ -190,13 +190,11 @@ public class Horario {
         * @return true si el horario de la gasolinera está abierto
         * @return false si el horario de la gasolinera está cerrado
      */
-    public static boolean compruebaHorario (String horario, String letraletraDiaActual, int horaActual) throws DataAccessException,IllegalArgumentException {
+    public static boolean compruebaHorario (String horario, String letraletraDiaActual) throws DataAccessException,IllegalArgumentException {
         // Separar los horarios por días
         String[] horarios = obtenerHorario(horario);
         // Si el horario contiene el día actual
-        if (horaActual > 24 || horaActual < 0  ){
-            throw new IllegalArgumentException("La hora no esta bien introducida");
-        }
+        int horaActual = horaActual();
         for (String horario2 : horarios) {
             // Elimino los espacios en blanco
             if (horario2.startsWith(" ")) {
