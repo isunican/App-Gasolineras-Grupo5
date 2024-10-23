@@ -8,14 +8,22 @@ class Gasolinera {
     - String cp
     - String direccion
     - String municipio
+    - String localidad
     - double gasoleoA
     - double gasolina95E5
+    - String estado
+    --
+    + calculateSummarizedPrice(): double
+    + comprubebaEstado(String horario): String
 }
 
 class GasolinerasResponse {
     - String fecha
     - String nota
+    - String gasolineras        
     - String consulta
+    --
+    + getGasolinerasCount(): int
 }
 
 GasolinerasResponse *-- "*" Gasolinera : gasolineras
