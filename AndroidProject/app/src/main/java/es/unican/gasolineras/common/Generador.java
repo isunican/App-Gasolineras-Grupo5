@@ -1,5 +1,7 @@
 package es.unican.gasolineras.common;
 
+import static es.unican.gasolineras.common.Horario.estaAbierto;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,15 +18,41 @@ public class Generador {
 
 
         // Definir horarios dinámicos para 4 gasolineras
-        String horarioAbierta1 = generarHorarioAbierto(horaActual, minutoActual);  // Abierta 1 hora antes
-        String horarioAbierta2 = generarHorarioAbierto(horaActual, minutoActual);  // Abierta 2 horas antes
-        String horarioCerrada1 = generarHorarioCerrado(horaActual, minutoActual);   // Cerrada 1 hora después
-        String horarioCerrada2 = generarHorarioCerrado(horaActual, minutoActual);   // Cerrada 2 horas después
+        String horarioAbierta1 = generarHorarioAbierto(horaActual, minutoActual);
+        String horarioAbierta2 = generarHorarioAbierto(horaActual, minutoActual);
+        String horarioCerrada1 = generarHorarioCerrado(horaActual, minutoActual);
+        String horarioCerrada2 = generarHorarioCerrado(horaActual, minutoActual);
 
         // Crear las gasolineras con los horarios generados
-        gasolineras.add(crearGasolinera("1", "Cepsa", "28001", "Calle A", "Peñacastillo", "Cantabria", "", 1.28, 1.42));
+
         gasolineras.add(crearGasolinera("1", "Repsol", "28001", "Calle A", "Peñacastillo", "Cantabria", horarioAbierta1, 1.35, 1.40));
         gasolineras.add(crearGasolinera("2", "Carrefour", "28002", "Calle B", "Peñacastillo", "Cantabria", horarioAbierta2, 1.30, 1.38));
+        gasolineras.add(crearGasolinera("3", "Shell", "28003", "Calle C", "Peñacastillo", "Cantabria", horarioCerrada1, 1.32, 1.37));
+        gasolineras.add(crearGasolinera("4", "Petronor", "28004", "Calle D", "Peñacastillo", "Cantabria", horarioCerrada2, 1.28, 1.36));
+
+        return gasolineras;
+    }
+
+
+
+    public static List<Gasolinera> generarGasolinerasCerradas() {
+        List<Gasolinera> gasolineras = new ArrayList<>();
+
+        // Obtener la hora actual y el día actual desde Tiempo
+        int horaActual = Tiempo.horaActual();
+        int minutoActual = Tiempo.minutoActual();
+
+
+        // Definir horarios dinámicos para 4 gasolineras
+        String horarioCerrada1 = generarHorarioCerrado(horaActual, minutoActual);
+        String horarioCerrada2 = generarHorarioCerrado(horaActual, minutoActual);
+        String horarioCerrada3 = generarHorarioCerrado(horaActual, minutoActual);
+        String horarioCerrada4 = generarHorarioCerrado(horaActual, minutoActual);
+
+        // Crear las gasolineras con los horarios generados
+
+        gasolineras.add(crearGasolinera("1", "Repsol", "28001", "Calle A", "Peñacastillo", "Cantabria", horarioCerrada3, 1.35, 1.40));
+        gasolineras.add(crearGasolinera("2", "Carrefour", "28002", "Calle B", "Peñacastillo", "Cantabria", horarioCerrada4, 1.30, 1.38));
         gasolineras.add(crearGasolinera("3", "Shell", "28003", "Calle C", "Peñacastillo", "Cantabria", horarioCerrada1, 1.32, 1.37));
         gasolineras.add(crearGasolinera("4", "Petronor", "28004", "Calle D", "Peñacastillo", "Cantabria", horarioCerrada2, 1.28, 1.36));
 
@@ -47,14 +75,13 @@ public class Generador {
 
     // Genera un horario en el que la gasolinera esté cerrada, ajustando el tiempo actual
     private static String generarHorarioCerrado(int horaActual, int minutoActual) {
-        // Sumar diferenciaHoras a la hora actual para simular que la gasolinera ya ha cerrado
-        int horaFin;
-        if(horaActual == 23){
-            horaFin = 0;
-        }else{
-            horaFin = horaActual + 1 ;
-        }
-        String horario = "L-D: 00:00-" + formatoHora(horaFin, minutoActual);  // Cerrada a partir de la hora fin
+        // Vamos a cerrar la gasolinera una hora antes del tiempo actual
+        int horaCierre = (horaActual - 1 + 24) % 24; // Hora de cierre es una hora antes de la actual
+        int horaApertura = (horaActual + 2) % 24;    // Hora de apertura es dos horas después de la actual
+
+        String horario = "L-D: " + formatoHora(horaApertura, minutoActual) + "-" + formatoHora(horaCierre, minutoActual);
+
+
         return horario;
     }
 
