@@ -6,7 +6,11 @@ import static org.mockito.Mockito.mock;
 
 import android.content.Context;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import es.unican.gasolineras.common.Utils;
+import es.unican.gasolineras.model.Gasolinera;
 import es.unican.gasolineras.repository.ICallBack;
 import es.unican.gasolineras.repository.IGasolinerasRepository;
 
@@ -26,7 +30,16 @@ public class MockRepositories {
         IGasolinerasRepository mock = mock(IGasolinerasRepository.class);
         doAnswer(invocation -> {
             ICallBack callBack = invocation.getArgument(0);
-            callBack.onSuccess(Utils.parseGasolineras(context, jsonId));
+            try {
+                List<Gasolinera> gasolineras = Utils.parseGasolineras(context, jsonId);
+                // Si gasolineras es null, lo inicializamos como una lista vacía.
+                if (gasolineras == null) {
+                    gasolineras = new ArrayList<>();
+                }
+                callBack.onSuccess(gasolineras);
+            } catch (Exception e) {
+                callBack.onFailure(e);
+            }
             return null;
         }).when(mock).requestGasolineras(any(ICallBack.class));
         return mock;

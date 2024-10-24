@@ -192,7 +192,7 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
                     String provincia = spnProvincias.getSelectedItem().toString();
                     String municipio = etLocalidad.getText().toString().trim();
 
-                    presenter.buscarGasolinerasConFiltros(provincia, municipio);
+                    presenter.onSearchStationsWhithFilters(provincia, municipio);
                     dialog.dismiss();
                 })
                 .setNegativeButton("Cancelar", (dialog, which) -> {

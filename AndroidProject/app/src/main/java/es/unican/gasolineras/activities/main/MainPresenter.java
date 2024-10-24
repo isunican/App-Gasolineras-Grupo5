@@ -1,5 +1,7 @@
 package es.unican.gasolineras.activities.main;
 
+import android.util.Log;
+
 import java.util.List;
 
 import es.unican.gasolineras.common.Filtros;
@@ -51,11 +53,14 @@ public class MainPresenter implements IMainContract.Presenter {
     }
 
     @Override
-    public void buscarGasolinerasConFiltros(String provincia, String municipio) {
+    public void onSearchStationsWhithFilters(String provincia, String municipio) {
         List<Gasolinera> gasolinerasFiltradas = gasolineras;
 
         String finalProvincia = "-".equals(provincia) ? null : provincia;
         String finalMunicipio = municipio.isEmpty() ? null : municipio;
+
+        Log.d("Provincia", provincia);
+        Log.d("Municipio", municipio);
 
         if (finalProvincia != null || finalMunicipio != null) {
             gasolinerasFiltradas = Filtros.filtrarPorProvinciaYMunicipio(gasolinerasFiltradas, finalProvincia, finalMunicipio);

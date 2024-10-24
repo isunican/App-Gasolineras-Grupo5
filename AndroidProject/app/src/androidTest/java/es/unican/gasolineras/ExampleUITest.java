@@ -1,16 +1,24 @@
 package es.unican.gasolineras;
 
+import static androidx.test.espresso.Espresso.onData;
+import static androidx.test.espresso.Espresso.onView;
+import static androidx.test.espresso.action.ViewActions.click;
+import static androidx.test.espresso.action.ViewActions.typeText;
+import static androidx.test.espresso.assertion.ViewAssertions.matches;
+import static androidx.test.espresso.matcher.ViewMatchers.hasChildCount;
+import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.CoreMatchers.anything;
 import static org.junit.Assert.assertEquals;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.mock;
 
 import static es.unican.gasolineras.utils.MockRepositories.getTestRepository;
 
 import android.content.Context;
+import android.os.SystemClock;
 
+import androidx.test.espresso.DataInteraction;
+import androidx.test.espresso.Espresso;
 import androidx.test.ext.junit.rules.ActivityScenarioRule;
 import androidx.test.platform.app.InstrumentationRegistry;
 
@@ -40,11 +48,22 @@ public class ExampleUITest {
 
     // Mock repository that provides data from a JSON file instead of downloading it from the internet.
     @BindValue
-    final IGasolinerasRepository repository = getTestRepository(context, R.raw.gasolineras_ccaa_06);
+    final IGasolinerasRepository repository = getTestRepository(context, R.raw.gasolineras_test);
 
     @Test
-    public void showStationsTest() {
-        assertEquals(10, 5+5);
-    }
+    public void testCantabriaSantander_UI1() {
+        // Open filter dialog
+        onView(withId(R.id.menuFilterButton)).perform(click());
 
+        // Enter "Santander" in the locality field
+        onView(withId(R.id.etLocalidad)).perform(typeText("Santander"));
+
+
+
+
+        // Click the "Buscar" button
+        onView(withText("Buscar")).perform(click());
+
+
+    }
 }
