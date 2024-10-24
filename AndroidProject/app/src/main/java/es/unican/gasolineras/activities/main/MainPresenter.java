@@ -1,9 +1,12 @@
 package es.unican.gasolineras.activities.main;
 
+import androidx.multidex.BuildConfig;
+
 import java.util.List;
 
 import es.unican.gasolineras.common.DataAccessException;
 import es.unican.gasolineras.common.Filtros;
+import es.unican.gasolineras.common.Generador;
 import es.unican.gasolineras.model.Gasolinera;
 import es.unican.gasolineras.model.IDCCAAs;
 import es.unican.gasolineras.repository.ICallBack;
@@ -53,7 +56,7 @@ public class MainPresenter implements IMainContract.Presenter {
 
 
     @Override
-    public void buscarGasolinerasConFiltros(boolean estado) throws DataAccessException {
+    public void onSearchStationsWithFilters(boolean estado) throws DataAccessException {
 
                 List<Gasolinera>gasolinerasFiltradas = gasolineras;
                 if (estado) {
@@ -72,24 +75,32 @@ public class MainPresenter implements IMainContract.Presenter {
      * Loads the gas stations from the repository, and sends them to the view
      */
     private void load() {
-        IGasolinerasRepository repository = view.getGasolinerasRepository();
+        if (BuildConfig.DEBUG) {
+            // Modo pruebas: usa la lista generada
+            gasolineras = Generador.generarGasolineras();
+        } else {
+            // Modo producción: usa el repositorio real
+            IGasolinerasRepository repository = view.getGasolinerasRepository();
 
-        ICallBack callBack = new ICallBack() {
+            ICallBack callBack = new ICallBack() {
+                @Override
+                public void onSuccess(List<Gasolinera> stations) {
+                    gasolineras = stations;
+                    view.showStations(stations);
+                    view.showLoadCorrect(stations.size());
+                }
 
-            @Override
-            public void onSuccess(List<Gasolinera> stations) {
-                gasolineras = stations;
-                view.showStations(stations);
-                view.showLoadCorrect(stations.size());
-            }
+                @Override
+                public void onFailure(Throwable e) {
+                    view.showLoadError();
+                }
+            };
 
-            @Override
-            public void onFailure(Throwable e) {
-                view.showLoadError();
-                view.showLoadError();
-            }
-        };
+            repository.requestGasolineras(callBack);
+        }
 
-        repository.requestGasolineras(callBack);
+        // Muestra las gasolineras (tanto para modo pruebas como producción)
+        view.showStations(gasolineras);
+        view.showLoadCorrect(gasolineras.size());
     }
 }

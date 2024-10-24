@@ -26,75 +26,8 @@ public class Horario {
         return horarios;
     }
 
-    /*
-        * Obtiene la letra del día actual
-        * @return la letra del día actual
-        * @throws DataAccessException si el día actual no es válido
-     */
-    public static String letraDiaActual () throws DataAccessException {
-        // Obtener el día actual
-        Calendar calendar = Calendar.getInstance();
-        int letraDiaActual = calendar.get(Calendar.DAY_OF_WEEK);
-        if (letraDiaActual < 1 || letraDiaActual > 7) {
-            throw new DataAccessException("El día actual no es válido");
-        }
 
-        String letraletraDiaActual = "";
-        switch (letraDiaActual) {
-            case Calendar.MONDAY:
-                letraletraDiaActual = "L";
-                break;
-            case Calendar.TUESDAY:
-                letraletraDiaActual = "M";
-                break;
-            case Calendar.WEDNESDAY:
-                letraletraDiaActual = "X";
-                break;
-            case Calendar.THURSDAY:
-                letraletraDiaActual = "J";
-                break;
-            case Calendar.FRIDAY:
-                letraletraDiaActual = "V";
-                break;
-            case Calendar.SATURDAY:
-                letraletraDiaActual = "S";
-                break;
-            case Calendar.SUNDAY:
-                letraletraDiaActual = "D";
-                break;
-        }
-        return letraletraDiaActual;
-    }
 
-    /*
-        * Obtiene la hora actual
-        * @return la hora actual
-        * @throws DataAccessException si la hora actual no es válida
-     */
-    public static int horaActual() throws DataAccessException {
-        // Obtener la hora actual
-        Calendar calendar = Calendar.getInstance();
-        int horaActual = calendar.get(Calendar.HOUR_OF_DAY);
-        if (horaActual < 0 || horaActual > 23) {
-            throw new DataAccessException("La hora actual no es válida");
-        }
-        return horaActual;
-    }
-
-    /*
-        * Obtiene el minuto actual
-        * @return el minuto actual
-        * @throws DataAccessException si el minuto actual no es válido
-     */
-    public static int minutoActual() throws DataAccessException {
-        // Obtener el minuto actual
-        Calendar calendar = Calendar.getInstance();
-        int minutoActual = calendar.get(Calendar.MINUTE);
-        if (minutoActual < 0 || minutoActual > 59) {
-            throw new DataAccessException("El minuto actual no es válido");
-        }
-        return minutoActual;
-    }
 
     /*
         * Comprueba si el horario de la gasolinera está abierto
@@ -117,60 +50,59 @@ public class Horario {
             return "Abierto 24h";
         }
         if (horario.contains("L: 24H")) {
-            if (letraDiaActual().equals("L")) {
+            if (Tiempo.letraDiaActual().equals("L")) {
                 return "Abierto";
             }
             return "Cerrado";
         }
         if (horario.contains("M: 24H")) {
-            if (letraDiaActual().equals("M")) {
+            if (Tiempo.letraDiaActual().equals("M")) {
                 return "Abierto";
             }
             return "Cerrado";
         }
         if (horario.contains("X: 24H")) {
-            if (letraDiaActual().equals("X")) {
+            if (Tiempo.letraDiaActual().equals("X")) {
                 return "Abierto";
             }
             return "Cerrado";
         }
         if (horario.contains("J: 24H")) {
-            if (letraDiaActual().equals("J")) {
+            if (Tiempo.letraDiaActual().equals("J")) {
                 return "Abierto";
             }
             return "Cerrado";
         }
         if (horario.contains("V: 24H")) {
-            if (letraDiaActual().equals("V")) {
+            if (Tiempo.letraDiaActual().equals("V")) {
                 return "Abierto";
             }
             return "Cerrado";
         }
         if (horario.contains("S: 24H")) {
-            if (letraDiaActual().equals("S")) {
+            if (Tiempo.letraDiaActual().equals("S")) {
                 return "Abierto";
             }
             return "Cerrado";
         }
         if (horario.contains("D: 24H")) {
-            if (letraDiaActual().equals("D")) {
+            if (Tiempo.letraDiaActual().equals("D")) {
                 return "Abierto";
             }
             return "Cerrado";
         }
 
         if (horario.contains("S-D: 24H")) {
-            if (letraDiaActual().equals("D") || letraDiaActual().equals("S")) {
+            if (Tiempo.letraDiaActual().equals("D") || Tiempo.letraDiaActual().equals("S")) {
                 return "Abierto";
             }
             return "Cerrado";
         }
 
-        // Obtener la letra del día actual
-        String letraletraDiaActual = letraDiaActual();
+
         // Obtener la hora actual
 
-        if (compruebaHorario(horario, letraletraDiaActual)) {
+        if (compruebaHorario(horario)) {
             return "Abierto";
         } else {
             return "Cerrado";
@@ -185,23 +117,21 @@ public class Horario {
         * (ejemplo: "L-V: 07:00-22:00; S: 08:00-14:00"; D: 08:00-14:00")
         * (ejemplo: "L-D: 24H")
         *
-        * @param letraletraDiaActual la letra del día actual
-        * @param horaActual la hora actual
         * @return true si el horario de la gasolinera está abierto
         * @return false si el horario de la gasolinera está cerrado
      */
-    public static boolean compruebaHorario (String horario, String letraletraDiaActual) throws DataAccessException,IllegalArgumentException {
+    public static boolean compruebaHorario (String horario) throws IllegalArgumentException {
         // Separar los horarios por días
         String[] horarios = obtenerHorario(horario);
         // Si el horario contiene el día actual
-        int horaActual = horaActual();
+        int horaActual = Tiempo.horaActual();
         for (String horario2 : horarios) {
             // Elimino los espacios en blanco
             if (horario2.startsWith(" ")) {
                 horario2 = horario2.substring(1);
             }
 
-            if (estaEnFranjaDia(letraletraDiaActual, horario2)) {
+            if (estaEnFranjaDia(horario2)) {
                 // Parseo el horario para obtener la hora de apertura y cierre
                 if (horario2.contains("24H")) {
                     return true;
@@ -216,8 +146,7 @@ public class Horario {
                     horariosPartidos[0] = horariosPartidos[0].split("\\s+")[1];
                     for (String horarioPartido : horariosPartidos) {
                         String [] horaCierreApertura = horarioPartido.split("-");
-                        Log.d("CUENTA", "horaCierreApertura[0]: " + horaCierreApertura[0]);
-                        Log.d("CUENTA", "horaCierreApertura[1]: " + horaCierreApertura[1]);
+
                         // Elimino el espacio si lo hay del string en horaCierreApertura[0], sino quedaría " 15:00"
                         if (horaCierreApertura[0].startsWith(" ")) {
                             horaCierreApertura[0] = horaCierreApertura[0].substring(1);
@@ -229,9 +158,9 @@ public class Horario {
                         // Compruebo si la hora actual está entre la hora de apertura y cierre
                         if (horaActual > horaApertura && horaActual < horaCierre) {
                             return true;
-                        } else if (horaActual == horaApertura && minutoActual() >= minutoApertura) {
+                        } else if (horaActual == horaApertura && Tiempo.minutoActual() >= minutoApertura) {
                             return true;
-                        } else if (horaActual == horaCierre && minutoActual() <= minutoCierre) {
+                        } else if (horaActual == horaCierre && Tiempo.minutoActual() <= minutoCierre) {
                             return true;
                         }
                     }
@@ -246,9 +175,9 @@ public class Horario {
                 // Compruebo si la hora actual está entre la hora de apertura y cierre
                 if (horaActual > horaApertura && horaActual < horaCierre) {
                     return true;
-                } else if (horaActual == horaApertura && minutoActual() >= minutoApertura) {
+                } else if (horaActual == horaApertura && Tiempo.minutoActual() >= minutoApertura) {
                     return true;
-                } else if (horaActual == horaCierre && minutoActual() <= minutoCierre) {
+                } else if (horaActual == horaCierre && Tiempo.minutoActual() <= minutoCierre) {
                     return true;
                 }
             }
@@ -266,8 +195,9 @@ public class Horario {
         * @return true si el dia actual esta en la franja horaria
         * @throws DataAccessException si el dia actual no es válido
      */
-    public static boolean estaEnFranjaDia (String letraletraDiaActual, String horario) throws IllegalArgumentException {
-        if (horario == null || horario.isEmpty() || letraletraDiaActual == null || letraletraDiaActual.isEmpty()) {
+    public static boolean estaEnFranjaDia (String horario) throws IllegalArgumentException {
+        String letraletraDiaActual = Tiempo.letraDiaActual();
+        if (horario == null || horario.isEmpty() ) {
             throw new IllegalArgumentException("El horario o la letra del día actual no puede ser nulo o vacío");
         }
         // array de 7 posiciones, una por cada dia de la semana a cero inicialmente
