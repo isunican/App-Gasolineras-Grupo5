@@ -56,10 +56,10 @@ public class MainPresenter implements IMainContract.Presenter {
 
 
     @Override
-    public void onSearchStationsWithFilters(String provincia, String municipio,boolean estado) throws DataAccessException {
+    public void onSearchStationsWithFilters(String provincia, String municipio,boolean abierto) throws DataAccessException {
 
                 List<Gasolinera>gasolinerasFiltradas = gasolineras;
-                if (estado) {
+                if (abierto) {
                     gasolinerasFiltradas = Filtros.filtrarPorEstado(gasolinerasFiltradas);
                     view.showStations(gasolinerasFiltradas);
                     view.showLoadCorrect(gasolinerasFiltradas.size());

@@ -128,8 +128,21 @@ public class HorarioTest {
         assertFalse(resultado);
     }
 
-    @Test(expected = IllegalArgumentException.class)
+
+
+    @Test
     public void testUD1i() {
+        tiempoMock.when(Tiempo::horaActual).thenReturn(6);
+        tiempoMock.when(Tiempo::minutoActual).thenReturn(0);
+        tiempoMock.when(Tiempo::letraDiaActual).thenReturn("L");
+
+        boolean resultado = Horario.compruebaHorario("");
+
+        assertFalse(resultado);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testUD1j() {
         Horario.compruebaHorario(null);
     }
 }

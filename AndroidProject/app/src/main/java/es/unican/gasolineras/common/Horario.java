@@ -19,7 +19,7 @@ public class Horario {
         * @throws IllegalArgumentException si el horario es nulo o vacío
      */
     public static String[] obtenerHorario (String horario) throws IllegalArgumentException {
-        if (horario == null || horario.isEmpty()) {
+        if (horario == null ) {
             throw new IllegalArgumentException("El horario no puede ser nulo o vacío");
         }
         String[] horarios = horario.split(";");
@@ -122,7 +122,12 @@ public class Horario {
      */
     public static boolean compruebaHorario (String horario) throws IllegalArgumentException {
         // Separar los horarios por días
+
+
         String[] horarios = obtenerHorario(horario);
+        if(horario.isEmpty()){
+            return false;
+        }
         // Si el horario contiene el día actual
         int horaActual = Tiempo.horaActual();
         for (String horario2 : horarios) {

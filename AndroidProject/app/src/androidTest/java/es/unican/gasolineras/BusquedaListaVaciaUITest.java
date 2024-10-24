@@ -1,6 +1,5 @@
 package es.unican.gasolineras;
 
-
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
@@ -8,21 +7,20 @@ import static androidx.test.espresso.matcher.ViewMatchers.hasChildCount;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
-
-
-
+import static org.hamcrest.Matchers.not;
 import static es.unican.gasolineras.utils.MockRepositories.getTestRepository;
 
+import android.view.View;
 
+import androidx.test.espresso.Espresso;
+import androidx.test.espresso.matcher.RootMatchers;
 import androidx.test.ext.junit.rules.ActivityScenarioRule;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
-import androidx.test.platform.app.InstrumentationRegistry;
 
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
 
 import dagger.hilt.android.testing.BindValue;
 import dagger.hilt.android.testing.HiltAndroidRule;
@@ -34,13 +32,12 @@ import es.unican.gasolineras.injection.RepositoriesModule;
 import es.unican.gasolineras.repository.IGasolinerasRepository;
 
 @HiltAndroidTest
-@UninstallModules (RepositoriesModule.class)
+@UninstallModules(RepositoriesModule.class)
 @RunWith(AndroidJUnit4.class)
-public class InterfazTest2 {
-
+public class BusquedaListaVaciaUITest {
+    View decorView;
     @BindValue
     IGasolinerasRepository repository = getTestRepository(
-            InstrumentationRegistry.getInstrumentation().getTargetContext(),
             Generador.generarGasolinerasCerradas()
     ); // Initialize the repository here instead of in @Before
 
@@ -72,10 +69,9 @@ public class InterfazTest2 {
 
         // Verifica que no haya gasolineras en la lista
         onView(withId(R.id.lvStations)).check(matches(isDisplayed())).check(matches(hasChildCount(0)));
+        Espresso.onView(withText("Cargadas 0 gasolineras")).inRoot(RootMatchers.withDecorView(not(decorView))).check(matches(isDisplayed()));
+
     }
-
-
-
 
 
 }

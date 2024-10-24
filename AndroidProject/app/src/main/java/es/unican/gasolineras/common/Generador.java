@@ -33,6 +33,30 @@ public class Generador {
         return gasolineras;
     }
 
+    public static List<Gasolinera> generarGasolinerasDatosVacios() {
+        List<Gasolinera> gasolineras = new ArrayList<>();
+
+        // Obtener la hora actual y el día actual desde Tiempo
+        int horaActual = Tiempo.horaActual();
+        int minutoActual = Tiempo.minutoActual();
+
+
+        // Definir horarios dinámicos para 4 gasolineras
+        String horarioAbierta1 = generarHorarioAbierto(horaActual, minutoActual);
+        String horarioAbierta2 = generarHorarioAbierto(horaActual, minutoActual);
+        String horarioCerrada1 = generarHorarioCerrado(horaActual, minutoActual);
+        String horarioCerrada2 = generarHorarioCerrado(horaActual, minutoActual);
+
+        // Crear las gasolineras con los horarios generados
+
+        gasolineras.add(crearGasolinera("1", "Repsol", "28001", "Calle A", "Peñacastillo", "Cantabria", horarioAbierta1, 1.35, 1.40));
+        gasolineras.add(crearGasolinera("2", "Carrefour", "28002", "Calle B", "Peñacastillo", "Cantabria", horarioAbierta2, 1.30, 1.38));
+        gasolineras.add(crearGasolinera("3", "Shell", "28003", "Calle C", "Peñacastillo", "Cantabria", horarioCerrada1, 1.32, 1.37));
+        gasolineras.add(crearGasolinera("4", "Petronor", "28004", "Calle D", "Peñacastillo", "Cantabria", horarioCerrada2, 1.28, 1.36));
+        gasolineras.add(crearGasolinera("5", "BP", "28004", "Calle D", "Peñacastillo", "Cantabria", "", 1.28, 1.36));
+        return gasolineras;
+    }
+
 
 
     public static List<Gasolinera> generarGasolinerasCerradas() {
