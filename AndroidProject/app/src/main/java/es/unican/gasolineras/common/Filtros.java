@@ -1,4 +1,6 @@
 package es.unican.gasolineras.common;
+import static es.unican.gasolineras.common.Horario.estaAbierto;
+
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -38,5 +40,20 @@ public class Filtros {
             return resultado;
         }
         return gasolineras;
+    }
+
+    public static List<Gasolinera> filtrarPorEstado(List<Gasolinera> gasolineras) throws DataAccessException {
+        List<Gasolinera> resultado = new ArrayList<>();
+
+        for (Gasolinera gasolinera : gasolineras) {
+
+            gasolinera.setEstado(estaAbierto(gasolinera.getHorario()));
+
+            if (gasolinera.getEstado().equals("Abierto") || gasolinera.getEstado().equals("Abierto 24h")) {
+                resultado.add(gasolinera);
+            }
+
+        }
+        return resultado;
     }
 }

@@ -2,6 +2,7 @@ package es.unican.gasolineras.activities.main;
 
 import java.util.List;
 
+import es.unican.gasolineras.common.DataAccessException;
 import es.unican.gasolineras.model.Gasolinera;
 import es.unican.gasolineras.repository.IGasolinerasRepository;
 
@@ -47,7 +48,7 @@ public interface IMainContract {
          * The presenter is informed that the user wants to filter gas stations
          * Only the View should call this method
          */
-        public void onSearchStationsWhithFilters(String provincia, String municipio);
+        public void onSearchStationsWhithFilters(String provincia, String municipio, boolean abierto) throws DataAccessException;
     }
 
 

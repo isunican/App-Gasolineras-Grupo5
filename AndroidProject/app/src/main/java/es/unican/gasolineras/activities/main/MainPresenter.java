@@ -4,6 +4,7 @@ import android.util.Log;
 
 import java.util.List;
 
+import es.unican.gasolineras.common.DataAccessException;
 import es.unican.gasolineras.common.Filtros;
 import es.unican.gasolineras.model.Gasolinera;
 import es.unican.gasolineras.model.IDProvincias;
@@ -47,13 +48,19 @@ public class MainPresenter implements IMainContract.Presenter {
         view.showInfoActivity();
     }
 
+    /**
+     * @see IMainContract.Presenter#onFilterButtonClicked()
+     */
     @Override
     public void onFilterButtonClicked() {
         view.showFiltersPopUp();
     }
 
+    /**
+     * @see IMainContract.Presenter#onSearchStationsWhithFilters(String provincia, String municipio, boolean abierto)
+     */
     @Override
-    public void onSearchStationsWhithFilters(String provincia, String municipio) {
+    public void onSearchStationsWhithFilters(String provincia, String municipio, boolean abierto) throws DataAccessException {
         List<Gasolinera> gasolinerasFiltradas = gasolineras;
 
         String finalProvincia = "-".equals(provincia) ? null : provincia;
@@ -64,11 +71,20 @@ public class MainPresenter implements IMainContract.Presenter {
 
         if (finalProvincia != null || finalMunicipio != null) {
             gasolinerasFiltradas = Filtros.filtrarPorProvinciaYMunicipio(gasolinerasFiltradas, finalProvincia, finalMunicipio);
+
+            if (abierto) {
+                gasolinerasFiltradas = Filtros.filtrarPorEstado(gasolinerasFiltradas);
+            }
+
             view.showStations(gasolinerasFiltradas);
             view.showLoadCorrect(gasolinerasFiltradas.size());
         } else {
-            view.showStations(gasolineras);
-            view.showLoadCorrect(gasolineras.size());
+            gasolinerasFiltradas = gasolineras;
+            if (abierto) {
+                gasolinerasFiltradas = Filtros.filtrarPorEstado(gasolineras);
+            }
+            view.showStations(gasolinerasFiltradas);
+            view.showLoadCorrect(gasolinerasFiltradas.size());
         }
     }
 

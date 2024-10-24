@@ -8,6 +8,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Spinner;
@@ -28,6 +29,7 @@ import dagger.hilt.android.AndroidEntryPoint;
 import es.unican.gasolineras.R;
 import es.unican.gasolineras.activities.info.InfoView;
 import es.unican.gasolineras.activities.details.DetailsView;
+import es.unican.gasolineras.common.DataAccessException;
 import es.unican.gasolineras.model.Gasolinera;
 import es.unican.gasolineras.repository.IGasolinerasRepository;
 
@@ -171,6 +173,7 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
 
         Spinner spnProvincias = view.findViewById(R.id.spnProvincias);
         EditText etLocalidad = view.findViewById(R.id.etLocalidad);
+        CheckBox checkEstado = view.findViewById(R.id.cbAbierto);
 
         String[] provinciasArray = getResources().getStringArray(R.array.provincias_espana);
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, provinciasArray);
@@ -183,8 +186,13 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
                 .setPositiveButton("Buscar", (dialog, which) -> {
                     String provincia = spnProvincias.getSelectedItem().toString();
                     String municipio = etLocalidad.getText().toString().trim();
+                    Boolean abierto = checkEstado.isChecked();
 
-                    presenter.onSearchStationsWhithFilters(provincia, municipio);
+                    try {
+                        presenter.onSearchStationsWhithFilters(provincia, municipio, abierto);
+                    } catch (DataAccessException e) {
+                        throw new RuntimeException(e);
+                    }
                     dialog.dismiss();
                 })
                 .setNegativeButton("Cancelar", (dialog, which) -> {
