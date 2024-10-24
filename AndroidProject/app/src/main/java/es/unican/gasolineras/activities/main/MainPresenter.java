@@ -56,7 +56,7 @@ public class MainPresenter implements IMainContract.Presenter {
 
 
     @Override
-    public void onSearchStationsWithFilters(boolean estado) throws DataAccessException {
+    public void onSearchStationsWithFilters(String provincia, String municipio,boolean estado) throws DataAccessException {
 
                 List<Gasolinera>gasolinerasFiltradas = gasolineras;
                 if (estado) {
@@ -75,32 +75,23 @@ public class MainPresenter implements IMainContract.Presenter {
      * Loads the gas stations from the repository, and sends them to the view
      */
     private void load() {
-        if (BuildConfig.DEBUG) {
-            // Modo pruebas: usa la lista generada
-            gasolineras = Generador.generarGasolineras();
-        } else {
-            // Modo producción: usa el repositorio real
-            IGasolinerasRepository repository = view.getGasolinerasRepository();
+        IGasolinerasRepository repository = view.getGasolinerasRepository();
 
-            ICallBack callBack = new ICallBack() {
-                @Override
-                public void onSuccess(List<Gasolinera> stations) {
-                    gasolineras = stations;
-                    view.showStations(stations);
-                    view.showLoadCorrect(stations.size());
-                }
+        ICallBack callBack = new ICallBack() {
 
-                @Override
-                public void onFailure(Throwable e) {
-                    view.showLoadError();
-                }
-            };
+            @Override
+            public void onSuccess(List<Gasolinera> stations) {
+                gasolineras = stations;
+                view.showStations(stations);
+                view.showLoadCorrect(stations.size());
+            }
 
-            repository.requestGasolineras(callBack);
-        }
-
-        // Muestra las gasolineras (tanto para modo pruebas como producción)
-        view.showStations(gasolineras);
-        view.showLoadCorrect(gasolineras.size());
+            @Override
+            public void onFailure(Throwable e) {
+                view.showLoadError();
+                view.showLoadError();
+            }
+        };
+        repository.requestGasolineras(callBack);
     }
 }

@@ -73,4 +73,21 @@ public class InterfazTest {
     }
 
 
+    @Test
+    public void testMensajeFaltanDatosGasolineras_A4() {
+        // Abre el diálogo de filtros
+        onView(withId(R.id.menuFilterButton)).perform(click());
+
+
+        // Haz click en el botón "Buscar"
+        onView(withText("Buscar")).perform(click());
+
+        // Verifica si aparecen las gasolineras "Shell" y "Petronor"
+        //onView(withText("Shell")).check(matches(isDisplayed()));
+        //onView(withText("Petronor")).check(matches(isDisplayed()));
+        //onView(withText("Repsol")).check(matches(isDisplayed()));
+        //onView(withText("Carrefour")).check(matches(isDisplayed()));
+    }
+
+
 }

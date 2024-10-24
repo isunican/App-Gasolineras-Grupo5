@@ -40,7 +40,7 @@ public interface IMainContract {
 
         public void onFilterButtonClicked();
 
-        public void onSearchStationsWithFilters(boolean estado) throws DataAccessException;
+        public void onSearchStationsWithFilters(String provincia,String municipio, boolean abierta) throws DataAccessException;
     }
 
     /**

@@ -191,7 +191,7 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
                     Boolean estado = checkEstado.isChecked();
                     // Call the presenter to filter the gas stations
                     try {
-                        presenter.onSearchStationsWithFilters(estado);
+                        presenter.onSearchStationsWithFilters(null,null,estado);
                     } catch (DataAccessException e) {
                         throw new RuntimeException(e);
                     }
