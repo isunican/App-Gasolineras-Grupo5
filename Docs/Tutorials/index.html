@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Índice - Manual de Usuario</title>
+    <!-- AOS CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.1/aos.css">
+    <style>
+        body {
+            background-color: #2c2c2c; /* Gris oscuro */
+            color: #fff;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh; /* Hace que el body ocupe toda la altura de la ventana */
+        }
+        .container {
+            flex-grow: 1; /* Permite que este contenedor ocupe todo el espacio disponible */
+            margin: 0 auto;
+            max-width: 1200px;
+            padding: 0 20px;
+        }
+        h1, h2, h3 {
+            text-align: center;
+            margin-top: 40px;
+        }
+        h1 {
+            font-size: 2.8em;
+            border-bottom: 3px solid #fff;
+            padding-bottom: 15px;
+        }
+        p {
+            font-size: 1.45em;
+            text-align: justify;
+            margin: 20px auto;
+            max-width: 900px;
+            padding: 0 20px;
+        }
+        ul {
+            max-width: 900px;
+            margin: 20px auto;
+            padding: 0 20px;
+            list-style: none;
+        }
+        ul li {
+            font-size: 1.2em;
+            margin-bottom: 15px;
+        }
+        ul li a {
+            color: #00d1b2;
+            text-decoration: none;
+            border-bottom: 1px solid transparent;
+            transition: border-bottom 0.3s ease;
+        }
+        ul li a:hover {
+            border-bottom: 1px solid #00d1b2;
+        }
+        hr {
+            border: none;
+            height: 1px;
+            background-color: #fff;
+            margin: 40px 0;
+        }
+        footer {
+            text-align: center;
+            padding: 20px 0;
+            background-color: #1b1b1b;
+            color: #888;
+            font-size: 0.9em;
+            margin-top: 40px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 data-aos="fade-up">Índice - Manual de Usuario de QuickGasofa</h1>
+        <p data-aos="fade-up">Este índice te llevará a las distintas secciones del manual de usuario:</p>
+        <ul>
+            <li data-aos="fade-up" data-aos-delay="400"><a href="./Introduccion/IntroduccionEInterfacesBasicas.html">1. Introducción a la aplicación y sus interfaces ⛽</a></li>
+            <li data-aos="fade-up" data-aos-delay="400"><a href="./US505805-BuscarGasolinerasAbiertas/BuscarGasolinerasAbiertas.html">2. Buscar gasolineras abiertas 🔎</a></li>
+            <li data-aos="fade-up" data-aos-delay="400"><a href="./US505806-BuscarPorProvinciaYLocalidad/BuscarPorProvinciaYLocalidad.html">3. Buscar por provincia y municipio 🔎</a></li>
+        </ul>
+    </div>
+    <footer>
+        &copy; 2024 QuickGasofa - Todos los derechos reservados.
+    </footer>
+
+    <!-- AOS JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.1/aos.js"></script>
+    <script>
+        AOS.init({
+            duration: 800, // Duración de la animación
+            offset: 100, // Cuánto desplazarse desde el borde del viewport
+        });
+    </script>
+</body>
+</html>
