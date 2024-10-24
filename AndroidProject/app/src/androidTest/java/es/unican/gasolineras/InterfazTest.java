@@ -3,22 +3,41 @@ package es.unican.gasolineras;
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.matcher.ViewMatchers.isAssignableFrom;
+import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
 
 import static java.util.regex.Pattern.matches;
 
 
+import static es.unican.gasolineras.utils.MockRepositories.getTestRepository;
+
+import android.content.Context;
 import android.view.View;
 
 import androidx.test.ext.junit.runners.AndroidJUnit4;
+import androidx.test.platform.app.InstrumentationRegistry;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import dagger.hilt.android.testing.BindValue;
+import dagger.hilt.android.testing.UninstallModules;
+import es.unican.gasolineras.common.Generador;
+import es.unican.gasolineras.injection.RepositoriesModule;
+import es.unican.gasolineras.repository.IGasolinerasRepository;
 
+@UninstallModules (RepositoriesModule.class)
 @RunWith(AndroidJUnit4.class)
 public class InterfazTest {
+
+    final Context context = InstrumentationRegistry.getInstrumentation().getTargetContext();
+    @BindValue
+    IGasolinerasRepository repository;
+    public void inicializa() {
+        repository = getTestRepository(context, Generador.generarGasolineras());
+    }
+
 
 
     @Test
@@ -49,7 +68,7 @@ public class InterfazTest {
         onView(withText("Buscar")).perform(click());
 
         // Verifica si aparecen las gasolineras "Shell" y "Petronor"
-        //onView(withText("Shell")).check(matches(isDisplayed()));
+        onView(withText("Shell")).check(matches(isDisplayed()));
         //onView(withText("Petronor")).check(matches(isDisplayed()));
         //onView(withText("Repsol")).check(matches(isDisplayed()));
         //onView(withText("Carrefour")).check(matches(isDisplayed()));
