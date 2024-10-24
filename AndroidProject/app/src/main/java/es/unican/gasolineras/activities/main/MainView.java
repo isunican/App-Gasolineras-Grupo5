@@ -144,14 +144,6 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
     }
 
     /**
-     * @see IMainContract.View#showMunicipioError()
-     */
-    @Override
-    public void showMunicipioError() {
-        Toast.makeText(this, "Debe introducir una provincia", Toast.LENGTH_SHORT).show();
-    }
-
-    /**
      * @see IMainContract.View#showStationDetails(Gasolinera)
      * @param station the charging station
      */
@@ -175,7 +167,7 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
     @Override
     public void showFiltersPopUp() {
         LayoutInflater inflater = LayoutInflater.from(this);
-        View view = inflater.inflate(R.layout.filters_popup, null);
+        View view = inflater.inflate(R.layout.activity_filters_popup, null);
 
         Spinner spnProvincias = view.findViewById(R.id.spnProvincias);
         EditText etLocalidad = view.findViewById(R.id.etLocalidad);
