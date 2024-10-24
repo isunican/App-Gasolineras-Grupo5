@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Introducción - Manual de Usuario</title>
+    <!-- AOS CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.1/aos.css">
+    <style>
+        html, body {
+            height: 100%; /* Asegura que el html y el body ocupen el 100% de la altura */
+        }
+
+        body {
+            display: flex;
+            flex-direction: column; /* Organiza los elementos en una columna */
+            background-color: #2c2c2c; /* Gris oscuro */
+            color: #fff;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3 {
+            text-align: center;
+            margin-top: 40px;
+        }
+
+        h1 {
+            font-size: 2.8em;
+            border-bottom: 3px solid #fff;
+            padding-bottom: 15px;
+        }
+
+        h2 {
+            font-size: 2.3em;
+            border-bottom: 2px solid #fff;
+            padding-bottom: 10px;
+        }
+
+        h3 {
+            font-size: 2em;
+            border-bottom: 1px solid #fff;
+            padding-bottom: 8px;
+        }
+
+        p {
+            font-size: 1.05em;
+            text-align: justify;
+            margin: 20px auto;
+            max-width: 900px;
+            padding: 0 20px;
+        }
+
+        .container {
+            flex: 1; /* Permite que el contenedor ocupe el espacio restante */
+            margin: 0 auto;
+            max-width: 1200px;
+            padding: 0 20px;
+        }
+
+        .section {
+            margin-bottom: 50px;
+        }
+
+        img {
+            max-width: 100%;
+            border-radius: 8px;
+            box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.5);
+        }
+
+        .img-wrapper {
+            text-align: center;
+            margin: 30px 0;
+        }
+
+        pre {
+            background-color: #444;
+            color: #fff;
+            padding: 10px; /* Reducir padding para un cuadro más pequeño */
+            font-size: 1.2em; /* Disminuir el tamaño de la fuente */
+            overflow-x: auto;
+            border-radius: 8px;
+            margin: 20px auto; /* Centrar el cuadro */
+            max-width: 400px; /* Establecer un ancho máximo para el cuadro */
+            text-align: center; /* Centrar el texto en el pre */
+        }
+
+        hr {
+            border: none;
+            height: 1px;
+            background-color: #fff;
+            margin: 40px 0;
+        }
+
+        .card {
+            background-color: #393939;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+            margin: 20px auto;
+            max-width: 900px;
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px 0;
+            background-color: #1b1b1b;
+            color: #888;
+            font-size: 0.9em;
+            margin-top: 40px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 data-aos="fade-up">Manual de usuario</h1>
+        <div class="section" data-aos="fade-up">
+            <p>
+                Bienvenido al Manual de Usuario de la aplicación <i>QuickGasofa</i>. Este documento ha sido creado con el propósito de brindarle toda la información necesaria para comprender y aprovechar al máximo las funcionalidades y características de nuestra aplicación. A través de este manual, podrá aprender a utilizar el sistema de manera eficiente y resolver cualquier duda que pueda surgir durante su uso.
+                <br>
+                El manual está diseñado para usuarios de todos los niveles, por lo que tanto principiantes como usuarios más experimentados encontrarán información útil y accesible. Le recomendamos que siga las instrucciones paso a paso para obtener los mejores resultados.
+            </p>
+        </div>
+        <hr>
+        <div class="section" data-aos="fade-up" id="InterfazPrincipal">
+            <h2>Interfaz principal ⛽</h2>
+            <p>
+                Al iniciar nuestra aplicación, podrá ver la siguiente interfaz en la que se muestra una lista con las gasolineras de España. Todas estas gasolineras nos muestran un logo junto al rótulo de esta, como puede ser <i>Repsol, Petronor, Cepsa, Campsa,...</i> Además, podemos ver la ubicación de la gasolinera, ya que, las podemos encontrar en kilómetros de carreteras nacionales, calles, etc. Por último, vemos los precios de la gasolina y del diésel en esas gasolineras. Si desliza por la aplicación, podrá ver la lista de todas las gasolineras que podemos encontrar en la aplicación.
+            </p>
+            <p>
+                Hay que tener también en cuenta los tres puntos que encontramos arriba a la derecha, los cuales al pincharlos nos darán la opción de obtener información sobre la aplicación, donde indica que ha sido creada para el Proyecto Integrado. Por otro lado, podemos ver el icono de un embudo que hace referencia a los filtros que podrá aplicar a la hora de buscar una gasolinera.
+            </p>
+            <div class="img-wrapper">
+                <img src="./Imagenes/InterfazPrincipal.png" alt="Interfaz inicial">
+                <img src="./Imagenes/InterfazPrincipal.gif" alt="Interfaz inicial">
+            </div>
+        </div>
+        <hr>
+        <div class="section" data-aos="fade-up">
+            <h2>Interfaz detalles ⛽</h2>
+            <p>
+                Si usted quiere conocer la información sobre una gasolinera, deberá pinchar sobre esta y se le redirigirá a una interfaz en la que se muestra toda la información, como se muestra a continuación. También hay que destacar que en la parte superior izquierda de la interfaz podemos ver una flecha que nos permite volver para el menú principal en el que se nos muestran todas las gasolineras, en caso de que hayamos entrado en una errónea o queramos ver los datos de otras.
+            </p>
+            <p>
+                En esta interfaz podrá ver información como el municipio donde se encuentra la gasolinera junto al horario que esta tiene, el precio del diesel y la gasolina, y el precio sumario que se calcula y retorna de la siguiente forma:
+            </p>
+            <pre>return (gasoleoA + gasolina95E5 * 2) / 3;</pre>
+            <div class="img-wrapper">
+                <img src="./Imagenes/InterfazDetalles.png" alt="Interfaz gasolinera">
+                <img src="./Imagenes/InterfazDetalles.gif" alt="Interfaz gasolineraGIF">
+            </div>
+        </div>
+        <hr>
+        <div class="section" data-aos="fade-up">
+            <div class="card">
+                <h3>¿El precio de un combustible es 0? 🤔</h3>
+                <p>
+                    Podrá encontrar algún caso en el que una de las gasolineras de la aplicación muestre el precio de uno de los dos combustibles o el de los dos con un valor de 0.0, dándole a entender que ese combustible no está disponible en la estación. Si entra dentro de la gasolinera para conocer más información sobre esta, el combustible con el valor de 0 se verá sustituido por un "-", además de que le saltará un pop-up en la parte inferior de su dispositivo mediante el cual se le informará de que los datos de ese combustible no se encuentran disponibles. A continuación se le mostrará con un ejemplo este caso:
+                </p>
+                <div class="img-wrapper">
+                    <img src="./Imagenes/InterfazGasolineraA0.png" alt="Interfaz gasolinera a 0">
+                    <img src="./Imagenes/InterfazGasolineraA0.gif" alt="Interfaz gasolinera a 0">
+                </div>
+            </div>
+        </div>
+    </div>
+    <footer>
+        &copy; 2024 QuickGasofa - Todos los derechos reservados.
+    </footer>
+
+    <!-- AOS JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.1/aos.js"></script>
+    <script>
+        AOS.init({
+            duration: 800, // Duración de la animación
+            offset: 100, // Cuánto desplazarse desde el borde del viewport
+        });
+    </script>
+</body>
+</html>
