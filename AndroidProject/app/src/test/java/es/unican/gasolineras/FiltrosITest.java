@@ -71,63 +71,63 @@ public class FiltrosITest {
 
     // Caso A: Provincia y municipio válidos
     @Test
-    public void testFiltrarPorProvinciaYMunicipio_provinciaYMunicipioValidos() {
+    public void testUD1A() {
         List<Gasolinera> resultado = Filtros.filtrarPorProvinciaYMunicipio(gasolineras, "Cantabria", "Santander");
         assertEquals(Arrays.asList(cepsa1, repsol, carrefour), resultado);
     }
 
     // Caso B: Provincia válida y municipio vacío
     @Test
-    public void testFiltrarPorProvinciaYMunicipio_provinciaValidaMunicipioVacio() {
+    public void testUD1B() {
         List<Gasolinera> resultado = Filtros.filtrarPorProvinciaYMunicipio(gasolineras, "Cantabria", null);
         assertEquals(Arrays.asList(cepsa1, repsol, carrefour, ballenoil, shell), resultado);
     }
 
     // Caso C: Provincia vacía y municipio válido
     @Test
-    public void testFiltrarPorProvinciaYMunicipio_provinciaVaciaMunicipioValido() {
+    public void testUD1C() {
         List<Gasolinera> resultado = Filtros.filtrarPorProvinciaYMunicipio(gasolineras, null, "Santander");
         assertEquals(Arrays.asList(cepsa1, repsol, carrefour), resultado);
     }
 
     // Caso D: Provincia válida y municipio vacío sin resultados
     @Test
-    public void testFiltrarPorProvinciaYMunicipio_provinciaValidaMunicipioVacioSinResultados() {
+    public void testUD1D() {
         List<Gasolinera> resultado = Filtros.filtrarPorProvinciaYMunicipio(gasolineras, "Madrid", null);
         assertTrue(resultado.isEmpty());
     }
 
     // Caso E: Provincia vacía y municipio válido sin resultados
     @Test
-    public void testFiltrarPorProvinciaYMunicipio_provinciaVaciaMunicipioValidoSinResultados() {
+    public void testUD1E() {
         List<Gasolinera> resultado = Filtros.filtrarPorProvinciaYMunicipio(gasolineras, null, "Tineo");
         assertTrue(resultado.isEmpty());
     }
 
     // Caso F: Municipio no perteneciente a la provincia
     @Test
-    public void testFiltrarPorProvinciaYMunicipio_municipioNoPerteneceProvincia() {
+    public void testUD1F() {
         List<Gasolinera> resultado = Filtros.filtrarPorProvinciaYMunicipio(gasolineras, "Asturias", "Santander");
         assertTrue(resultado.isEmpty());
     }
 
     // Caso G: Provincia y municipio válidos sin resultados
     @Test
-    public void testFiltrarPorProvinciaYMunicipio_provinciaYMunicipioValidosSinResultados() {
+    public void testUD1G() {
         List<Gasolinera> resultado = Filtros.filtrarPorProvinciaYMunicipio(gasolineras, "Asturias", "Tineo");
         assertTrue(resultado.isEmpty());
     }
 
     // Caso H: Provincia y municipio vacíos
     @Test
-    public void testFiltrarPorProvinciaYMunicipio_provinciaYMunicipioVacios() {
+    public void testUD1H() {
         List<Gasolinera> resultado = Filtros.filtrarPorProvinciaYMunicipio(gasolineras, null, null);
         assertEquals(gasolineras, resultado);
     }
 
     // Caso I: Lista de gasolineras vacía
     @Test
-    public void testFiltrarPorProvinciaYMunicipio_listaGasolinerasVacia() {
+    public void testUD1I() {
         List<Gasolinera> resultado = Filtros.filtrarPorProvinciaYMunicipio(Collections.emptyList(), "Cantabria", "Santander");
         assertNull(resultado);
     }

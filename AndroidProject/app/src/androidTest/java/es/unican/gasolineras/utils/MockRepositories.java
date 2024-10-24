@@ -30,16 +30,7 @@ public class MockRepositories {
         IGasolinerasRepository mock = mock(IGasolinerasRepository.class);
         doAnswer(invocation -> {
             ICallBack callBack = invocation.getArgument(0);
-            try {
-                List<Gasolinera> gasolineras = Utils.parseGasolineras(context, jsonId);
-                // Si gasolineras es null, lo inicializamos como una lista vacía.
-                if (gasolineras == null) {
-                    gasolineras = new ArrayList<>();
-                }
-                callBack.onSuccess(gasolineras);
-            } catch (Exception e) {
-                callBack.onFailure(e);
-            }
+            callBack.onSuccess(Utils.parseGasolineras(context, jsonId));
             return null;
         }).when(mock).requestGasolineras(any(ICallBack.class));
         return mock;
