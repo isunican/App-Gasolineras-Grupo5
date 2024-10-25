@@ -19,7 +19,6 @@ import es.unican.gasolineras.repository.IGasolinerasRepository;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doAnswer;
-import static org.mockito.Mockito.mockStatic;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.when;
@@ -82,7 +81,7 @@ public class onSearchStationsWithFiltersTest {
 
 
         sut.onSearchStationsWithFilters("-", "", false);
-        //mockFiltros.verify(() -> Filtros.filtrarPorEstado(gasolineras));  //esto se ejecuta con un try ya que es estático
+
         verify(mockView, times(2)).showStations(Mockito.argThat(stations -> stations.size() == 4));  // 4 gasolineras
         verify(mockView, times(2)).showLoadCorrect(4);  // Verificar que se muestra el número correcto de gasolineras
 
