@@ -189,7 +189,7 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
                     Boolean abierto = checkEstado.isChecked();
 
                     try {
-                        presenter.onSearchStationsWhithFilters(provincia, municipio, abierto);
+                        presenter.onSearchStationsWithFilters(provincia, municipio, abierto);
                     } catch (DataAccessException e) {
                         throw new RuntimeException(e);
                     }

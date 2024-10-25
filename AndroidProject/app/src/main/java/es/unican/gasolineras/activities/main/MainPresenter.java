@@ -60,7 +60,7 @@ public class MainPresenter implements IMainContract.Presenter {
      * @see IMainContract.Presenter#onSearchStationsWhithFilters(String provincia, String municipio, boolean abierto)
      */
     @Override
-    public void onSearchStationsWhithFilters(String provincia, String municipio, boolean abierto) throws DataAccessException {
+    public void onSearchStationsWithFilters(String provincia, String municipio, boolean abierto) throws DataAccessException {
         List<Gasolinera> gasolinerasFiltradas = gasolineras;
 
         String finalProvincia = "-".equals(provincia) ? null : provincia;

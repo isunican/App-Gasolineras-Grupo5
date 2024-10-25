@@ -48,7 +48,7 @@ public interface IMainContract {
          * The presenter is informed that the user wants to filter gas stations
          * Only the View should call this method
          */
-        public void onSearchStationsWhithFilters(String provincia, String municipio, boolean abierto) throws DataAccessException;
+        public void onSearchStationsWithFilters(String provincia, String municipio, boolean abierto) throws DataAccessException;
     }
 
 
