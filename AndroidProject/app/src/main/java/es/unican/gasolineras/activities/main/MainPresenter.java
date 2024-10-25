@@ -64,27 +64,16 @@ public class MainPresenter implements IMainContract.Presenter {
         List<Gasolinera> gasolinerasFiltradas = gasolineras;
 
         String finalProvincia = "-".equals(provincia) ? null : provincia;
-        String finalMunicipio = municipio.isEmpty() ? null : municipio;
-
-        Log.d("Provincia", provincia);
-        Log.d("Municipio", municipio);
+        String finalMunicipio = "".equals(municipio) ? null : municipio;
 
         if (finalProvincia != null || finalMunicipio != null) {
             gasolinerasFiltradas = Filtros.filtrarPorProvinciaYMunicipio(gasolinerasFiltradas, finalProvincia, finalMunicipio);
-
-            if (abierto) {
-                gasolinerasFiltradas = Filtros.filtrarPorEstado(gasolinerasFiltradas);
-            }
-            view.showStations(gasolinerasFiltradas);
-            view.showLoadCorrect(gasolinerasFiltradas.size());
-        } else {
-            gasolinerasFiltradas = gasolineras;
-            if (abierto) {
-                gasolinerasFiltradas = Filtros.filtrarPorEstado(gasolineras);
-            }
-            view.showStations(gasolinerasFiltradas);
-            view.showLoadCorrect(gasolinerasFiltradas.size());
         }
+        if (abierto) {
+            gasolinerasFiltradas = Filtros.filtrarPorEstado(gasolinerasFiltradas);
+        }
+        view.showStations(gasolinerasFiltradas);
+        view.showLoadCorrect(gasolinerasFiltradas.size());
     }
 
     /**
@@ -104,7 +93,6 @@ public class MainPresenter implements IMainContract.Presenter {
 
             @Override
             public void onFailure(Throwable e) {
-                view.showLoadError();
                 view.showLoadError();
             }
         };
