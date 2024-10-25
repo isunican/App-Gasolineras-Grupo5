@@ -42,14 +42,19 @@ jobs:
   #         name: unit-tests-artifacts
   #         path: ./AndroidProject/app/build/reports/tests/testDebugUnitTest/
 
-  # Run unit and ui tests together, to capture the test coverage of both
   android-tests:
     name: Android Tests
-    runs-on: macos-13
+    runs-on: ubuntu-latest
 
     steps:
       - name: checkout
         uses: actions/checkout@v4
+
+      - name: Enable KVM
+        run: |
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+          sudo udevadm control --reload-rules
+          sudo udevadm trigger --name-match=kvm
 
       - name: Set up JDK 17
         uses: actions/setup-java@v4
@@ -74,7 +79,7 @@ jobs:
           target: google_apis
           disable-animations: true
           emulator-options: -no-window -gpu off -no-snapshot -noaudio -no-boot-anim
-          script: ./gradlew clean jacocoTestReport sonar
+          script: ./gradlew clean jacocoTestReport
 
       - name: Android tests reports
         if: always()
@@ -89,6 +94,7 @@ jobs:
         with:
           name: test-outputs
           path: ./AndroidProject/app/build/outputs/
+
 
   # build:
   #   name: Build APK
@@ -123,5 +129,4 @@ jobs:
   #       with:
   #         name: app-debug-apk
   #         path: AndroidProject/app/build/outputs/apk/debug/app-debug.apk
-
 
