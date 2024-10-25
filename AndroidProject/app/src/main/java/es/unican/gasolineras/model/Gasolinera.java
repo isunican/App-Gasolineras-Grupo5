@@ -48,15 +48,20 @@ public class Gasolinera {
      * @return el precio medio de los carburantes de la gasolinera
      */
     public double calculateSummarizedPrice() {
-        if (gasoleoA == 0 || gasoleoA < 0) {
+        // Primero verificamos si ambos precios son exactamente 0
+        if (gasoleoA == 0 && gasolina95E5 == 0) {
+            return 0;
+        }
+        // Si solo gasoleoA es negativo, devolvemos gasolina95E5
+        else if (gasoleoA < 0) {
             return gasolina95E5;
-        } else if (gasolina95E5 == 0 || gasolina95E5 < 0) {
+        }
+        // Si solo gasolina95E5 es negativo, devolvemos gasoleoA
+        else if (gasolina95E5 < 0) {
             return gasoleoA;
         }
-        // en caso de que ambos precios sean 0, se devuelve 0
-        else if (gasolina95E5 == 0 && gasoleoA == 0) {
-            return 0;
-        } else {
+        // Si ambos precios son positivos, calculamos la media ponderada
+        else {
             return (gasoleoA + gasolina95E5 * 2) / 3;
         }
     }
