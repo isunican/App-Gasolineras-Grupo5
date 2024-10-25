@@ -16,6 +16,9 @@ class MainPresenter {
 }
 
 interface IMainContract#View {
+    + onCreate(Bundle savedInstanceState)
+    + onCreateOptionsMenu(Menu menu): boolean
+    + onOptionsItemSelected(@NonNull MenuItem item): boolean
     + init()
     + getGasolinerasRepository() : IGasolinerasRepository
     + showStations(List<Gasolinera> stations)
@@ -23,20 +26,24 @@ interface IMainContract#View {
     + showLoadError()
     + showStationDetails(Gasolinera station)
     + showInfoActivity()
+    + showFiltersPopUp()
 }
 
 interface IMainContract#Presenter {
-    + init(View view)
+    + init(IMainContract.View view)
     + onStationClicked(Gasolinera station)
     + onMenuInfoClicked()
-}
+    + onFilterButtonClicked()
+    + onSearchStationsWhithFilters(String provincia, String municipio, boolean abierto)
+    + load()
+    }
 
 interface IGasolinerasRepository {
-    + requestGasolineras(ICallBack cb, String ccaa)
+    + requestGasolineras(ICallBack cb)
 }
 
 interface ICallBack {
-    + onSuccess(List<Gasolinera> gasolineras)
+    + onSuccess(List<Gasolinera> stations)
     + onFailure(Throwable e)
 }
 

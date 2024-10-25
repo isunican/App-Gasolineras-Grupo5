@@ -3,18 +3,22 @@
 hide empty members
 
 class Gasolinera {
-    - String id
-    - String rotulo
-    - String cp
-    - String direccion
-    - String municipio
-    - double gasoleoA
-    - double gasolina95E5
+    # String id
+    # String rotulo
+    # String cp
+    # String direccion
+    # String municipio
+    # String provincia
+    # String horario;
+    # double gasoleoA
+    # double gasolina95E5
+    - String estado;
 }
 
 class GasolinerasResponse {
     - String fecha
     - String nota
+    - List<Gasolinera> gasolineras;
     - String consulta
 }
 
