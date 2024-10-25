@@ -1,6 +1,5 @@
 package es.unican.gasolineras.main;
 
-import static org.junit.Assert.assertEquals;
 import static org.mockito.ArgumentMatchers.anyList;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
