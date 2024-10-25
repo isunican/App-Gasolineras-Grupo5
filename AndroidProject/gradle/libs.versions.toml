@@ -15,6 +15,8 @@ hilt = "2.52"
 mockito = "5.5.0"
 robolectric = "4.13"
 sonarqube = "5.1.0.4882"
+junitJupiter = "5.8.1"
+multidex = "2.0.1"
 
 [libraries]
 junit = { group = "junit", name = "junit", version.ref = "junit" }
@@ -36,6 +38,8 @@ hilt-android-testing = { group = "com.google.dagger", name = "hilt-android-testi
 mockito-core = { group = "org.mockito", name = "mockito-core", version.ref = "mockito"}
 mockito-android = { group = "org.mockito", name = "mockito-android", version.ref = "mockito"}
 roboelectric = { group = "org.robolectric", name = "robolectric", version.ref = "robolectric"}
+junit-jupiter = { group = "org.junit.jupiter", name = "junit-jupiter", version.ref = "junitJupiter" }
+multidex = { group = "androidx.multidex", name = "multidex", version.ref = "multidex" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

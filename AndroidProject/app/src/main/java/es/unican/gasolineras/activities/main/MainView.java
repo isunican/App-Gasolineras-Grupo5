@@ -8,6 +8,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Spinner;
@@ -28,6 +29,7 @@ import dagger.hilt.android.AndroidEntryPoint;
 import es.unican.gasolineras.R;
 import es.unican.gasolineras.activities.info.InfoView;
 import es.unican.gasolineras.activities.details.DetailsView;
+import es.unican.gasolineras.common.DataAccessException;
 import es.unican.gasolineras.model.Gasolinera;
 import es.unican.gasolineras.repository.IGasolinerasRepository;
 
@@ -79,6 +81,7 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
      *
      * @return true if we have handled the selection
      */
+
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         int itemId = item.getItemId();
@@ -173,7 +176,7 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
         // Get references to the EditText fields
         Spinner spnProvincias = view.findViewById(R.id.spnProvincias);
         EditText etLocalidad = view.findViewById(R.id.etLocalidad);
-
+        CheckBox checkEstado = view.findViewById(R.id.cbAbierto);
         String[] provinciasArray = getResources().getStringArray(R.array.provincias_espana);
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, provinciasArray);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -185,13 +188,17 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
                 .setView(view)  // Set the custom view
                 .setPositiveButton("Buscar", (dialog, which) -> {
                     // Get the values entered by the user
-                    String provincia = spnProvincias.getSelectedItem().toString();
-                    String localidad = etLocalidad.getText().toString().trim();
-                    if (localidad.isEmpty()){
-                        localidad = null;
+                    Boolean estado = checkEstado.isChecked();
+                    // Call the presenter to filter the gas stations
+                    try {
+                        presenter.onSearchStationsWithFilters(null,null,estado);
+                    } catch (DataAccessException e) {
+                        throw new RuntimeException(e);
                     }
-                    // Call the presenter to handle the search logic
-                    presenter.buscarGasolinerasConFiltros(provincia, localidad);
+
+                    dialog.dismiss();  // Close the dialog
+
+
                 })
                 .setNegativeButton("Cancelar", (dialog, which) -> {
                     dialog.dismiss();  // Close the dialog without action
@@ -199,4 +206,6 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
                 .create()
                 .show();
     }
+
+
 }

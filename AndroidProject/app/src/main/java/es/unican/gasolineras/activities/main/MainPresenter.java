@@ -1,9 +1,14 @@
 package es.unican.gasolineras.activities.main;
 
+import androidx.multidex.BuildConfig;
+
 import java.util.List;
 
+import es.unican.gasolineras.common.DataAccessException;
+import es.unican.gasolineras.common.Filtros;
+import es.unican.gasolineras.common.Generador;
 import es.unican.gasolineras.model.Gasolinera;
-import es.unican.gasolineras.model.IDProvincias;
+import es.unican.gasolineras.model.IDCCAAs;
 import es.unican.gasolineras.repository.ICallBack;
 import es.unican.gasolineras.repository.IGasolinerasRepository;
 
@@ -14,7 +19,7 @@ public class MainPresenter implements IMainContract.Presenter {
 
     /** The view that is controlled by this presenter */
     private IMainContract.View view;
-
+    private List<Gasolinera> gasolineras;
     /**
      * @see IMainContract.Presenter#init(IMainContract.View)
      * @param view the view to control
@@ -48,16 +53,35 @@ public class MainPresenter implements IMainContract.Presenter {
         view.showFiltersPopUp();
     }
 
-    @Override
-    public void buscarGasolinerasConFiltros(String provincia, String localidad) {
-        IGasolinerasRepository repository = view.getGasolinerasRepository();
 
-        String codigoProvincia = IDProvincias.getCodigoByProvincia(provincia);
+
+    @Override
+    public void onSearchStationsWithFilters(String provincia, String municipio,boolean abierto) throws DataAccessException {
+
+                List<Gasolinera>gasolinerasFiltradas = gasolineras;
+                if (abierto) {
+                    gasolinerasFiltradas = Filtros.filtrarPorEstado(gasolinerasFiltradas);
+                    view.showStations(gasolinerasFiltradas);
+                    view.showLoadCorrect(gasolinerasFiltradas.size());
+                }else{
+                    view.showStations(gasolineras);
+                    view.showLoadCorrect(gasolineras.size());
+                }
+
+    }
+
+
+    /**
+     * Loads the gas stations from the repository, and sends them to the view
+     */
+    private void load() {
+        IGasolinerasRepository repository = view.getGasolinerasRepository();
 
         ICallBack callBack = new ICallBack() {
 
             @Override
             public void onSuccess(List<Gasolinera> stations) {
+                gasolineras = stations;
                 view.showStations(stations);
                 view.showLoadCorrect(stations.size());
             }
@@ -68,14 +92,6 @@ public class MainPresenter implements IMainContract.Presenter {
                 view.showLoadError();
             }
         };
-
-        repository.requestGasolineras(callBack, codigoProvincia, localidad);
-    }
-
-    /**
-     * Loads the gas stations from the repository, and sends them to the view
-     */
-    private void load() {
-        buscarGasolinerasConFiltros(null, null);
+        repository.requestGasolineras(callBack);
     }
 }
