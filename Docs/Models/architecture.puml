@@ -30,15 +30,16 @@ interface IMainContract#View {
 }
 
 interface IMainContract#Presenter {
-    + init(View view)
+    + init(IMainContract.View view)
     + onStationClicked(Gasolinera station)
     + onMenuInfoClicked()
     + onFilterButtonClicked()
-    + buscarGasolinerasConFiltros(boolean estado)
+    + onSearchStationsWithFilters(String provincia, String municipio,boolean abierto)
+    + load()
 }
 
 interface IGasolinerasRepository {
-    + requestGasolineras(ICallBack cb, String ccaa)
+    + requestGasolineras(ICallBack cb)
 }
 
 interface ICallBack {
