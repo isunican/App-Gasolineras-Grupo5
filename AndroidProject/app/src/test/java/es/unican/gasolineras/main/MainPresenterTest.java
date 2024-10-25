@@ -48,7 +48,7 @@ public class MainPresenterTest {
         String provincia = "Cantabria";
         String municipio = "Santander";
 
-        presenter.onSearchStationsWhithFilters(provincia, municipio, true);
+        presenter.onSearchStationsWithFilters(provincia, municipio, true);
 
         verify(mockView, times(2)).showStations(anyList());
         verify(mockView, times(1)).showLoadCorrect(2);
@@ -60,7 +60,7 @@ public class MainPresenterTest {
         String provincia = "Cantabria";
         String municipio = "";
 
-        presenter.onSearchStationsWhithFilters(provincia, municipio, true);
+        presenter.onSearchStationsWithFilters(provincia, municipio, true);
 
         verify(mockView, times(2)).showStations(anyList());
         verify(mockView, times(1)).showLoadCorrect(4);
@@ -71,7 +71,7 @@ public class MainPresenterTest {
         String provincia = "-";
         String municipio = "Santander";
 
-        presenter.onSearchStationsWhithFilters(provincia, municipio, false);
+        presenter.onSearchStationsWithFilters(provincia, municipio, false);
 
         verify(mockView, times(2)).showStations(anyList());
         verify(mockView, times(1)).showLoadCorrect(2);
@@ -82,7 +82,7 @@ public class MainPresenterTest {
         String provincia = "Madrid";
         String municipio = "";
 
-        presenter.onSearchStationsWhithFilters(provincia, municipio, false);
+        presenter.onSearchStationsWithFilters(provincia, municipio, false);
 
         verify(mockView, times(2)).showStations(anyList());
         verify(mockView, times(1)).showLoadCorrect(0);
@@ -93,7 +93,7 @@ public class MainPresenterTest {
         String provincia = "Asturias";
         String municipio = "Tineo";
 
-        presenter.onSearchStationsWhithFilters(provincia, municipio, false);
+        presenter.onSearchStationsWithFilters(provincia, municipio, false);
 
         verify(mockView, times(2)).showStations(anyList());
         verify(mockView, times(1)).showLoadCorrect(0);
@@ -104,7 +104,7 @@ public class MainPresenterTest {
         String provincia = "-";
         String municipio = "Tineo";
 
-        presenter.onSearchStationsWhithFilters(provincia, municipio, false);
+        presenter.onSearchStationsWithFilters(provincia, municipio, false);
 
         verify(mockView, times(2)).showStations(anyList());
         verify(mockView, times(1)).showLoadCorrect(0);
@@ -115,7 +115,7 @@ public class MainPresenterTest {
         String provincia = "Asturias";
         String municipio = "Santander";
 
-        presenter.onSearchStationsWhithFilters(provincia, municipio, false);
+        presenter.onSearchStationsWithFilters(provincia, municipio, false);
 
         verify(mockView, times(2)).showStations(anyList());
         verify(mockView, times(1)).showLoadCorrect(0);
@@ -126,7 +126,7 @@ public class MainPresenterTest {
         String provincia = "-";
         String municipio = "";
 
-        presenter.onSearchStationsWhithFilters(provincia, municipio, true);
+        presenter.onSearchStationsWithFilters(provincia, municipio, true);
 
         verify(mockView, times(2)).showStations(anyList());
         verify(mockView, times(2)).showLoadCorrect(7);
