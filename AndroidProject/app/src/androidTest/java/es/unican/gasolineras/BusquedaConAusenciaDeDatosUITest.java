@@ -56,7 +56,7 @@ public class BusquedaConAusenciaDeDatosUITest {
     View decorView;
 
     @Test
-    public void test() {
+    public void test() throws InterruptedException {
         // TEST_UI7
         onView(withId(R.id.menuFilterButton)).perform(click());
 
@@ -71,6 +71,8 @@ public class BusquedaConAusenciaDeDatosUITest {
         onView(withId(R.id.lvStations)).check(matches(isDisplayed())).check(matches(hasChildCount(1)));
         DataInteraction elementoLista = onData(anything()).inAdapterView(withId(R.id.lvStations)).atPosition(0);
         elementoLista.onChildView(withId(R.id.tvName)).check(matches(withText("AVIA")));
+
+        Thread.sleep(1000);
 
         Espresso.onView(withText("Cargadas 1 gasolineras")).inRoot(RootMatchers.withDecorView(not(decorView))).check(matches(isDisplayed()));
     }

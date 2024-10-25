@@ -75,7 +75,6 @@ public class MainPresenter implements IMainContract.Presenter {
             if (abierto) {
                 gasolinerasFiltradas = Filtros.filtrarPorEstado(gasolinerasFiltradas);
             }
-
             view.showStations(gasolinerasFiltradas);
             view.showLoadCorrect(gasolinerasFiltradas.size());
         } else {

@@ -55,7 +55,7 @@ public class BusquedaPorProvinciaExitoUITest {
     View decorView;
 
     @Test
-    public void test() {
+    public void test() throws InterruptedException {
         // TEST_UI2
         onView(withId(R.id.menuFilterButton)).perform(click());
 
@@ -76,6 +76,8 @@ public class BusquedaPorProvinciaExitoUITest {
         elementoLista3.onChildView(withId(R.id.tvName)).check(matches(withText("BALLENOIL")));
         DataInteraction elementoLista4 = onData(anything()).inAdapterView(withId(R.id.lvStations)).atPosition(3);
         elementoLista4.onChildView(withId(R.id.tvName)).check(matches(withText("SHELL")));
+
+        Thread.sleep(1000);
 
         Espresso.onView(withText("Cargadas 4 gasolineras")).inRoot(RootMatchers.withDecorView(not(decorView))).check(matches(isDisplayed()));
     }

@@ -53,7 +53,7 @@ public class BusquedaSinResultadosUITest {
     View decorView;
 
     @Test
-    public void test() {
+    public void test() throws InterruptedException {
         // TEST_UI6
         onView(withId(R.id.menuFilterButton)).perform(click());
 
@@ -66,6 +66,8 @@ public class BusquedaSinResultadosUITest {
         onView(withText("Buscar")).perform(click());
 
         onView(withId(R.id.lvStations)).check(matches(isDisplayed())).check(matches(hasChildCount(0)));
+
+        Thread.sleep(1000);
 
         Espresso.onView(withText("Cargadas 0 gasolineras")).inRoot(RootMatchers.withDecorView(not(decorView))).check(matches(isDisplayed()));
     }
