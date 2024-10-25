@@ -46,7 +46,7 @@ public class BuscarGasolinerasAbiertasUITest {
         @BindValue
         IGasolinerasRepository repository = getTestRepository(
                 Generador.generarGasolineras()
-        ); // Initialize the repository here instead of in @Before
+        );
 
         @Rule(order=0)
         public HiltAndroidRule hiltRule = new HiltAndroidRule(this);
@@ -56,33 +56,27 @@ public class BuscarGasolinerasAbiertasUITest {
 
         @Before
         public void inicializa() {
-            // Perform additional setup if necessary
-            hiltRule.inject();  // This injects the @BindValue dependency into Hilt's component
+
+            hiltRule.inject();
         }
 
 
 
 
         @Test
-        public void testGasolinerasAbiertas_A1() {
-            // Abre el diálogo de filtros
+        public void testGasolinerasAbiertas_A1() throws InterruptedException {
+            //Selecciona filtros y busca
             Espresso.onView(withId(R.id.menuFilterButton)).perform(click());
-
-            // Selecciona la opción de gasolineras abiertas
             Espresso.onView(withId(R.id.cbAbierto)).perform(click());
-
-            // Haz click en el botón "Buscar"
             Espresso.onView(withText("Buscar")).perform(click());
 
-            // Verifica si aparecen las gasolineras "Repsol" y "Carrefour"
+            //comprueba que aparece el numero de gasolineras correcta
             Espresso.onView(withId(R.id.lvStations)).check(matches(isDisplayed())).check(matches(hasChildCount(2)));
-            //Primer elemento
             DataInteraction elementoLista1 = onData(anything()).inAdapterView(withId(R.id.lvStations)).atPosition(0);
             elementoLista1.onChildView(withId(R.id.tvName)).check(matches(withText("Repsol")));
-            //Segundo elemento
             DataInteraction elementoLista2 = onData(anything()).inAdapterView(withId(R.id.lvStations)).atPosition(1);
             elementoLista2.onChildView(withId(R.id.tvName)).check(matches(withText("Carrefour")));
-
+            Thread.sleep(1000);
             Espresso.onView(withText("Cargadas 2 gasolineras")).inRoot(RootMatchers.withDecorView(not(decorView))).check(matches(isDisplayed()));
         }
 

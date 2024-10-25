@@ -59,29 +59,23 @@ public class BusquedaTodasLasGasolinerasUITest {
 
 
     @Test
-    public void testTodasLasGasolineras_A2() {
-        // Abre el diálogo de filtros
+    public void testTodasLasGasolineras_A2() throws InterruptedException {
+        //Selecciona filtros y busca
         Espresso.onView(withId(R.id.menuFilterButton)).perform(click());
-
-        // Haz click en el botón "Buscar"
         Espresso.onView(withText("Buscar")).perform(click());
 
-
+        //comprueba que aparece el numero de gasolineras correcta
         Espresso.onView(withId(R.id.lvStations)).check(matches(isDisplayed())).check(matches(hasChildCount(4)));
-        //Primer elemento
         DataInteraction elementoLista1 = onData(anything()).inAdapterView(withId(R.id.lvStations)).atPosition(0);
         elementoLista1.onChildView(withId(R.id.tvName)).check(matches(withText("Repsol")));
-        //Segundo elemento
         DataInteraction elementoLista2 = onData(anything()).inAdapterView(withId(R.id.lvStations)).atPosition(1);
         elementoLista2.onChildView(withId(R.id.tvName)).check(matches(withText("Carrefour")));
-        //Tercer elemento
         DataInteraction elementoLista3 = onData(anything()).inAdapterView(withId(R.id.lvStations)).atPosition(2);
         elementoLista3.onChildView(withId(R.id.tvName)).check(matches(withText("Shell")));
-        //Cuarto elemento
         DataInteraction elementoLista4 = onData(anything()).inAdapterView(withId(R.id.lvStations)).atPosition(3);
         elementoLista4.onChildView(withId(R.id.tvName)).check(matches(withText("Petronor")));
 
-
+        Thread.sleep(1000);
         Espresso.onView(withText("Cargadas 4 gasolineras")).inRoot(RootMatchers.withDecorView(not(decorView))).check(matches(isDisplayed()));
 
     }

@@ -39,7 +39,7 @@ public class BusquedaListaVaciaUITest {
     @BindValue
     IGasolinerasRepository repository = getTestRepository(
             Generador.generarGasolinerasCerradas()
-    ); // Initialize the repository here instead of in @Before
+    );
 
     @Rule(order=0)
     public HiltAndroidRule hiltRule = new HiltAndroidRule(this);
@@ -49,26 +49,23 @@ public class BusquedaListaVaciaUITest {
 
     @Before
     public void inicializa() {
-        // Perform additional setup if necessary
-        hiltRule.inject();  // This injects the @BindValue dependency into Hilt's component
+
+        hiltRule.inject();
     }
 
 
 
     @Test
-    public void testNingunaGasolineras_A3() {
+    public void testNingunaGasolineras_A3() throws InterruptedException {
 
-
+        //Selecciona filtros y busca
         onView(withId(R.id.menuFilterButton)).perform(click());
-
-
         onView(withId(R.id.cbAbierto)).perform(click());
-
-        // Haz click en el botón "Buscar"
         onView(withText("Buscar")).perform(click());
 
         // Verifica que no haya gasolineras en la lista
         onView(withId(R.id.lvStations)).check(matches(isDisplayed())).check(matches(hasChildCount(0)));
+        Thread.sleep(1000);
         Espresso.onView(withText("Cargadas 0 gasolineras")).inRoot(RootMatchers.withDecorView(not(decorView))).check(matches(isDisplayed()));
 
     }
