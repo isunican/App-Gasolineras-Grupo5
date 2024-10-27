@@ -21,5 +21,4 @@ public interface ICallBack {
      * @param e the information about the failure
      */
     public void onFailure(Throwable e);
-
 }

@@ -18,13 +18,11 @@ import org.parceler.Parcels;
 
 import es.unican.gasolineras.R;
 import es.unican.gasolineras.model.Gasolinera;
-
 /**
  * View that shows the details of one gas station. Since this view does not have business logic,
  * it can be implemented as an activity directly, without the MVP pattern.
  */
 public class DetailsView extends AppCompatActivity {
-
     /** Key for the intent that contains the gas station */
     public static final String INTENT_STATION = "INTENT_STATION";
 

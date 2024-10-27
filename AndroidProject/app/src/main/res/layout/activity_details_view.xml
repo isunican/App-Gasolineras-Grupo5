@@ -49,5 +49,4 @@
         app:layout_constraintTop_toBottomOf="@+id/tvRotulo" />
 
 
-
 </androidx.constraintlayout.widget.ConstraintLayout>

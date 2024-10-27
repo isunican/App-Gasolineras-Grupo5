@@ -14,5 +14,4 @@ public enum IDCCAAs {
     private IDCCAAs(String id) {
         this.id = id;
     }
-
 }

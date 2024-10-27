@@ -72,5 +72,12 @@
         app:layout_constraintStart_toEndOf="@+id/tvDieselALabel"
         tools:text="Precio Diesel" />
 
+    <TextView
+        android:id="@+id/tvEstado"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Estado"
+        app:layout_constraintBottom_toTopOf="@+id/tvName"
+        app:layout_constraintStart_toStartOf="@+id/tvName" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
