@@ -1,13 +1,7 @@
 package es.unican.gasolineras.common;
 import static es.unican.gasolineras.common.Horario.estaAbierto;
-
-import android.widget.Toast;
-
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
-
-import es.unican.gasolineras.activities.main.MainView;
 import es.unican.gasolineras.model.Gasolinera;
 public class Filtros {
 

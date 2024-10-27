@@ -33,5 +33,4 @@ public class GasolinerasResponse {
     public int getGasolinerasCount() {
         return gasolineras != null ? gasolineras.size() : 0;
     }
-
 }

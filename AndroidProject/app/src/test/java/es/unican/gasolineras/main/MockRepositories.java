@@ -39,5 +39,4 @@ public class MockRepositories {
         // Utiliza el método parseGasolineras para cargar las gasolineras desde el archivo JSON
         return Utils.parseGasolineras(context, jsonId);
     }
-
 }

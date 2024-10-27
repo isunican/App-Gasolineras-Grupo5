@@ -1,13 +1,9 @@
 package es.unican.gasolineras.activities.main;
 
-import android.util.Log;
-
 import java.util.List;
-
 import es.unican.gasolineras.common.DataAccessException;
 import es.unican.gasolineras.common.Filtros;
 import es.unican.gasolineras.model.Gasolinera;
-import es.unican.gasolineras.model.IDProvincias;
 import es.unican.gasolineras.repository.ICallBack;
 import es.unican.gasolineras.repository.IGasolinerasRepository;
 

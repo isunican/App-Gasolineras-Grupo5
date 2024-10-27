@@ -126,4 +126,5 @@ public class FiltrosTest {
         List<Gasolinera> resultado = Filtros.filtrarPorProvinciaYMunicipio(Collections.emptyList(), "Cantabria", "Santander");
         assertNull(resultado);
     }
+
 }

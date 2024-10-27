@@ -81,4 +81,5 @@ public class BusquedaPorProvinciaExitoUITest {
 
         Espresso.onView(withText("Cargadas 4 gasolineras")).inRoot(RootMatchers.withDecorView(not(decorView))).check(matches(isDisplayed()));
     }
+
 }

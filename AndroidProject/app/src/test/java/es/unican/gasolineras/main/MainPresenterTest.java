@@ -131,4 +131,5 @@ public class MainPresenterTest {
         verify(mockView, times(2)).showStations(anyList());
         verify(mockView, times(2)).showLoadCorrect(7);
     }
+
 }

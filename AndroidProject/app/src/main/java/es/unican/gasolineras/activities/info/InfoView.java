@@ -1,9 +1,7 @@
 package es.unican.gasolineras.activities.info;
 
 import android.os.Bundle;
-
 import androidx.appcompat.app.AppCompatActivity;
-
 import es.unican.gasolineras.R;
 
 /**

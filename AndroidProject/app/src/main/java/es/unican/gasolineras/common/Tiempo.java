@@ -5,14 +5,11 @@ import java.util.Calendar;
 
 
 public class Tiempo {
-
-
-
     /*
-     * Obtiene la hora actual
-     * @return la hora actual
-     * @throws DataAccessException si la hora actual no es válida
-     */
+    * Obtiene la hora actual
+    * @return la hora actual
+    * @throws DataAccessException si la hora actual no es válida
+    */
     public static int horaActual()   {
         // Obtener la hora actual
         Calendar calendar = Calendar.getInstance();

@@ -76,4 +76,5 @@ public class BusquedaConAusenciaDeDatosUITest {
 
         Espresso.onView(withText("Cargadas 1 gasolineras")).inRoot(RootMatchers.withDecorView(not(decorView))).check(matches(isDisplayed()));
     }
+
 }

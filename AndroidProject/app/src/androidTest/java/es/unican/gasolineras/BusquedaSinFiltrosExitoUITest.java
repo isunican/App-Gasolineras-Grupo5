@@ -61,4 +61,5 @@ public class BusquedaSinFiltrosExitoUITest {
 
         Espresso.onView(withText("Cargadas 7 gasolineras")).inRoot(RootMatchers.withDecorView(not(decorView))).check(matches(isDisplayed()));
     }
+
 }

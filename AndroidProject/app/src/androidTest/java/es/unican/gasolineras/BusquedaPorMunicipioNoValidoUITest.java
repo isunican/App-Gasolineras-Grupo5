@@ -74,4 +74,5 @@ public class BusquedaPorMunicipioNoValidoUITest {
 
         Espresso.onView(withText("Cargadas 0 gasolineras")).inRoot(RootMatchers.withDecorView(not(decorView))).check(matches(isDisplayed()));
     }
+
 }
