@@ -38,10 +38,19 @@ public interface IMainContract {
          */
         public void onMenuInfoClicked();
 
+        /**
+         * The presenter is informed that the filter button has been clicked
+         * Only the View should call this method
+         */
         public void onFilterButtonClicked();
 
-        public void onSearchStationsWithFilters(String provincia,String municipio, boolean abierto) throws DataAccessException;
+        /**
+         * The presenter is informed that the user wants to filter gas stations
+         * Only the View should call this method
+         */
+        public void onSearchStationsWithFilters(String provincia, String municipio, boolean abierto) throws DataAccessException;
     }
+
 
     /**
      * Methods that must be implemented in the Main View.
@@ -103,9 +112,10 @@ public interface IMainContract {
         public void showInfoActivity();
 
         /**
-         * The view is requested to open the info activity.
+         * The view is requested to open the filters popup
          * Only the Presenter should call this method
          */
         public void showFiltersPopUp();
+
     }
 }

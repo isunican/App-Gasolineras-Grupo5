@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Buscar por provincia y municipio - Manual de usuario</title>
+    <!-- AOS CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.1/aos.css">
+    <style>
+        body {
+            background-color: #2c2c2c; /* Gris oscuro */
+            color: #fff;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+        }
+        h1, h2, h3 {
+            text-align: center;
+            margin-top: 40px;
+        }
+        h1 {
+            font-size: 2.8em;
+            border-bottom: 3px solid #fff;
+            padding-bottom: 15px;
+        }
+        h2 {
+            font-size: 2.3em;
+            border-bottom: 2px solid #fff;
+            padding-bottom: 10px;
+        }
+        h3 {
+            font-size: 2em;
+            border-bottom: 1px solid #fff;
+            padding-bottom: 8px;
+        }
+        p {
+            font-size: 1.05em;
+            text-align: justify;
+            margin: 20px auto;
+            max-width: 900px;
+            padding: 0 20px;
+        }
+        a {
+            color: #00d1b2; /* Color de los hipervínculos */
+            text-decoration: none;
+            transition: color 0.3s, border-bottom 0.3s;
+        }
+        a:hover {
+            color: #ffeb3b; /* Color al pasar el mouse sobre el hipervínculo */
+            border-bottom: 1px solid #ffeb3b; /* Subrayado en hover */
+        }
+        .container {
+            margin: 0 auto;
+            max-width: 1200px;
+            padding: 0 20px;
+        }
+        .section {
+            margin-bottom: 50px;
+        }
+        img {
+            max-width: 100%;
+            border-radius: 8px;
+            box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.5);
+        }
+        .img-wrapper {
+            text-align: center;
+            margin: 30px 0;
+        }
+        pre {
+            background-color: #444;
+            color: #fff;
+            padding: 10px; /* Reducir padding para un cuadro más pequeño */
+            font-size: 1.2em; /* Disminuir el tamaño de la fuente */
+            overflow-x: auto;
+            border-radius: 8px;
+            margin: 20px auto; /* Centrar el cuadro */
+            max-width: 400px; /* Establecer un ancho máximo para el cuadro */
+            text-align: center; /* Centrar el texto en el pre */
+        }
+        hr {
+            border: none;
+            height: 1px;
+            background-color: #fff;
+            margin: 40px 0;
+        }
+        .card {
+            background-color: #393939;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+            margin: 20px auto;
+            max-width: 900px;
+        }
+        footer {
+            text-align: center;
+            padding: 20px 0;
+            background-color: #1b1b1b;
+            color: #888;
+            font-size: 0.9em;
+            margin-top: 40px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1 data-aos="fade-up">Buscar por provincia y municipio</h1>
+        <div class="section" data-aos="fade-up">
+            <p>
+                En la actualidad, encontrar una gasolinera adecuada puede ser un desafío, especialmente en provincias y municipios desconocidos. Para facilitar este proceso, <i>QuickGasofa</i> ha desarrollado una funcionalidad de filtros que permite a los usuarios buscar gasolineras de manera más eficiente.
+            </p>
+            <p>
+                Imaginemos a un usuario que necesita encontrar una gasolinera cerca de su ubicación. Ahora, con los nuevos filtros de <i>QuickGasofa</i>, este usuario puede seleccionar la provincia y el municipio en el que desea buscar. Si lo desea, puede ajustar estos filtros para obtener resultados más específicos y relevantes.
+                Con esta herramienta, los usuarios pueden filtrar la búsqueda según sus necesidades, lo que les permite encontrar fácilmente la gasolinera más cercana y conveniente en su área. Así, <i>QuickGasofa</i> se convierte en un aliado en la carretera, haciendo que la búsqueda de gasolineras sea rápida y sencilla.
+            </p>
+        </div>
+        <hr>
+        <div class="section" data-aos="fade-up" id="InterfazPrincipal">
+            <h2>Pop Up filtros 🔎</h2>
+            <p>
+                Debe tener en cuenta que la lista de gasolineras que aparece en la <a href="../Introduccion/IntroduccionEInterfacesBasicas.html">interfaz principal</a>, previamente explicada, muestra todas las gasolineras existentes en España, es por esto, por lo que se han desarrollado una serie de filtros de búsqueda para que le sea mucho más sencillo encontrar una gasolinera deseada.
+            </p>
+            <p>
+                A partir de este Pop Up, usted podrá aplicar unos filtros de búsqueda en el caso de que desee encontrar una o unas determinadas gasolineras para su uso. En este Pop Up podrá hacer uso de un desplegable mediante el cual se le mostrarán todas las provincias de España y a continuación un cuadro de texto donde si usted lo desea podrá introducir el municipio en el que desea encontrar una de las gasolineras. Por último, encontramos una check box denominada <i>Abierto</i> con la que podrá filtrar aquellas gasolineras que se encuentren abiertas en ese preciso momento.
+            </p>
+            <p>
+                En el siguiente ejemplo podrá ver el uso de estos filtros, aunque en el siguiente apartado solo le explicaremos como hacer uso de los filtros provincia y municipio. Si usted desea comprender el uso del filtro de abierto, vuelva al indice o pinche <a href="../US505805-BuscarGasolinerasAbiertas/BuscarGasolinerasAbiertas.html">aquí</a>.
+            </p>
+            <div class="img-wrapper">
+                <img src="./Imagenes/PopUpFiltros.png" alt="Pop Up filtros">
+                <img src="./Imagenes/PopUpFiltros.gif" alt="Pop Up filtros gif">
+            </div>
+        </div>
+        <div class="section" data-aos="fade-up">
+            <div class="card">
+                <h3>¿Desea buscar una provincia y un municipio de esta? 🤔</h3>
+                <p>
+                    Para facilitar la búsqueda de gasolineras, la aplicación ofrece un filtro de provincia. Al pinchar en el desplegable, se mostrará una lista de todas las provincias de España. Simplemente seleccione la provincia que le interesa y la aplicación actualizará automáticamente la lista de gasolineras para mostrar solo las que se encuentran en esa provincia.
+                </p>
+                <p>
+                    Además, junto al desplegable encontrará un campo donde puede escribir el nombre del municipio que desea buscar. La búsqueda combinará la provincia seleccionada con el municipio ingresado, mostrando únicamente las gasolineras que se encuentran en ese municipio.
+                </p>
+                <p>
+                    Este sistema de filtros hace que la búsqueda de gasolineras sea una tarea sencilla y efectiva.
+                </p>
+                <p>
+                    A continuación se le mostrará de forma más gráfica un ejemplo del uso de este filtro:
+                </p>
+                <div class="img-wrapper">
+                    <img src="./Imagenes/Provincia.png" alt="PopUpFiltrosProvincia">
+                    <img src="./Imagenes/Municipio.png" alt="PopUpFiltrosMunicipio">
+                    <img src="./Imagenes/PopUpFiltrosProvinciaMunicipio.gif" alt="PopUpFiltrosProvinciaMunicipio">
+                </div>
+            </div>
+        </div>
+    </div>
+    <footer>
+        &copy; 2024 QuickGasofa - Todos los derechos reservados.
+    </footer>
+
+    <!-- AOS JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.1/aos.js"></script>
+    <script>
+        AOS.init({
+            duration: 800, // Duración de la animación
+            offset: 100, // Cuánto desplazarse desde el borde del viewport
+        });
+    </script>
+</body>
+</html>

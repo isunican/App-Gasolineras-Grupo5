@@ -16,7 +16,7 @@ class MainPresenter {
 }
 
 interface IMainContract#View {
-    # onCreate(Bundle savedInstanceState)
+    + onCreate(Bundle savedInstanceState)
     + onCreateOptionsMenu(Menu menu): boolean
     + onOptionsItemSelected(@NonNull MenuItem item): boolean
     + init()
@@ -30,7 +30,7 @@ interface IMainContract#View {
 }
 
 interface IMainContract#Presenter {
-    + init(IMainContract.View view)
+    + init(View view)
     + onStationClicked(Gasolinera station)
     + onMenuInfoClicked()
     + onFilterButtonClicked()
@@ -39,7 +39,7 @@ interface IMainContract#Presenter {
 }
 
 interface IGasolinerasRepository {
-    + requestGasolineras(ICallBack cb)
+    + requestGasolineras(ICallBack cb, String ccaa)
 }
 
 interface ICallBack {

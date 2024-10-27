@@ -65,9 +65,8 @@ public class BusquedaListaVaciaUITest {
 
         // Verifica que no haya gasolineras en la lista
         onView(withId(R.id.lvStations)).check(matches(isDisplayed())).check(matches(hasChildCount(0)));
-        Thread.sleep(1000);
-        Espresso.onView(withText("Cargadas 0 gasolineras")).inRoot(RootMatchers.withDecorView(not(decorView))).check(matches(isDisplayed()));
 
+        Espresso.onView(withText("Cargadas 0 gasolineras")).inRoot(RootMatchers.withDecorView(not(decorView))).check(matches(isDisplayed()));
     }
 
 

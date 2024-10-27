@@ -4,8 +4,8 @@ import java.util.List;
 
 import es.unican.gasolineras.common.DataAccessException;
 import es.unican.gasolineras.common.Filtros;
-import es.unican.gasolineras.common.Generador;
 import es.unican.gasolineras.model.Gasolinera;
+import es.unican.gasolineras.model.IDProvincias;
 import es.unican.gasolineras.repository.ICallBack;
 import es.unican.gasolineras.repository.IGasolinerasRepository;
 
@@ -17,6 +17,7 @@ public class MainPresenter implements IMainContract.Presenter {
     /** The view that is controlled by this presenter */
     private IMainContract.View view;
     private List<Gasolinera> gasolineras;
+
     /**
      * @see IMainContract.Presenter#init(IMainContract.View)
      * @param view the view to control
@@ -50,23 +51,25 @@ public class MainPresenter implements IMainContract.Presenter {
         view.showFiltersPopUp();
     }
 
-
-
+    /**
+     * @see IMainContract.Presenter#onSearchStationsWithFilters(String provincia, String municipio, boolean abierto)
+     */
     @Override
-    public void onSearchStationsWithFilters(String provincia, String municipio,boolean abierto) throws DataAccessException {
+    public void onSearchStationsWithFilters(String provincia, String municipio, boolean abierto) throws DataAccessException, DataAccessException {
+        List<Gasolinera> gasolinerasFiltradas = gasolineras;
 
-                List<Gasolinera>gasolinerasFiltradas = gasolineras;
-                if (abierto) {
-                    gasolinerasFiltradas = Filtros.filtrarPorEstado(gasolinerasFiltradas);
-                    view.showStations(gasolinerasFiltradas);
-                    view.showLoadCorrect(gasolinerasFiltradas.size());
-                }else{
-                    view.showStations(gasolineras);
-                    view.showLoadCorrect(gasolineras.size());
-                }
+        String finalProvincia = "-".equals(provincia) ? null : provincia;
+        String finalMunicipio = "".equals(municipio) ? null : municipio;
 
+        if (finalProvincia != null || finalMunicipio != null) {
+            gasolinerasFiltradas = Filtros.filtrarPorProvinciaYMunicipio(gasolinerasFiltradas, finalProvincia, finalMunicipio);
+        }
+        if (abierto) {
+            gasolinerasFiltradas = Filtros.filtrarPorEstado(gasolinerasFiltradas);
+        }
+        view.showStations(gasolinerasFiltradas);
+        view.showLoadCorrect(gasolinerasFiltradas.size());
     }
-
 
     /**
      * Loads the gas stations from the repository, and sends them to the view

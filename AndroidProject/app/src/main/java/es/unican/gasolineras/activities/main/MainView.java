@@ -81,7 +81,6 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
      *
      * @return true if we have handled the selection
      */
-
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         int itemId = item.getItemId();
@@ -171,12 +170,13 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
     public void showFiltersPopUp() {
         // Inflate the layout for the dialog
         LayoutInflater inflater = LayoutInflater.from(this);
-        View view = inflater.inflate(R.layout.filters_popup, null);
+        View view = inflater.inflate(R.layout.activity_filters_popup, null);
 
         // Get references to the EditText fields
         Spinner spnProvincias = view.findViewById(R.id.spnProvincias);
         EditText etLocalidad = view.findViewById(R.id.etLocalidad);
         CheckBox checkEstado = view.findViewById(R.id.cbAbierto);
+
         String[] provinciasArray = getResources().getStringArray(R.array.provincias_espana);
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, provinciasArray);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -185,27 +185,23 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
         // Create the dialog using AlertDialog.Builder
         new AlertDialog.Builder(this)
                 .setTitle("Filtrar Gasolineras")
-                .setView(view)  // Set the custom view
+                .setView(view)
                 .setPositiveButton("Buscar", (dialog, which) -> {
-                    // Get the values entered by the user
-                    Boolean estado = checkEstado.isChecked();
-                    // Call the presenter to filter the gas stations
+                    String provincia = spnProvincias.getSelectedItem().toString();
+                    String municipio = etLocalidad.getText().toString().trim();
+                    Boolean abierto = checkEstado.isChecked();
+
                     try {
-                        presenter.onSearchStationsWithFilters(null,null,estado);
+                        presenter.onSearchStationsWithFilters(provincia, municipio, abierto);
                     } catch (DataAccessException e) {
                         throw new RuntimeException(e);
                     }
-
-                    dialog.dismiss();  // Close the dialog
-
-
+                    dialog.dismiss();
                 })
                 .setNegativeButton("Cancelar", (dialog, which) -> {
-                    dialog.dismiss();  // Close the dialog without action
+                    dialog.dismiss();
                 })
                 .create()
                 .show();
     }
-
-
 }

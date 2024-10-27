@@ -1,7 +1,17 @@
 package es.unican.gasolineras.repository;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Iterator;
+import java.util.List;
+import java.util.ListIterator;
+
 import javax.annotation.Nonnull;
 
+import es.unican.gasolineras.model.Gasolinera;
 import es.unican.gasolineras.model.GasolinerasResponse;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -23,15 +33,17 @@ public class GasolinerasRepository implements IGasolinerasRepository {
      * Request gas stations from the Gasolineras real API.
      * @see IGasolinerasRepository#requestGasolineras(ICallBack)
      * @param cb the callback that will asynchronously process the returned gas stations
+     *
      */
     @Override
     public void requestGasolineras(ICallBack cb) {
         Call<GasolinerasResponse> call = GasolinerasService.api.gasolineras();
+
         call.enqueue(new Callback<GasolinerasResponse>() {
             @Override
             public void onResponse(@Nonnull Call<GasolinerasResponse> call, @Nonnull Response<GasolinerasResponse> response) {
                 GasolinerasResponse body = response.body();
-                assert body != null;  // to avoid warning in the following line
+                assert body != null;  // para evitar advertencias
                 cb.onSuccess(body.getGasolineras());
             }
 

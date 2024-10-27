@@ -4,11 +4,9 @@ import static es.unican.gasolineras.common.Horario.estaAbierto;
 
 import com.google.gson.annotations.SerializedName;
 
-import es.unican.gasolineras.common.DataAccessException;
-import es.unican.gasolineras.common.Horario;
 import org.parceler.Parcel;
-import java.util.Date;
-import java.util.Calendar;
+
+import es.unican.gasolineras.common.DataAccessException;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -33,7 +31,7 @@ public class Gasolinera {
     @SerializedName("C.P.")                         protected String cp;
     @SerializedName("Dirección")                    protected String direccion;
     @SerializedName("Municipio")                    protected String municipio;
-    @SerializedName("Localidad")                    protected String localidad;
+    @SerializedName("Provincia")                    protected String provincia;
     @SerializedName("Horario")                      protected String horario;
 
     @SerializedName("Precio Gasoleo A")             protected double gasoleoA;
@@ -49,15 +47,20 @@ public class Gasolinera {
      * @return el precio medio de los carburantes de la gasolinera
      */
     public double calculateSummarizedPrice() {
-        if (gasoleoA == 0 || gasoleoA < 0) {
+        // Primero verificamos si ambos precios son exactamente 0
+        if (gasoleoA == 0 && gasolina95E5 == 0) {
+            return 0;
+        }
+        // Si solo gasoleoA es negativo, devolvemos gasolina95E5
+        else if (gasoleoA < 0) {
             return gasolina95E5;
-        } else if (gasolina95E5 == 0 || gasolina95E5 < 0) {
+        }
+        // Si solo gasolina95E5 es negativo, devolvemos gasoleoA
+        else if (gasolina95E5 < 0) {
             return gasoleoA;
         }
-        // en caso de que ambos precios sean 0, se devuelve 0
-        else if (gasolina95E5 == 0 && gasoleoA == 0) {
-            return 0;
-        } else {
+        // Si ambos precios son positivos, calculamos la media ponderada
+        else {
             return (gasoleoA + gasolina95E5 * 2) / 3;
         }
     }
@@ -68,10 +71,8 @@ public class Gasolinera {
      * @return el estado de la gasolinera
      * @throws IllegalArgumentException si el horario no es válido
      */
-        public String compruebaEstado(String horario) throws IllegalArgumentException, DataAccessException {
+    public String compruebaEstado(String horario) throws IllegalArgumentException, DataAccessException {
         this.estado = estaAbierto(horario);
         return estaAbierto(horario);
     }
 }
-
-

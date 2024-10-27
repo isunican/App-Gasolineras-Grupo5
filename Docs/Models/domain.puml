@@ -8,21 +8,21 @@ class Gasolinera {
     #  String cp
     #  String direccion
     #  String municipio
-    #  String localidad
+    #  String provincia
     #  String horario
     #  double gasoleoA
     #  double gasolina95E5
     -  String estado
-    
-    
+
+
 }
 
 class GasolinerasResponse {
     -  String fecha
     -  String nota
-    -  List<Gasolinera> gasolineras        
+    -  List<Gasolinera> gasolineras
     -  String consulta
-  
+
 }
 
 GasolinerasResponse *-- "*" Gasolinera : gasolineras
