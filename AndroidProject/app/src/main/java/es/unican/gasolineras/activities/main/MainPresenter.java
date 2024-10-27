@@ -68,7 +68,6 @@ public class MainPresenter implements IMainContract.Presenter {
 
     }
 
-
     /**
      * Loads the gas stations from the repository, and sends them to the view
      */

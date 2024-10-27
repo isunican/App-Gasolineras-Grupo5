@@ -1,7 +1,5 @@
 package es.unican.gasolineras.common;
 
-import android.util.Log;
-
 import java.util.Calendar;
 import es.unican.gasolineras.common.DataAccessException;
 /**
@@ -10,14 +8,14 @@ import es.unican.gasolineras.common.DataAccessException;
 public class Horario {
 
     /*
-        * Obtiene los horarios de una gasolinera
-        * @param horario el horario en formato String
-        *               (ejemplo: "L-D: 06:00-22:00")
-        *              (ejemplo: "L-S: 07:00-22:00; D: 08:00-14:00")
-        *             (ejemplo: "L-V: 07:00-22:00; S: 08:00-14:00"; D: 08:00-14:00")
-        * @return un array con los horarios
-        * @throws IllegalArgumentException si el horario es nulo o vacío
-     */
+    * Obtiene los horarios de una gasolinera
+    * @param horario el horario en formato String
+    *               (ejemplo: "L-D: 06:00-22:00")
+    *              (ejemplo: "L-S: 07:00-22:00; D: 08:00-14:00")
+    *             (ejemplo: "L-V: 07:00-22:00; S: 08:00-14:00"; D: 08:00-14:00")
+    * @return un array con los horarios
+    * @throws IllegalArgumentException si el horario es nulo o vacío
+    */
     public static String[] obtenerHorario (String horario) throws IllegalArgumentException {
         if (horario == null ) {
             throw new IllegalArgumentException("El horario no puede ser nulo o vacío");

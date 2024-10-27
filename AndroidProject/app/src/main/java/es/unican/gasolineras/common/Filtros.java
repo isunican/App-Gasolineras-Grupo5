@@ -1,5 +1,5 @@
-
 package es.unican.gasolineras.common;
+
 import java.util.ArrayList;
 import java.util.List;
 import static es.unican.gasolineras.common.Horario.estaAbierto;

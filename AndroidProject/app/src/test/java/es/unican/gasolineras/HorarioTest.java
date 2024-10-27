@@ -35,8 +35,6 @@ public class HorarioTest {
         }
     }
 
-
-
     @Test
     public void testUD1a() {
         // Simular los valores actuales del tiempo

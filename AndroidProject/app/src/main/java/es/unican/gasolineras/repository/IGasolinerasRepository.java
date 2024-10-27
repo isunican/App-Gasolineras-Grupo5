@@ -10,5 +10,4 @@ public interface IGasolinerasRepository {
          * @param cb the callback that will asynchronously process the returned gas stations
          */
         public void requestGasolineras(ICallBack cb);
-
 }

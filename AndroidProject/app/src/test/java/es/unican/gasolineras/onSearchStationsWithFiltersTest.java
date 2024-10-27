@@ -79,7 +79,6 @@ public class onSearchStationsWithFiltersTest {
     @Test
     public void testOnSearchStationsWithFilters_AllStations_UD1b() throws Exception {
 
-
         sut.onSearchStationsWithFilters("-", "", false);
 
         verify(mockView, times(2)).showStations(Mockito.argThat(stations -> stations.size() == 4));  // 4 gasolineras

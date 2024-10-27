@@ -206,6 +206,4 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
                 .create()
                 .show();
     }
-
-
 }

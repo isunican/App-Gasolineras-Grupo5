@@ -38,7 +38,6 @@ import es.unican.gasolineras.repository.IGasolinerasRepository;
 @RunWith(AndroidJUnit4.class)
 public class BusquedaTodasLasGasolinerasUITest {
 
-
     View decorView;
     @BindValue
     IGasolinerasRepository repository = getTestRepository(

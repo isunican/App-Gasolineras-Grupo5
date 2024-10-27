@@ -33,8 +33,6 @@ import es.unican.gasolineras.common.Generador;
 import es.unican.gasolineras.injection.RepositoriesModule;
 import es.unican.gasolineras.repository.IGasolinerasRepository;
 
-
-
 @HiltAndroidTest
 @UninstallModules(RepositoriesModule.class)
 @RunWith(AndroidJUnit4.class)

@@ -80,5 +80,4 @@
         app:layout_constraintBottom_toTopOf="@+id/tvName"
         app:layout_constraintStart_toStartOf="@+id/tvName" />
 
-
 </androidx.constraintlayout.widget.ConstraintLayout>

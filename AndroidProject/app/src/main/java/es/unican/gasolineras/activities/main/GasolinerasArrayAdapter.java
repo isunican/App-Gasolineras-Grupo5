@@ -139,7 +139,6 @@ public class GasolinerasArrayAdapter extends BaseAdapter {
             TextView tv = convertView.findViewById(R.id.tvDieselA);
             tv.setText(String.valueOf(gasolinera.getGasoleoA()));
         }
-
         return convertView;
     }
 }

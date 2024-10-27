@@ -1,7 +1,6 @@
 package es.unican.gasolineras.activities.main;
 
 import java.util.List;
-
 import es.unican.gasolineras.common.DataAccessException;
 import es.unican.gasolineras.model.Gasolinera;
 import es.unican.gasolineras.repository.IGasolinerasRepository;

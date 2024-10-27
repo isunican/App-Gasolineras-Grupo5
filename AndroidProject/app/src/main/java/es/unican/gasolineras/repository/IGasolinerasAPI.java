@@ -19,5 +19,4 @@ public interface IGasolinerasAPI {
      */
     @GET("EstacionesTerrestres/")
     Call<GasolinerasResponse> gasolineras();
-
 }

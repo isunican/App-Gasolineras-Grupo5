@@ -152,5 +152,4 @@
         app:layout_constraintBottom_toBottomOf="@+id/tDireccion"
         app:layout_constraintStart_toStartOf="@+id/tvRotulo" />
 
-
 </androidx.constraintlayout.widget.ConstraintLayout>

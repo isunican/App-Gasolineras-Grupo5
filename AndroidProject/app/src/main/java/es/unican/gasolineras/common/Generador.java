@@ -70,14 +70,12 @@ public class Generador {
         return gasolineras;
     }
 
-
     private static String generarHorarioCerrado(int horaActual, int minutoActual) {
 
         int horaCierre = (horaActual - 1 + 24) % 24; // Hora de cierre es una hora antes de la actual
         int horaApertura = (horaActual + 2) % 24;    // Hora de apertura es dos horas después de la actual
 
         String horario = "L-D: " + formatoHora(horaApertura, minutoActual) + "-" + formatoHora(horaCierre, minutoActual);
-
 
         return horario;
     }

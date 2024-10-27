@@ -53,8 +53,6 @@ public class BusquedaListaVaciaUITest {
         hiltRule.inject();
     }
 
-
-
     @Test
     public void testNingunaGasolineras_A3() throws InterruptedException {
 
