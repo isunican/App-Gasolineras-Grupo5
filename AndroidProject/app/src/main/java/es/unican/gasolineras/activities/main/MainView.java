@@ -1,3 +1,4 @@
+
 package es.unican.gasolineras.activities.main;
 
 import android.content.Intent;
@@ -118,7 +119,7 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
     }
 
     /**
-     * @see IMainContract.View#showStations(List) 
+     * @see IMainContract.View#showStations(List)
      * @param stations the list of charging stations
      */
     @Override

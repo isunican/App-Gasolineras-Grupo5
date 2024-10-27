@@ -1,3 +1,4 @@
+
 package es.unican.gasolineras.repository;
 
 import com.google.gson.Gson;

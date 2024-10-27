@@ -1,3 +1,4 @@
+
 package es.unican.gasolineras.model;
 
 import com.google.gson.annotations.SerializedName;

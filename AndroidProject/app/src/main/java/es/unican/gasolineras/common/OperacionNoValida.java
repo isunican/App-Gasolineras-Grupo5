@@ -1,3 +1,4 @@
+
 package es.unican.gasolineras.common;
 
 public class OperacionNoValida extends Exception {

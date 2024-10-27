@@ -1,3 +1,4 @@
+
 package es.unican.gasolineras.common;
 
 import android.util.Log;
