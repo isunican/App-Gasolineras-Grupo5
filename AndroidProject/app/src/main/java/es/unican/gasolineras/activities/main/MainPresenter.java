@@ -1,7 +1,5 @@
 package es.unican.gasolineras.activities.main;
 
-import androidx.multidex.BuildConfig;
-
 import java.util.List;
 
 import es.unican.gasolineras.common.DataAccessException;
