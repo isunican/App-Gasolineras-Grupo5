@@ -57,7 +57,7 @@ public class MainPresenter implements IMainContract.Presenter {
     }
 
     /**
-     * @see IMainContract.Presenter#onSearchStationsWhithFilters(String provincia, String municipio, boolean abierto)
+     * @see IMainContract.Presenter#onSearchStationsWithFilters(String provincia, String municipio, boolean abierto)
      */
     @Override
     public void onSearchStationsWithFilters(String provincia, String municipio, boolean abierto) throws DataAccessException {
