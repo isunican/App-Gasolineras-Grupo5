@@ -2,20 +2,13 @@ package es.unican.gasolineras.activities.main;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.ArrayAdapter;
-import android.widget.CheckBox;
-import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
@@ -29,7 +22,6 @@ import dagger.hilt.android.AndroidEntryPoint;
 import es.unican.gasolineras.R;
 import es.unican.gasolineras.activities.info.InfoView;
 import es.unican.gasolineras.activities.details.DetailsView;
-import es.unican.gasolineras.common.DataAccessException;
 import es.unican.gasolineras.model.Gasolinera;
 import es.unican.gasolineras.repository.IGasolinerasRepository;
 
@@ -88,10 +80,6 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
             presenter.onMenuInfoClicked();
             return true;
         }
-        if (itemId == R.id.menuFilterButton) {
-            presenter.onFilterButtonClicked();
-            return true;
-        }
         return super.onOptionsItemSelected(item);
     }
 
@@ -118,7 +106,7 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
     }
 
     /**
-     * @see IMainContract.View#showStations(List) 
+     * @see IMainContract.View#showStations(List)
      * @param stations the list of charging stations
      */
     @Override
@@ -166,39 +154,5 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
 
     }
 
-    @Override
-    public void showFiltersPopUp() {
-        LayoutInflater inflater = LayoutInflater.from(this);
-        View view = inflater.inflate(R.layout.activity_filters_popup, null);
 
-        Spinner spnProvincias = view.findViewById(R.id.spnProvincias);
-        EditText etLocalidad = view.findViewById(R.id.etLocalidad);
-        CheckBox checkEstado = view.findViewById(R.id.cbAbierto);
-
-        String[] provinciasArray = getResources().getStringArray(R.array.provincias_espana);
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, provinciasArray);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spnProvincias.setAdapter(adapter);
-
-        new AlertDialog.Builder(this)
-                .setTitle("Filtrar Gasolineras")
-                .setView(view)
-                .setPositiveButton("Buscar", (dialog, which) -> {
-                    String provincia = spnProvincias.getSelectedItem().toString();
-                    String municipio = etLocalidad.getText().toString().trim();
-                    Boolean abierto = checkEstado.isChecked();
-
-                    try {
-                        presenter.onSearchStationsWhithFilters(provincia, municipio, abierto);
-                    } catch (DataAccessException e) {
-                        throw new RuntimeException(e);
-                    }
-                    dialog.dismiss();
-                })
-                .setNegativeButton("Cancelar", (dialog, which) -> {
-                    dialog.dismiss();
-                })
-                .create()
-                .show();
-    }
 }

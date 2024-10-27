@@ -1,20 +1,16 @@
 package es.unican.gasolineras;
 
-import static androidx.test.espresso.Espresso.onView;
-import static androidx.test.espresso.action.ViewActions.click;
-import static androidx.test.espresso.assertion.ViewAssertions.matches;
-import static androidx.test.espresso.matcher.ViewMatchers.hasChildCount;
-import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
-import static org.hamcrest.Matchers.not;
+import static org.hamcrest.CoreMatchers.anything;
+import static org.junit.Assert.assertEquals;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.mock;
+
 import static es.unican.gasolineras.utils.MockRepositories.getTestRepository;
 
 import android.content.Context;
-import android.view.View;
 
-import androidx.test.espresso.Espresso;
-import androidx.test.espresso.matcher.RootMatchers;
 import androidx.test.ext.junit.rules.ActivityScenarioRule;
 import androidx.test.platform.app.InstrumentationRegistry;
 
@@ -31,7 +27,7 @@ import es.unican.gasolineras.repository.IGasolinerasRepository;
 
 @UninstallModules(RepositoriesModule.class)
 @HiltAndroidTest
-public class BusquedaSinFiltrosExitoUITest {
+public class ExampleUITest {
 
     @Rule(order = 0)  // the Hilt rule must execute first
     public HiltAndroidRule hiltRule = new HiltAndroidRule(this);
@@ -44,21 +40,11 @@ public class BusquedaSinFiltrosExitoUITest {
 
     // Mock repository that provides data from a JSON file instead of downloading it from the internet.
     @BindValue
-    final IGasolinerasRepository repository = getTestRepository(context, R.raw.gasolineras_test);
-
-    View decorView;
+    final IGasolinerasRepository repository = getTestRepository(context, R.raw.gasolineras_ccaa_06);
 
     @Test
-    public void test() throws InterruptedException {
-        // TEST_UI4
-        onView(withId(R.id.menuFilterButton)).perform(click());
-
-        onView(withText("Buscar")).perform(click());
-
-        onView(withId(R.id.lvStations)).check(matches(isDisplayed())).check(matches(hasChildCount(7)));
-
-        Thread.sleep(1000);
-
-        Espresso.onView(withText("Cargadas 7 gasolineras")).inRoot(RootMatchers.withDecorView(not(decorView))).check(matches(isDisplayed()));
+    public void showStationsTest() {
+        assertEquals(10, 5+5);
     }
+
 }
