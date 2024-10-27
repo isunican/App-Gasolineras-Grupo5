@@ -1,7 +1,7 @@
 package es.unican.gasolineras.common;
 
 import java.util.Calendar;
-import es.unican.gasolineras.common.DataAccessException;
+
 /**
  * Clase que contiene métodos para comprobar si una gasolinera está abierta
  */
