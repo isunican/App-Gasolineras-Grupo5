@@ -91,7 +91,6 @@ public class Generador {
         gasolinera.setCp(cp);
         gasolinera.setDireccion(direccion);
         gasolinera.setMunicipio(municipio);
-        gasolinera.setLocalidad(localidad);
         gasolinera.setHorario(horario);
         gasolinera.setGasoleoA(gasoleoA);
         gasolinera.setGasolina95E5(gasolina95E5);
