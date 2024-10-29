@@ -73,7 +73,6 @@ public class Filtros implements IFiltros {
 
         if ("Otros".equalsIgnoreCase(companhia)) {
             for (Gasolinera gasolinera : gasolineras) {
-                // Aquí se verifica que el nombre no contiene ninguna marca conocida
                 if (!esCompanhiaConocida(gasolinera.getRotulo())) {
                     resultado.add(gasolinera);
                 }
@@ -96,7 +95,7 @@ public class Filtros implements IFiltros {
      */
     private boolean esCompanhiaConocida(String companhia) {
         String[] conocidas = {"REPSOL", "CEPSA", "AVIA", "CARREFOUR", "PETRONOR",
-                "BALLENOIL", "GALP", "SHELL", "MEROIL", "PETROPRIX"};
+                "BALLENOIL", "GALP", "SHELL", "MEROIL", "PETROPRIX","BP"};
 
         for (String marca : conocidas) {
             if (companhia.toLowerCase().contains(marca.toLowerCase())) {
