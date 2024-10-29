@@ -101,11 +101,7 @@ public class GasolinerasArrayAdapter extends BaseAdapter {
             } catch (IllegalArgumentException e) {
                 Toast.makeText(context, "Error de argumento: " + e.getMessage(), Toast.LENGTH_SHORT).show();
                 tv.setText("Error de argumento: " + e.getMessage());
-            } catch (DataAccessException e) {
-                Toast.makeText(context, "Error de acceso de datos: " + e.getMessage(), Toast.LENGTH_SHORT).show();
-                tv.setText("Error de acceso de datos: " + e.getMessage());
             }
-
         }
 
         // name

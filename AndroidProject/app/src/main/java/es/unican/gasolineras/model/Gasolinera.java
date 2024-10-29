@@ -68,7 +68,7 @@ public class Gasolinera {
      * @return el estado de la gasolinera
      * @throws IllegalArgumentException si el horario no es válido
      */
-        public String compruebaEstado(String horario) throws IllegalArgumentException, DataAccessException {
+        public String compruebaEstado(String horario) throws IllegalArgumentException {
         this.estado = estaAbierto(horario);
         return estaAbierto(horario);
     }
