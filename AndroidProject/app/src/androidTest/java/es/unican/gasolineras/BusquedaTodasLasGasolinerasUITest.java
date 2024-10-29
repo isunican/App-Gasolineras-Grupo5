@@ -20,6 +20,7 @@ import androidx.test.espresso.matcher.RootMatchers;
 import androidx.test.ext.junit.rules.ActivityScenarioRule;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -58,9 +59,13 @@ public class BusquedaTodasLasGasolinerasUITest {
         hiltRule.inject();  // This injects the @BindValue dependency into Hilt's component
     }
 
+    @After
+    public void tearDown() throws InterruptedException {
+        Thread.sleep(1000);
+    }
 
     @Test
-    public void testTodasLasGasolineras_A2() throws InterruptedException {
+    public void testTodasLasGasolineras_A2() {
         //Selecciona filtros y busca
         Espresso.onView(withId(R.id.menuFilterButton)).perform(click());
         Espresso.onView(withText("Buscar")).perform(click());
@@ -77,6 +82,5 @@ public class BusquedaTodasLasGasolinerasUITest {
         elementoLista4.onChildView(withId(R.id.tvName)).check(matches(withText("Petronor")));
 
         Espresso.onView(withText("Cargadas 4 gasolineras")).inRoot(RootMatchers.withDecorView(not(decorView))).check(matches(isDisplayed()));
-        Thread.sleep(1000);
     }
 }
