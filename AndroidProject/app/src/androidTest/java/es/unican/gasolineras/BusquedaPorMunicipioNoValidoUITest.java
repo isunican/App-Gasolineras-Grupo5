@@ -6,7 +6,6 @@ import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.action.ViewActions.scrollTo;
 import static androidx.test.espresso.action.ViewActions.typeText;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
-import static androidx.test.espresso.matcher.ViewMatchers.hasChildCount;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
@@ -20,7 +19,6 @@ import static es.unican.gasolineras.utils.MockRepositories.getTestRepository;
 import android.content.Context;
 import android.view.View;
 
-import androidx.test.espresso.Espresso;
 import androidx.test.espresso.matcher.RootMatchers;
 import androidx.test.ext.junit.rules.ActivityScenarioRule;
 import androidx.test.platform.app.InstrumentationRegistry;
@@ -72,7 +70,7 @@ public class BusquedaPorMunicipioNoValidoUITest {
                 .inRoot(RootMatchers.isPlatformPopup())
                 .perform(scrollTo(), click());
 
-        onView(withId(R.id.etLocalidad)).perform(typeText("Santander"));
+        onView(withId(R.id.etMunicipio)).perform(typeText("Santander"));
 
         onView(withText("Buscar")).perform(click());
 

@@ -6,7 +6,6 @@ import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.action.ViewActions.typeText;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
-import static androidx.test.espresso.matcher.ViewMatchers.hasChildCount;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
@@ -19,7 +18,6 @@ import android.content.Context;
 import android.view.View;
 
 import androidx.test.espresso.DataInteraction;
-import androidx.test.espresso.Espresso;
 import androidx.test.espresso.matcher.RootMatchers;
 import androidx.test.ext.junit.rules.ActivityScenarioRule;
 import androidx.test.platform.app.InstrumentationRegistry;
@@ -65,7 +63,7 @@ public class BusquedaPorMunicipioExitoUITest {
         // TEST_UI3
         onView(withId(R.id.menuFilterButton)).perform(click());
 
-        onView(withId(R.id.etLocalidad)).perform(typeText("Santander"));
+        onView(withId(R.id.etMunicipio)).perform(typeText("Santander"));
         Thread.sleep(1000);
         onView(withText("Buscar")).perform(click());
 

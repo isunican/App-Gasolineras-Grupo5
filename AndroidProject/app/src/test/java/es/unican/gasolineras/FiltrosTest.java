@@ -14,11 +14,12 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-import es.unican.gasolineras.common.Filtros;
+import es.unican.gasolineras.model.Filtros;
 import es.unican.gasolineras.model.Gasolinera;
 
 public class FiltrosTest {
 
+    private Filtros filtros;
     private List<Gasolinera> gasolineras;
     private Gasolinera repsol;
     private Gasolinera carrefour;
@@ -30,6 +31,8 @@ public class FiltrosTest {
 
     @Before
     public void setUp() {
+        filtros = new Filtros();
+
         // Mock de las gasolineras
         repsol = Mockito.mock(Gasolinera.class);
         carrefour = Mockito.mock(Gasolinera.class);
@@ -67,63 +70,63 @@ public class FiltrosTest {
     // Caso A: Provincia y municipio válidos
     @Test
     public void testUD1A() {
-        List<Gasolinera> resultado = Filtros.filtrarPorProvinciaYMunicipio(gasolineras, "Cantabria", "Santander");
+        List<Gasolinera> resultado = filtros.filtrarPorProvinciaYMunicipio(gasolineras, "Cantabria", "Santander");
         assertEquals(Arrays.asList(repsol, carrefour), resultado);
     }
 
     // Caso B: Provincia válida y municipio vacío
     @Test
     public void testUD1B() {
-        List<Gasolinera> resultado = Filtros.filtrarPorProvinciaYMunicipio(gasolineras, "Cantabria", null);
+        List<Gasolinera> resultado = filtros.filtrarPorProvinciaYMunicipio(gasolineras, "Cantabria", null);
         assertEquals(Arrays.asList(repsol, carrefour, ballenoil, shell), resultado);
     }
 
     // Caso C: Provincia vacía y municipio válido
     @Test
     public void testUD1C() {
-        List<Gasolinera> resultado = Filtros.filtrarPorProvinciaYMunicipio(gasolineras, null, "Santander");
+        List<Gasolinera> resultado = filtros.filtrarPorProvinciaYMunicipio(gasolineras, null, "Santander");
         assertEquals(Arrays.asList(repsol, carrefour), resultado);
     }
 
     // Caso D: Provincia válida y municipio vacío sin resultados
     @Test
     public void testUD1D() {
-        List<Gasolinera> resultado = Filtros.filtrarPorProvinciaYMunicipio(gasolineras, "Madrid", null);
+        List<Gasolinera> resultado = filtros.filtrarPorProvinciaYMunicipio(gasolineras, "Madrid", null);
         assertTrue(resultado.isEmpty());
     }
 
     // Caso E: Provincia vacía y municipio válido sin resultados
     @Test
     public void testUD1E() {
-        List<Gasolinera> resultado = Filtros.filtrarPorProvinciaYMunicipio(gasolineras, null, "Tineo");
+        List<Gasolinera> resultado = filtros.filtrarPorProvinciaYMunicipio(gasolineras, null, "Tineo");
         assertTrue(resultado.isEmpty());
     }
 
     // Caso F: Municipio no perteneciente a la provincia
     @Test
     public void testUD1F() {
-        List<Gasolinera> resultado = Filtros.filtrarPorProvinciaYMunicipio(gasolineras, "Asturias", "Santander");
+        List<Gasolinera> resultado = filtros.filtrarPorProvinciaYMunicipio(gasolineras, "Asturias", "Santander");
         assertTrue(resultado.isEmpty());
     }
 
     // Caso G: Provincia y municipio válidos sin resultados
     @Test
     public void testUD1G() {
-        List<Gasolinera> resultado = Filtros.filtrarPorProvinciaYMunicipio(gasolineras, "Asturias", "Tineo");
+        List<Gasolinera> resultado = filtros.filtrarPorProvinciaYMunicipio(gasolineras, "Asturias", "Tineo");
         assertTrue(resultado.isEmpty());
     }
 
     // Caso H: Provincia y municipio vacíos
     @Test
     public void testUD1H() {
-        List<Gasolinera> resultado = Filtros.filtrarPorProvinciaYMunicipio(gasolineras, null, null);
+        List<Gasolinera> resultado = filtros.filtrarPorProvinciaYMunicipio(gasolineras, null, null);
         assertEquals(gasolineras, resultado);
     }
 
     // Caso I: Lista de gasolineras vacía
     @Test
     public void testUD1I() {
-        List<Gasolinera> resultado = Filtros.filtrarPorProvinciaYMunicipio(Collections.emptyList(), "Cantabria", "Santander");
+        List<Gasolinera> resultado = filtros.filtrarPorProvinciaYMunicipio(Collections.emptyList(), "Cantabria", "Santander");
         assertNull(resultado);
     }
 
