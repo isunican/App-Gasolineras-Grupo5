@@ -37,7 +37,7 @@ public class Horario {
         * @return "Cerrado" si el horario de la gasolinera está cerrado
         * @throws DataAccessException si el horario no es válido
      */
-    public static String estaAbierto(String horario) throws DataAccessException,IllegalArgumentException {
+    public static String estaAbierto(String horario) throws IllegalArgumentException {
 
         // Caso 24h
         if (horario.contains("L-D: 24H")) {

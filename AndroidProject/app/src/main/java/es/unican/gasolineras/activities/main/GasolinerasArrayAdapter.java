@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -86,6 +87,16 @@ public class GasolinerasArrayAdapter extends BaseAdapter {
                 view.setImageResource(imageID);
             }
         }
+        // status
+        {
+            TextView tv = convertView.findViewById(R.id.tvEstado);
+            try  {
+                tv.setText(gasolinera.compruebaEstado(gasolinera.getHorario()));
+            } catch (IllegalArgumentException e) {
+                Toast.makeText(context, "Error de argumento: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                tv.setText("Error de argumento: " + e.getMessage());
+            }
+        }
 
         // name
         {
@@ -118,6 +129,7 @@ public class GasolinerasArrayAdapter extends BaseAdapter {
             TextView tv = convertView.findViewById(R.id.tvDieselA);
             tv.setText(String.valueOf(gasolinera.getGasoleoA()));
         }
+
         return convertView;
     }
 }

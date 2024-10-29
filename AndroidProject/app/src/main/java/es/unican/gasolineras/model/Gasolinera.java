@@ -1,4 +1,3 @@
-
 package es.unican.gasolineras.model;
 
 import static es.unican.gasolineras.common.Horario.estaAbierto;
@@ -6,8 +5,10 @@ import static es.unican.gasolineras.common.Horario.estaAbierto;
 import com.google.gson.annotations.SerializedName;
 
 import es.unican.gasolineras.common.DataAccessException;
+import es.unican.gasolineras.common.Horario;
 import org.parceler.Parcel;
-
+import java.util.Date;
+import java.util.Calendar;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -72,8 +73,10 @@ public class Gasolinera {
      * @return el estado de la gasolinera
      * @throws IllegalArgumentException si el horario no es válido
      */
-    public String compruebaEstado(String horario) throws IllegalArgumentException, DataAccessException {
+        public String compruebaEstado(String horario) throws IllegalArgumentException {
         this.estado = estaAbierto(horario);
         return estaAbierto(horario);
     }
 }
+
+
