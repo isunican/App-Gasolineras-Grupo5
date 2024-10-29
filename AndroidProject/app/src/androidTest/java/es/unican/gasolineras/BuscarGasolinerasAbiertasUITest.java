@@ -20,6 +20,7 @@ import androidx.test.espresso.matcher.RootMatchers;
 import androidx.test.ext.junit.rules.ActivityScenarioRule;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -58,11 +59,14 @@ public class BuscarGasolinerasAbiertasUITest {
             hiltRule.inject();
         }
 
-
+    @After
+    public void tearDown() throws InterruptedException {
+           Thread.sleep(1000);
+    }
 
 
         @Test
-        public void testGasolinerasAbiertas_A1() throws InterruptedException {
+        public void testGasolinerasAbiertas_A1() {
             //Selecciona filtros y busca
             Espresso.onView(withId(R.id.menuFilterButton)).perform(click());
             Espresso.onView(withId(R.id.cbAbierto)).perform(click());
@@ -76,7 +80,6 @@ public class BuscarGasolinerasAbiertasUITest {
             elementoLista2.onChildView(withId(R.id.tvName)).check(matches(withText("Carrefour")));
 
             Espresso.onView(withText("Cargadas 2 gasolineras")).inRoot(RootMatchers.withDecorView(not(decorView))).check(matches(isDisplayed()));
-            Thread.sleep(1000);
         }
     }
 

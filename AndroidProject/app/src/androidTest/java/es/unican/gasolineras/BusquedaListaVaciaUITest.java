@@ -18,6 +18,7 @@ import androidx.test.espresso.matcher.RootMatchers;
 import androidx.test.ext.junit.rules.ActivityScenarioRule;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -54,21 +55,23 @@ public class BusquedaListaVaciaUITest {
         hiltRule.inject();
     }
 
-
-
+    @After
+    public void tearDown() throws InterruptedException {
+        Thread.sleep(1000);
+    }
     @Test
     public void testNingunaGasolineras_A3() throws InterruptedException {
 
         //Selecciona filtros y busca
         onView(withId(R.id.menuFilterButton)).perform(click());
         onView(withId(R.id.cbAbierto)).perform(click());
+        Thread.sleep(1000);
         onView(withText("Buscar")).perform(click());
 
         // Verifica que no haya gasolineras en la lista
         onView(withId(R.id.lvStations)).check(matches(isDisplayed())).check(matches(listSize(0)));
 
         Espresso.onView(withText("Cargadas 0 gasolineras")).inRoot(RootMatchers.withDecorView(not(decorView))).check(matches(isDisplayed()));
-        Thread.sleep(1000);
     }
 
 
