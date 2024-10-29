@@ -26,6 +26,7 @@ import androidx.test.espresso.matcher.RootMatchers;
 import androidx.test.ext.junit.rules.ActivityScenarioRule;
 import androidx.test.platform.app.InstrumentationRegistry;
 
+import org.junit.After;
 import org.junit.Rule;
 import org.junit.Test;
 
@@ -56,8 +57,13 @@ public class BusquedaConAusenciaDeDatosUITest {
 
     View decorView;
 
+    @After
+    public void tearDown() throws InterruptedException {
+        Thread.sleep(2000);
+    }
+
     @Test
-    public void test() throws InterruptedException {
+    public void test() {
         // TEST_UI7
         onView(withId(R.id.menuFilterButton)).perform(click());
 
@@ -74,6 +80,5 @@ public class BusquedaConAusenciaDeDatosUITest {
         elementoLista.onChildView(withId(R.id.tvName)).check(matches(withText("AVIA")));
 
         onView(withText("Cargadas 1 gasolineras")).inRoot(RootMatchers.withDecorView(not(decorView))).check(matches(isDisplayed()));
-        Thread.sleep(1000);
     }
 }
