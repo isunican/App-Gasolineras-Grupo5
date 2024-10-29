@@ -1,5 +1,6 @@
 package es.unican.gasolineras;
 
+import static androidx.test.espresso.Espresso.onData;
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.action.ViewActions.scrollTo;
@@ -13,6 +14,7 @@ import static org.hamcrest.Matchers.allOf;
 import static org.hamcrest.Matchers.instanceOf;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.not;
+import static es.unican.gasolineras.utils.Matchers.listSize;
 import static es.unican.gasolineras.utils.MockRepositories.getTestRepository;
 
 import android.content.Context;
@@ -58,9 +60,9 @@ public class BusquedaPorMunicipioNoValidoUITest {
         // TEST_UI5
         onView(withId(R.id.menuFilterButton)).perform(click());
 
-        Espresso.onView(withId(R.id.spnProvincias)).perform(click());
+        onView(withId(R.id.spnProvincias)).perform(click());
 
-        Espresso.onData(allOf(is(instanceOf(String.class)), is("ASTURIAS")))
+        onData(allOf(is(instanceOf(String.class)), is("ASTURIAS")))
                 .inRoot(RootMatchers.isPlatformPopup())
                 .perform(scrollTo(), click());
 
@@ -68,11 +70,10 @@ public class BusquedaPorMunicipioNoValidoUITest {
 
         onView(withText("Buscar")).perform(click());
 
-        onView(withId(R.id.lvStations)).check(matches(isDisplayed())).check(matches(hasChildCount(0)));
+        onView(withId(R.id.lvStations)).check(matches(listSize(0)));
 
+        onView(withText("Cargadas 0 gasolineras")).inRoot(RootMatchers.withDecorView(not(decorView))).check(matches(isDisplayed()));
         Thread.sleep(1000);
-
-        Espresso.onView(withText("Cargadas 0 gasolineras")).inRoot(RootMatchers.withDecorView(not(decorView))).check(matches(isDisplayed()));
     }
 
 }

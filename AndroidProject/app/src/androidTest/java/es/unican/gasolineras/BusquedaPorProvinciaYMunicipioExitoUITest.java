@@ -15,6 +15,7 @@ import static org.hamcrest.Matchers.allOf;
 import static org.hamcrest.Matchers.instanceOf;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.not;
+import static es.unican.gasolineras.utils.Matchers.listSize;
 import static es.unican.gasolineras.utils.MockRepositories.getTestRepository;
 
 import android.content.Context;
@@ -61,9 +62,9 @@ public class BusquedaPorProvinciaYMunicipioExitoUITest {
         // TEST_UI1
         onView(withId(R.id.menuFilterButton)).perform(click());
 
-        Espresso.onView(withId(R.id.spnProvincias)).perform(click());
+        onView(withId(R.id.spnProvincias)).perform(click());
 
-        Espresso.onData(allOf(is(instanceOf(String.class)), is("CANTABRIA")))
+        onData(allOf(is(instanceOf(String.class)), is("CANTABRIA")))
                 .inRoot(RootMatchers.isPlatformPopup())
                 .perform(scrollTo(), click());
 
@@ -71,7 +72,7 @@ public class BusquedaPorProvinciaYMunicipioExitoUITest {
 
         onView(withText("Buscar")).perform(click());
 
-        onView(withId(R.id.lvStations)).check(matches(isDisplayed())).check(matches(hasChildCount(2)));
+        onView(withId(R.id.lvStations)).check(matches(listSize(2)));
 
         DataInteraction elementoLista1 = onData(anything()).inAdapterView(withId(R.id.lvStations)).atPosition(0);
         elementoLista1.onChildView(withId(R.id.tvName)).check(matches(withText("REPSOL")));
@@ -79,9 +80,8 @@ public class BusquedaPorProvinciaYMunicipioExitoUITest {
         DataInteraction elementoLista2 = onData(anything()).inAdapterView(withId(R.id.lvStations)).atPosition(1);
         elementoLista2.onChildView(withId(R.id.tvName)).check(matches(withText("CARREFOUR")));
 
+        onView(withText("Cargadas 2 gasolineras")).inRoot(RootMatchers.withDecorView(not(decorView))).check(matches(isDisplayed()));
         Thread.sleep(1000);
-
-        Espresso.onView(withText("Cargadas 2 gasolineras")).inRoot(RootMatchers.withDecorView(not(decorView))).check(matches(isDisplayed()));
     }
 
 }

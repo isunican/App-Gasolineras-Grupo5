@@ -11,6 +11,8 @@ import static androidx.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.Matchers.allOf;
 import static org.hamcrest.Matchers.instanceOf;
 import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.not;
+import static es.unican.gasolineras.utils.Matchers.listSize;
 import static es.unican.gasolineras.utils.MockRepositories.getTestRepository;
 
 import android.content.Context;
@@ -64,6 +66,8 @@ public class BusquedaSinResultadosUITest {
 
         onView(withText("Buscar")).perform(click());
 
-        onView(withId(R.id.lvStations)).check(matches(isDisplayed())).check(matches(hasChildCount(0)));
+        onView(withId(R.id.lvStations)).check(matches(listSize(0)));
+
+        Thread.sleep(1000);
     }
 }

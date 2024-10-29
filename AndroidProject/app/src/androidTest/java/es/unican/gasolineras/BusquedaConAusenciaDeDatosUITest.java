@@ -14,6 +14,7 @@ import static org.hamcrest.Matchers.allOf;
 import static org.hamcrest.Matchers.instanceOf;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.not;
+import static es.unican.gasolineras.utils.Matchers.listSize;
 import static es.unican.gasolineras.utils.MockRepositories.getTestRepository;
 
 import android.content.Context;
@@ -68,13 +69,12 @@ public class BusquedaConAusenciaDeDatosUITest {
 
         onView(withText("Buscar")).perform(click());
 
-        onView(withId(R.id.lvStations)).check(matches(isDisplayed())).check(matches(hasChildCount(1)));
+        onView(withId(R.id.lvStations)).check(matches(listSize(1)));
         DataInteraction elementoLista = onData(anything()).inAdapterView(withId(R.id.lvStations)).atPosition(0);
         elementoLista.onChildView(withId(R.id.tvName)).check(matches(withText("AVIA")));
 
+        onView(withText("Cargadas 1 gasolineras")).inRoot(RootMatchers.withDecorView(not(decorView))).check(matches(isDisplayed()));
         Thread.sleep(1000);
-
-        Espresso.onView(withText("Cargadas 1 gasolineras")).inRoot(RootMatchers.withDecorView(not(decorView))).check(matches(isDisplayed()));
     }
 
 }
