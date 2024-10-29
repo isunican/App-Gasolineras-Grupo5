@@ -8,6 +8,7 @@ import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.Matchers.not;
+import static es.unican.gasolineras.utils.Matchers.listSize;
 import static es.unican.gasolineras.utils.MockRepositories.getTestRepository;
 
 import android.view.View;
@@ -64,10 +65,10 @@ public class BusquedaListaVaciaUITest {
         onView(withText("Buscar")).perform(click());
 
         // Verifica que no haya gasolineras en la lista
-        onView(withId(R.id.lvStations)).check(matches(isDisplayed())).check(matches(hasChildCount(0)));
-        Thread.sleep(1000);
-        Espresso.onView(withText("Cargadas 0 gasolineras")).inRoot(RootMatchers.withDecorView(not(decorView))).check(matches(isDisplayed()));
+        onView(withId(R.id.lvStations)).check(matches(isDisplayed())).check(matches(listSize(0)));
 
+        Espresso.onView(withText("Cargadas 0 gasolineras")).inRoot(RootMatchers.withDecorView(not(decorView))).check(matches(isDisplayed()));
+        Thread.sleep(1000);
     }
 
 
