@@ -2,10 +2,11 @@ package es.unican.gasolineras.activities.main;
 
 import java.util.List;
 import es.unican.gasolineras.common.DataAccessException;
-import es.unican.gasolineras.common.Filtros;
+import es.unican.gasolineras.common.IFiltros;
 import es.unican.gasolineras.model.Gasolinera;
 import es.unican.gasolineras.repository.ICallBack;
 import es.unican.gasolineras.repository.IGasolinerasRepository;
+import lombok.Setter;
 
 /**
  * The presenter of the main activity of the application. It controls {@link MainView}
@@ -15,6 +16,8 @@ public class MainPresenter implements IMainContract.Presenter {
     /** The view that is controlled by this presenter */
     private IMainContract.View view;
     private List<Gasolinera> gasolineras;
+    @Setter
+    private IFiltros filtros;
 
     /**
      * @see IMainContract.Presenter#init(IMainContract.View)
@@ -53,21 +56,29 @@ public class MainPresenter implements IMainContract.Presenter {
     }
 
     /**
-     * @see IMainContract.Presenter#onSearchStationsWithFilters(String provincia, String municipio, boolean abierto)
+     * @see IMainContract.Presenter#onSearchStationsWithFilters(String provincia, String municipio,
+     *                                                          String companhia, boolean abierto)
      */
     @Override
-    public void onSearchStationsWithFilters(String provincia, String municipio, boolean abierto) throws DataAccessException {
+    public void onSearchStationsWithFilters(String provincia, String municipio, String companhia,
+                                            boolean abierto) throws DataAccessException {
         List<Gasolinera> gasolinerasFiltradas = gasolineras;
 
         String finalProvincia = "-".equals(provincia) ? null : provincia;
         String finalMunicipio = "".equals(municipio) ? null : municipio;
+        String finalCompanhia = "-".equals(companhia) ? null : companhia;
 
         if (finalProvincia != null || finalMunicipio != null) {
-            gasolinerasFiltradas = Filtros.filtrarPorProvinciaYMunicipio(gasolinerasFiltradas, finalProvincia, finalMunicipio);
+            gasolinerasFiltradas = filtros.filtrarPorProvinciaYMunicipio(gasolinerasFiltradas,
+                    finalProvincia, finalMunicipio);
+        }
+        if (finalCompanhia != null){
+            gasolinerasFiltradas = filtros.filtrarPorCompanhia(gasolinerasFiltradas, finalCompanhia);
         }
         if (abierto) {
-            gasolinerasFiltradas = Filtros.filtrarPorEstado(gasolinerasFiltradas);
+            gasolinerasFiltradas = filtros.filtrarPorEstado(gasolinerasFiltradas);
         }
+
         view.showStations(gasolinerasFiltradas);
         view.showLoadCorrect(gasolinerasFiltradas.size());
     }
@@ -94,4 +105,5 @@ public class MainPresenter implements IMainContract.Presenter {
         };
         repository.requestGasolineras(callBack);
     }
+
 }

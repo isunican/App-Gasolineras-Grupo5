@@ -62,5 +62,21 @@
         <item>ZAMORA</item>
         <item>ZARAGOZA</item>
     </string-array>
+
+    <string-array name="lista_companhias">
+        <item>-</item>
+        <item>Repsol</item>
+        <item>Cepsa</item>
+        <item>Avia</item>
+        <item>Carrefour</item>
+        <item>Petronor</item>
+        <item>Ballenoil</item>
+        <item>Galp</item>
+        <item>Shell</item>
+        <item>Meroil</item>
+        <item>Petroprix</item>
+        <item>BP</item>
+        <item>Otros</item>
+    </string-array>
 </resources>
 

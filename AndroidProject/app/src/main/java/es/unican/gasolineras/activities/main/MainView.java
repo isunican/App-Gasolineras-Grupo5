@@ -1,4 +1,3 @@
-
 package es.unican.gasolineras.activities.main;
 
 import android.content.Intent;
@@ -26,6 +25,7 @@ import es.unican.gasolineras.R;
 import es.unican.gasolineras.activities.info.InfoView;
 import es.unican.gasolineras.activities.details.DetailsView;
 import es.unican.gasolineras.common.DataAccessException;
+import es.unican.gasolineras.common.Filtros;
 import es.unican.gasolineras.model.Gasolinera;
 import es.unican.gasolineras.repository.IGasolinerasRepository;
 
@@ -56,6 +56,7 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
         // instantiate presenter and launch initial business logic
         presenter = new MainPresenter();
         presenter.init(this);
+        presenter.setFiltros(new Filtros());
     }
 
     /**
@@ -126,7 +127,6 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
 
     /**
      * @see IMainContract.View#showLoadCorrect(int)
-     * @param stations
      */
     @Override
     public void showLoadCorrect(int stations) {
@@ -168,24 +168,33 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
         View view = inflater.inflate(R.layout.activity_filters_popup, null);
 
         Spinner spnProvincias = view.findViewById(R.id.spnProvincias);
-        EditText etLocalidad = view.findViewById(R.id.etLocalidad);
+        EditText etMunicipio = view.findViewById(R.id.etMunicipio);
+        Spinner spnCompanhia = view.findViewById(R.id.spnCompanhia);
         CheckBox checkEstado = view.findViewById(R.id.cbAbierto);
 
         String[] provinciasArray = getResources().getStringArray(R.array.provincias_espana);
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, provinciasArray);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spnProvincias.setAdapter(adapter);
+        ArrayAdapter<String> provinciasAdapter = new ArrayAdapter<>(this,
+                android.R.layout.simple_spinner_item, provinciasArray);
+        provinciasAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spnProvincias.setAdapter(provinciasAdapter);
+
+        String[] companhiasArray = getResources().getStringArray(R.array.lista_companhias);
+        ArrayAdapter<String> companhiasAdapter = new ArrayAdapter<>(this,
+                android.R.layout.simple_spinner_item, companhiasArray);
+        companhiasAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spnCompanhia.setAdapter(companhiasAdapter);
 
         new AlertDialog.Builder(this)
                 .setTitle("Filtrar Gasolineras")
                 .setView(view)
                 .setPositiveButton("Buscar", (dialog, which) -> {
                     String provincia = spnProvincias.getSelectedItem().toString();
-                    String municipio = etLocalidad.getText().toString().trim();
-                    Boolean abierto = checkEstado.isChecked();
+                    String municipio = etMunicipio.getText().toString().trim();
+                    String companhia = spnCompanhia.getSelectedItem().toString();
+                    boolean abierto = checkEstado.isChecked();
 
                     try {
-                        presenter.onSearchStationsWithFilters(provincia, municipio, abierto);
+                        presenter.onSearchStationsWithFilters(provincia, municipio, companhia, abierto);
                     } catch (DataAccessException e) {
                         throw new RuntimeException(e);
                     }

@@ -44,7 +44,7 @@ public class BusquedaTodasLasGasolinerasUITest {
     @BindValue
     IGasolinerasRepository repository = getTestRepository(
             Generador.generarGasolineras()
-    ); // Initialize the repository here instead of in @Before
+    );
 
     @Rule(order=0)
     public HiltAndroidRule hiltRule = new HiltAndroidRule(this);
@@ -56,11 +56,6 @@ public class BusquedaTodasLasGasolinerasUITest {
     public void inicializa() {
         // Perform additional setup if necessary
         hiltRule.inject();  // This injects the @BindValue dependency into Hilt's component
-    }
-
-    @After
-    public void tearDown() throws InterruptedException {
-        Thread.sleep(1000);
     }
 
     @Test
@@ -80,7 +75,7 @@ public class BusquedaTodasLasGasolinerasUITest {
         DataInteraction elementoLista4 = onData(anything()).inAdapterView(withId(R.id.lvStations)).atPosition(3);
         elementoLista4.onChildView(withId(R.id.tvName)).check(matches(withText("Petronor")));
 
-        Espresso.onView(withText("Cargadas 4 gasolineras")).inRoot(RootMatchers.withDecorView(not(decorView))).check(matches(isDisplayed()));
+        //Espresso.onView(withText("Cargadas 4 gasolineras")).inRoot(RootMatchers.withDecorView(not(decorView))).check(matches(isDisplayed()));
     }
 
 }

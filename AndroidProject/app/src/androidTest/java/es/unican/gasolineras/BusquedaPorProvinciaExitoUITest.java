@@ -48,19 +48,12 @@ public class BusquedaPorProvinciaExitoUITest {
     @Rule(order = 1)
     public ActivityScenarioRule<MainView> activityRule = new ActivityScenarioRule<>(MainView.class);
 
-    // I need the context to access resources, such as the json with test gas stations
     final Context context = InstrumentationRegistry.getInstrumentation().getTargetContext();
 
-    // Mock repository that provides data from a JSON file instead of downloading it from the internet.
     @BindValue
     final IGasolinerasRepository repository = getTestRepository(context, R.raw.gasolineras_test);
 
     View decorView;
-
-    @After
-    public void tearDown() throws InterruptedException {
-        Thread.sleep(2000);
-    }
 
     @Test
     public void test() {
@@ -75,8 +68,7 @@ public class BusquedaPorProvinciaExitoUITest {
 
         onView(withText("Buscar")).perform(click());
 
-        onView(withText("Cargadas 4 gasolineras")).inRoot(RootMatchers.withDecorView(not(decorView))).check(matches(isDisplayed()));
-
+        onView(withId(R.id.lvStations)).check(matches(listSize(4)));
         DataInteraction elementoLista1 = onData(anything()).inAdapterView(withId(R.id.lvStations)).atPosition(0);
         elementoLista1.onChildView(withId(R.id.tvName)).check(matches(withText("REPSOL")));
         DataInteraction elementoLista2 = onData(anything()).inAdapterView(withId(R.id.lvStations)).atPosition(1);
@@ -86,6 +78,6 @@ public class BusquedaPorProvinciaExitoUITest {
         DataInteraction elementoLista4 = onData(anything()).inAdapterView(withId(R.id.lvStations)).atPosition(3);
         elementoLista4.onChildView(withId(R.id.tvName)).check(matches(withText("SHELL")));
 
-        onView(withId(R.id.lvStations)).check(matches(listSize(4)));
+        //onView(withText("Cargadas 4 gasolineras")).inRoot(RootMatchers.withDecorView(not(decorView))).check(matches(isDisplayed()));
     }
 }

@@ -11,13 +11,13 @@
         android:layout_height="wrap_content"
         android:paddingBottom="8dp"
         android:text="Provincia:"
-        android:textSize="16sp"
-        android:textStyle="bold" />
+        android:textSize="16sp" />
 
     <Spinner
         android:id="@+id/spnProvincias"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:paddingBottom="12dp" />
 
     <TextView
         android:id="@+id/tvLocalidad"
@@ -29,10 +29,25 @@
         android:textSize="16sp" />
 
     <EditText
-        android:id="@+id/etLocalidad"
+        android:id="@+id/etMunicipio"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Localidad" />
+
+    <TextView
+        android:id="@+id/tcCompanhia"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="16dp"
+        android:paddingBottom="8dp"
+        android:text="Compañía:"
+        android:textSize="16sp" />
+
+    <Spinner
+        android:id="@+id/spnCompanhia"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="12dp" />
 
     <CheckBox
         android:id="@+id/cbAbierto"

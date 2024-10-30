@@ -37,9 +37,25 @@ public interface IMainContract {
          */
         public void onMenuInfoClicked();
 
+        /**
+         * The presenter is informed that the Filters item in the menu has been clicked
+         * Only the View should call this method
+         */
         public void onFilterButtonClicked();
 
-        public void onSearchStationsWithFilters(String provincia,String municipio, boolean abierto) throws DataAccessException;
+        /**
+         * Filtra y muestra la lista de gasolineras segun los filtros indicados.
+         *
+         * @param provincia La provincia por la que filtrar. Puede ser "-" para indicar que no se
+         *                  debe filtar por provincia.
+         * @param municipio El municipio por el que filtrar. Puede ser "-" para indicar que no se
+         *          *                  debe filtar por municipio.
+         * @param companhia La compnhia por la que filtrar. Puede ser "-" para indicar que no se
+         *          *                  debe filtar por companhia.
+         * @param abierto Un boolean que indica si se debe filtar por gasolineras abiertas.
+         * @throws DataAccessException Si ocurre un error al acceder a los datos
+         */
+        public void onSearchStationsWithFilters(String provincia,String municipio, String companhia, boolean abierto) throws DataAccessException;
     }
 
     /**
