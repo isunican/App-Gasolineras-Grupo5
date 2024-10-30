@@ -93,6 +93,7 @@ public class MainPresenter implements IMainContract.Presenter {
                 gasolineras = stations;
                 view.showStations(stations);
                 view.showLoadCorrect(stations.size());
+                gasolinerasFiltradas = stations;
             }
 
             @Override
@@ -111,17 +112,38 @@ public class MainPresenter implements IMainContract.Presenter {
 
         Comparator<Gasolinera> comparator;
 
-        if (combustible == Combustible.GASOLINA95E) {
-            comparator = Comparator.comparing(Gasolinera::getGasolina95E5);
-        } else {
+        // Determinamos el comparador básico según el tipo de combustible
+        if (combustible == Combustible.GASOLEOA) {
             comparator = Comparator.comparing(Gasolinera::getGasoleoA);
+        } else if (combustible == Combustible.GASOLINA95E) {
+            comparator = Comparator.comparing(Gasolinera::getGasolina95E5);
+        } else if (combustible == Combustible.GASOLINA98E) {
+            comparator = Comparator.comparing(Gasolinera::getGasolina98E5);
+        } else {
+            comparator = Comparator.comparing(Gasolinera::getBiodiesel);
         }
 
+        // Comparador que coloca los precios 0.0 al final
+        Comparator<Gasolinera> comparatorWithZeroLast = (g1, g2) -> {
+            double precio1 = comparator.compare(g1, g2) == 0 ? 0.0 : (combustible == Combustible.GASOLEOA ? g1.getGasoleoA() : combustible == Combustible.GASOLINA95E ? g1.getGasolina95E5() : combustible == Combustible.GASOLINA98E ? g1.getGasolina98E5() : g1.getBiodiesel());
+            double precio2 = comparator.compare(g1, g2) == 0 ? 0.0 : (combustible == Combustible.GASOLEOA ? g2.getGasoleoA() : combustible == Combustible.GASOLINA95E ? g2.getGasolina95E5() : combustible == Combustible.GASOLINA98E ? g2.getGasolina98E5() : g2.getBiodiesel());
+
+            // Colocar los precios 0.0 al final de la lista
+            if (precio1 == 0.0 && precio2 != 0.0) return 1;
+            if (precio2 == 0.0 && precio1 != 0.0) return -1;
+
+            // Ordenar según el precio normal
+            return Double.compare(precio1, precio2);
+        };
+
+        // Aplicamos el orden descendente si se requiere
         if (orden == Orden.DESCENDENTE) {
-            comparator = comparator.reversed();
+            comparatorWithZeroLast = comparatorWithZeroLast.reversed();
         }
 
-        gasolinerasAOrdenar.sort(comparator);
+        // Ordenamos la lista
+        gasolinerasAOrdenar.sort(comparatorWithZeroLast);
+        // Mostramos la lista ordenada
         view.showStations(gasolinerasAOrdenar);
     }
 }

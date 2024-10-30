@@ -38,6 +38,8 @@ public class Gasolinera {
 
     @SerializedName("Precio Gasoleo A")             protected double gasoleoA;
     @SerializedName("Precio Gasolina 95 E5")        protected double gasolina95E5;
+    @SerializedName("Precio Gasolina 98 E5")        protected double gasolina98E5;
+    @SerializedName("Precio Biodiesel")             protected double biodiesel;
 
     private String estado;
 
