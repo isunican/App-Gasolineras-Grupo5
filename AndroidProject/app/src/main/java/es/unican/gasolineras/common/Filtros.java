@@ -1,12 +1,9 @@
-package es.unican.gasolineras.model;
+package es.unican.gasolineras.common;
 import static es.unican.gasolineras.common.Horario.estaAbierto;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
-import es.unican.gasolineras.activities.main.IMainContract;
-import es.unican.gasolineras.common.DataAccessException;
-import es.unican.gasolineras.common.IFiltros;
+import es.unican.gasolineras.model.Gasolinera;
 
 public class Filtros implements IFiltros {
 

@@ -25,7 +25,7 @@ import es.unican.gasolineras.R;
 import es.unican.gasolineras.activities.info.InfoView;
 import es.unican.gasolineras.activities.details.DetailsView;
 import es.unican.gasolineras.common.DataAccessException;
-import es.unican.gasolineras.model.Filtros;
+import es.unican.gasolineras.common.Filtros;
 import es.unican.gasolineras.model.Gasolinera;
 import es.unican.gasolineras.repository.IGasolinerasRepository;
 

@@ -5,7 +5,6 @@ import java.util.List;
 import es.unican.gasolineras.model.Gasolinera;
 
 public interface IFiltros {
-
     /**
      * Filtra una lista de gasolineras por provincia y municipio.
      *

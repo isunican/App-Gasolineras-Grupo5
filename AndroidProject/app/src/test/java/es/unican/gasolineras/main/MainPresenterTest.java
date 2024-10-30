@@ -5,7 +5,6 @@ import static org.mockito.ArgumentMatchers.anyList;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.verifyNoInteractions;
 import static org.mockito.Mockito.when;
 
 import android.content.Context;
@@ -24,7 +23,6 @@ import es.unican.gasolineras.activities.main.IMainContract;
 import es.unican.gasolineras.activities.main.MainPresenter;
 import es.unican.gasolineras.common.DataAccessException;
 import es.unican.gasolineras.common.IFiltros;
-import es.unican.gasolineras.model.Filtros;
 import es.unican.gasolineras.repository.IGasolinerasRepository;
 
 @RunWith(RobolectricTestRunner.class)

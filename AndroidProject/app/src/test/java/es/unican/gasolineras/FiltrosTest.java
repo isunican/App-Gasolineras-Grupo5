@@ -14,7 +14,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-import es.unican.gasolineras.model.Filtros;
+import es.unican.gasolineras.common.Filtros;
 import es.unican.gasolineras.model.Gasolinera;
 
 public class FiltrosTest {
