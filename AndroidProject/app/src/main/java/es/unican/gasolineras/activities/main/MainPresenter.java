@@ -1,9 +1,12 @@
 package es.unican.gasolineras.activities.main;
 
+import java.util.Comparator;
 import java.util.List;
 import es.unican.gasolineras.common.DataAccessException;
 import es.unican.gasolineras.common.Filtros;
+import es.unican.gasolineras.model.Combustible;
 import es.unican.gasolineras.model.Gasolinera;
+import es.unican.gasolineras.model.Orden;
 import es.unican.gasolineras.repository.ICallBack;
 import es.unican.gasolineras.repository.IGasolinerasRepository;
 
@@ -15,6 +18,7 @@ public class MainPresenter implements IMainContract.Presenter {
     /** The view that is controlled by this presenter */
     private IMainContract.View view;
     private List<Gasolinera> gasolineras;
+    private List<Gasolinera> gasolinerasFiltradas;
 
     /**
      * @see IMainContract.Presenter#init(IMainContract.View)
@@ -68,6 +72,10 @@ public class MainPresenter implements IMainContract.Presenter {
         if (abierto) {
             gasolinerasFiltradas = Filtros.filtrarPorEstado(gasolinerasFiltradas);
         }
+
+        // Guarda la lista filtrada para utilizarla en la ordenación
+        this.gasolinerasFiltradas = gasolinerasFiltradas;
+
         view.showStations(gasolinerasFiltradas);
         view.showLoadCorrect(gasolinerasFiltradas.size());
     }
@@ -93,5 +101,27 @@ public class MainPresenter implements IMainContract.Presenter {
             }
         };
         repository.requestGasolineras(callBack);
+    }
+
+    public void onOrdenarButtonClicked() { view.showOrdenarPopUp(); }
+
+    public void ordenarGasolinerasPorPrecio(Combustible combustible, Orden orden) {
+        // Usa la lista filtrada
+        List<Gasolinera> gasolinerasAOrdenar = this.gasolinerasFiltradas;
+
+        Comparator<Gasolinera> comparator;
+
+        if (combustible == Combustible.GASOLINA95E) {
+            comparator = Comparator.comparing(Gasolinera::getGasolina95E5);
+        } else {
+            comparator = Comparator.comparing(Gasolinera::getGasoleoA);
+        }
+
+        if (orden == Orden.DESCENDENTE) {
+            comparator = comparator.reversed();
+        }
+
+        gasolinerasAOrdenar.sort(comparator);
+        view.showStations(gasolinerasAOrdenar);
     }
 }

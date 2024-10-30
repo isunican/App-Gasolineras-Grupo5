@@ -2,6 +2,11 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
+        android:id="@+id/menuOrdenButton"
+        android:icon="@drawable/sort"
+        android:title="Orden"
+        app:showAsAction="always" />
+    <item
         android:id="@+id/menuFilterButton"
         android:icon="@drawable/filter"
         android:title="Filtros"

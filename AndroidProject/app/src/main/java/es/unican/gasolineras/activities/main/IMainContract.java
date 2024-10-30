@@ -106,5 +106,11 @@ public interface IMainContract {
          * Only the Presenter should call this method
          */
         public void showFiltersPopUp();
+
+        /**
+         * The view is requested to open the info activity.
+         * Only the Presenter should call this method
+         */
+        public void showOrdenarPopUp();
     }
 }
