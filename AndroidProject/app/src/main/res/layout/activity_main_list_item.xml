@@ -5,6 +5,15 @@
     android:layout_width="match_parent"
     android:layout_height="128dp">
 
+    <TextView
+        android:id="@+id/tv95Label2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        app:layout_constraintBottom_toBottomOf="@+id/ivLogo"
+        app:layout_constraintStart_toEndOf="@+id/ivLogo"
+        tools:text="Label 95" />
+
     <ImageView
         android:id="@+id/ivLogo"
         android:layout_width="64dp"
