@@ -7,6 +7,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -18,6 +19,8 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import org.parceler.Parcels;
+
+import java.util.ArrayList;
 import java.util.List;
 import javax.inject.Inject;
 import dagger.hilt.android.AndroidEntryPoint;
@@ -28,6 +31,7 @@ import es.unican.gasolineras.common.DataAccessException;
 import es.unican.gasolineras.model.Combustible;
 import es.unican.gasolineras.common.Filtros;
 import es.unican.gasolineras.model.Gasolinera;
+import es.unican.gasolineras.model.Municipio;
 import es.unican.gasolineras.model.Orden;
 import es.unican.gasolineras.repository.IGasolinerasRepository;
 
@@ -41,6 +45,7 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
     private MainPresenter presenter;
     private Combustible combustibleSeleccionado; // guarda la seleccion si se reabre el popup
     private Orden ordenSeleccionada;
+    private Spinner spnMunicipios;
 
     /** The repository to access the data. This is automatically injected by Hilt in this class */
     @Inject
@@ -176,21 +181,28 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
         View view = inflater.inflate(R.layout.activity_filters_popup, null);
 
         Spinner spnProvincias = view.findViewById(R.id.spnProvincias);
-        Spinner spnMunicipios = view.findViewById(R.id.spnMunicipio);
+        spnMunicipios = view.findViewById(R.id.spnMunicipio);
         Spinner spnCompanhia = view.findViewById(R.id.spnCompanhia);
         CheckBox checkEstado = view.findViewById(R.id.cbAbierto);
+
+        spnProvincias.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String provinciaSeleccionada = (String) spnProvincias.getSelectedItem();
+                presenter.onProvinciaSelected(provinciaSeleccionada);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                // No acción
+            }
+        });
 
         String[] provinciasArray = getResources().getStringArray(R.array.provincias_espana);
         ArrayAdapter<String> provinciasAdapter = new ArrayAdapter<>(this,
                 android.R.layout.simple_spinner_item, provinciasArray);
         provinciasAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spnProvincias.setAdapter(provinciasAdapter);
-
-        String[] municipiosArray = getResources().getStringArray(R.array.lista_municipios);
-        ArrayAdapter<String> municipiosAdapter = new ArrayAdapter<>(this,
-                android.R.layout.simple_spinner_item, municipiosArray);
-        municipiosAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spnMunicipios.setAdapter(municipiosAdapter);
 
         String[] companhiasArray = getResources().getStringArray(R.array.lista_companhias);
         ArrayAdapter<String> companhiasAdapter = new ArrayAdapter<>(this,
@@ -220,6 +232,8 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
                 .create()
                 .show();
     }
+
+
 
     @Override
     public void showOrdenarPopUp() {
@@ -258,5 +272,18 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
                 .setNegativeButton("Cancelar", (dialog, which) -> dialog.dismiss())
                 .create()
                 .show();
+    }
+
+    @Override
+    public void updateMunicipiosSpinner(List<Municipio> municipios) {
+        List<String> nombresMunicipios = new ArrayList<>();
+        nombresMunicipios.add("-");
+        for (Municipio municipio : municipios) {
+            nombresMunicipios.add(municipio.getNombre());
+        }
+        ArrayAdapter<String> municipiosAdapter = new ArrayAdapter<>(this,
+                android.R.layout.simple_spinner_item, nombresMunicipios);
+        municipiosAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spnMunicipios.setAdapter(municipiosAdapter);
     }
 }

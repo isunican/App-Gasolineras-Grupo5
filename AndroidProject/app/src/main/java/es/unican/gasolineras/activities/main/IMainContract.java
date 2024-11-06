@@ -2,7 +2,10 @@ package es.unican.gasolineras.activities.main;
 
 import java.util.List;
 import es.unican.gasolineras.common.DataAccessException;
+import es.unican.gasolineras.model.Combustible;
 import es.unican.gasolineras.model.Gasolinera;
+import es.unican.gasolineras.model.Municipio;
+import es.unican.gasolineras.model.Orden;
 import es.unican.gasolineras.repository.IGasolinerasRepository;
 
 /**
@@ -56,6 +59,12 @@ public interface IMainContract {
          * @throws DataAccessException Si ocurre un error al acceder a los datos
          */
         public void onSearchStationsWithFilters(String provincia,String municipio, String companhia, boolean abierto) throws DataAccessException;
+
+        public void onProvinciaSelected(String provinciaNombre);
+
+        public void onOrdenarButtonClicked();
+
+        public void ordenarGasolinerasPorPrecio(Combustible combustible, Orden orden);
     }
 
     /**
@@ -128,5 +137,7 @@ public interface IMainContract {
          * Only the Presenter should call this method
          */
         public void showOrdenarPopUp();
+
+        void updateMunicipiosSpinner(List<Municipio> municipios);
     }
 }
