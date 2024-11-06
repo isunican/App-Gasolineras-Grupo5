@@ -1,7 +1,9 @@
 <resources>
     <string name="app_name">Gasolineras</string>
-    <string name="gasolina95label">Gasolina</string>
+    <string name="gasolina95label">Gasolina95</string>
     <string name="dieselAlabel">Diesel</string>
+    <string name="gasolina98label">Gasolina98</string>
+    <string name="biolabel">Biodiesel</string>
     <string name="refresh">Recargar</string>
     <string name="info">Info</string>
     <string name="loadCorrect">Se han cargado %d gasolineras</string>

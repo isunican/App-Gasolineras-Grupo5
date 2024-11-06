@@ -1,9 +1,12 @@
 package es.unican.gasolineras.activities.main;
 
+import java.util.Comparator;
 import java.util.List;
 import es.unican.gasolineras.common.DataAccessException;
 import es.unican.gasolineras.common.IFiltros;
+import es.unican.gasolineras.model.Combustible;
 import es.unican.gasolineras.model.Gasolinera;
+import es.unican.gasolineras.model.Orden;
 import es.unican.gasolineras.repository.ICallBack;
 import es.unican.gasolineras.repository.IGasolinerasRepository;
 import lombok.Setter;
@@ -18,6 +21,7 @@ public class MainPresenter implements IMainContract.Presenter {
     private List<Gasolinera> gasolineras;
     @Setter
     private IFiltros filtros;
+    private List<Gasolinera> gasolinerasFiltradas;
 
     /**
      * @see IMainContract.Presenter#init(IMainContract.View)
@@ -79,6 +83,9 @@ public class MainPresenter implements IMainContract.Presenter {
             gasolinerasFiltradas = filtros.filtrarPorEstado(gasolinerasFiltradas);
         }
 
+        // Guarda la lista filtrada para utilizarla en la ordenación
+        this.gasolinerasFiltradas = gasolinerasFiltradas;
+
         view.showStations(gasolinerasFiltradas);
         view.showLoadCorrect(gasolinerasFiltradas.size());
     }
@@ -94,6 +101,7 @@ public class MainPresenter implements IMainContract.Presenter {
             @Override
             public void onSuccess(List<Gasolinera> stations) {
                 gasolineras = stations;
+                gasolinerasFiltradas = stations;
                 view.showStations(stations);
                 view.showLoadCorrect(stations.size());
             }
@@ -106,4 +114,57 @@ public class MainPresenter implements IMainContract.Presenter {
         repository.requestGasolineras(callBack);
     }
 
+    public void onOrdenarButtonClicked() { view.showOrdenarPopUp(); }
+
+    public void ordenarGasolinerasPorPrecio(Combustible combustible, Orden orden) {
+        // Usa la lista filtrada
+        List<Gasolinera> gasolinerasAOrdenar = this.gasolinerasFiltradas;
+
+        // Determinamos el comparador básico según el tipo de combustible
+        Comparator<Gasolinera> comparator = (g1, g2) -> {
+            double precio1 = getPrecioCombustible(g1, combustible);
+            double precio2 = getPrecioCombustible(g2, combustible);
+
+            // Coloca precios 0.0 al final en cualquier orden
+            if (precio1 == 0.0 && precio2 != 0.0) return 1;
+            if (precio2 == 0.0 && precio1 != 0.0) return -1;
+
+            // Ordena normalmente por precio
+            return Double.compare(precio1, precio2);
+        };
+
+        // Si el orden es descendente, cambiamos la comparación sin afectar a los 0.0
+        if (orden == Orden.DESCENDENTE) {
+            comparator = (g1, g2) -> {
+                double precio1 = getPrecioCombustible(g1, combustible);
+                double precio2 = getPrecioCombustible(g2, combustible);
+
+                // Coloca precios 0.0 al final en cualquier orden
+                if (precio1 == 0.0 && precio2 != 0.0) return 1;
+                if (precio2 == 0.0 && precio1 != 0.0) return -1;
+
+                // Ordena de mayor a menor
+                return Double.compare(precio2, precio1);
+            };
+        }
+
+        // Ordenamos la lista
+        gasolinerasAOrdenar.sort(comparator);
+        // Mostramos la lista ordenada
+        view.showStations(gasolinerasAOrdenar);
+    }
+
+    // Método auxiliar para obtener el precio del combustible
+    private double getPrecioCombustible(Gasolinera gasolinera, Combustible combustible) {
+        switch (combustible) {
+            case GASOLEOA:
+                return gasolinera.getGasoleoA();
+            case GASOLINA95E:
+                return gasolinera.getGasolina95E5();
+            case GASOLINA98E:
+                return gasolinera.getGasolina98E5();
+            default:
+                return gasolinera.getBiodiesel();
+        }
+    }
 }
