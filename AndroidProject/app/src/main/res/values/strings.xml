@@ -80,5 +80,9 @@
         <item>BP</item>
         <item>Otros</item>
     </string-array>
+
+    <string-array name="lista_municipios">
+        <item>-</item>
+    </string-array>
 </resources>
 

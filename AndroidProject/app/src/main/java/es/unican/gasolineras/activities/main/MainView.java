@@ -1,4 +1,3 @@
-
 package es.unican.gasolineras.activities.main;
 
 import android.content.Intent;
@@ -177,7 +176,7 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
         View view = inflater.inflate(R.layout.activity_filters_popup, null);
 
         Spinner spnProvincias = view.findViewById(R.id.spnProvincias);
-        EditText etMunicipio = view.findViewById(R.id.etMunicipio);
+        Spinner spnMunicipios = view.findViewById(R.id.spnMunicipio);
         Spinner spnCompanhia = view.findViewById(R.id.spnCompanhia);
         CheckBox checkEstado = view.findViewById(R.id.cbAbierto);
 
@@ -186,6 +185,12 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
                 android.R.layout.simple_spinner_item, provinciasArray);
         provinciasAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spnProvincias.setAdapter(provinciasAdapter);
+
+        String[] municipiosArray = getResources().getStringArray(R.array.lista_municipios);
+        ArrayAdapter<String> municipiosAdapter = new ArrayAdapter<>(this,
+                android.R.layout.simple_spinner_item, municipiosArray);
+        municipiosAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spnMunicipios.setAdapter(municipiosAdapter);
 
         String[] companhiasArray = getResources().getStringArray(R.array.lista_companhias);
         ArrayAdapter<String> companhiasAdapter = new ArrayAdapter<>(this,
@@ -198,7 +203,7 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
                 .setView(view)
                 .setPositiveButton("Buscar", (dialog, which) -> {
                     String provincia = spnProvincias.getSelectedItem().toString();
-                    String municipio = etMunicipio.getText().toString().trim();
+                    String municipio = spnMunicipios.getSelectedItem().toString();
                     String companhia = spnCompanhia.getSelectedItem().toString();
                     boolean abierto = checkEstado.isChecked();
 
