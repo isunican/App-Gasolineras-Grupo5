@@ -1,4 +1,4 @@
-package es.unican.gasolineras.main;
+package es.unican.gasolineras;
 
 import org.junit.Before;
 import org.junit.Test;

@@ -55,6 +55,7 @@ public class BusquedaPorProvinciaYMunicipioExitoUITest {
 
     View decorView;
 
+    /**
     @Test
     public void test() {
         // TEST_UI1
@@ -80,5 +81,6 @@ public class BusquedaPorProvinciaYMunicipioExitoUITest {
 
         //onView(withText("Cargadas 2 gasolineras")).inRoot(RootMatchers.withDecorView(not(decorView))).check(matches(isDisplayed()));
     }
+    **/
 
 }

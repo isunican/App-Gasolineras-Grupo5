@@ -1,4 +1,4 @@
-package es.unican.gasolineras.main;
+package es.unican.gasolineras;
 
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.ArgumentMatchers.anyList;
@@ -18,11 +18,11 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.robolectric.RobolectricTestRunner;
 
-import es.unican.gasolineras.R;
 import es.unican.gasolineras.activities.main.IMainContract;
 import es.unican.gasolineras.activities.main.MainPresenter;
 import es.unican.gasolineras.common.DataAccessException;
 import es.unican.gasolineras.common.IFiltros;
+import es.unican.gasolineras.utils.MockRepositories;
 import es.unican.gasolineras.repository.IGasolinerasRepository;
 
 @RunWith(RobolectricTestRunner.class)
