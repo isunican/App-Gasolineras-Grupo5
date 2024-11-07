@@ -68,6 +68,7 @@ public class MainPresenter implements IMainContract.Presenter {
     @Override
     public void onSearchStationsWithFilters(String provincia, String municipio, String companhia,
                                             boolean abierto) throws DataAccessException {
+
         List<Gasolinera> gasolinerasFiltradas = gasolineras;
 
         String finalProvincia = "-".equals(provincia) ? null : provincia;
