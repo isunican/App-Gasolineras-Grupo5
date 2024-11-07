@@ -1,4 +1,4 @@
-package es.unican.gasolineras.main;
+package es.unican.gasolineras;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
