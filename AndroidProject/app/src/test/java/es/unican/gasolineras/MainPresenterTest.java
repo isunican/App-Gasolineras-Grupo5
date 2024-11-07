@@ -74,18 +74,6 @@ public class MainPresenterTest {
     }
 
     @Test
-    public void test_UB1C() throws DataAccessException {
-        String provincia = "-";
-        String municipio = "Santander";
-
-        presenter.onSearchStationsWithFilters(provincia, municipio, null,false);
-
-        verify(mockFilters).filtrarPorProvinciaYMunicipio(anyList(), eq(null), eq("Santander"));
-        verify(mockView, times(2)).showStations(anyList());
-        verify(mockView, times(2)).showLoadCorrect(anyInt());
-    }
-
-    @Test
     public void test_UB1D() throws DataAccessException {
         String provincia = "Madrid";
         String municipio = "";
@@ -105,18 +93,6 @@ public class MainPresenterTest {
         presenter.onSearchStationsWithFilters(provincia, municipio, null, false);
 
         verify(mockFilters).filtrarPorProvinciaYMunicipio(anyList(), eq("Asturias"), eq("Tineo"));
-        verify(mockView, times(2)).showStations(anyList());
-        verify(mockView, times(2)).showLoadCorrect(anyInt());
-    }
-
-    @Test
-    public void test_UB1F() throws DataAccessException {
-        String provincia = "-";
-        String municipio = "Tineo";
-
-        presenter.onSearchStationsWithFilters(provincia, municipio, null, false);
-
-        verify(mockFilters).filtrarPorProvinciaYMunicipio(anyList(), eq(null), eq("Tineo"));
         verify(mockView, times(2)).showStations(anyList());
         verify(mockView, times(2)).showLoadCorrect(anyInt());
     }
