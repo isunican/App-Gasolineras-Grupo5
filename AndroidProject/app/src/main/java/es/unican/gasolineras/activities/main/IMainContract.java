@@ -60,10 +60,26 @@ public interface IMainContract {
          */
         public void onSearchStationsWithFilters(String provincia,String municipio, String companhia, boolean abierto) throws DataAccessException;
 
+        /**
+         * Según el nombre de la provincia, en caso de éxito devuelve los municipios de esta y, en caso de error lanza un mensaje.
+         *
+         * @param provinciaNombre El nombre de la provincia por la que se filtraran los municipios.
+         *
+         */
         public void onProvinciaSelected(String provinciaNombre);
 
+        /**
+         * The presenter is informed that the Order button in the menu has been clicked
+         * Only the View should call this method
+         */
         public void onOrdenarButtonClicked();
 
+        /**
+         * Filtra y muestra la lista de gasolineras segun los filtros indicados.
+         *
+         * @param combustible el combustible por el que filtrar.Por defecto es "diesel".
+         * @param orden El orden por el que filtrar.Por defecto es "ascedente".
+         */
         public void ordenarGasolinerasPorPrecio(Combustible combustible, Orden orden);
     }
 
@@ -138,6 +154,10 @@ public interface IMainContract {
          */
         public void showOrdenarPopUp();
 
-        void updateMunicipiosSpinner(List<Municipio> municipios);
+        /**
+         * The view is requested to update the spinner content.
+         * Only the Presenter should call this method
+         */
+        public void updateMunicipiosSpinner(List<Municipio> municipios);
     }
 }
