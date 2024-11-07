@@ -20,19 +20,19 @@
         android:paddingBottom="12dp" />
 
     <TextView
-        android:id="@+id/tvLocalidad"
+        android:id="@+id/tvMunicipio"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingTop="16dp"
         android:paddingBottom="8dp"
-        android:text="Introduce una localidad (opcional)"
+        android:text="Introduce el municipio (opcional)"
         android:textSize="16sp" />
 
-    <EditText
-        android:id="@+id/etMunicipio"
+    <Spinner
+        android:id="@+id/spnMunicipio"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Localidad" />
+        android:paddingBottom="12dp" />
 
     <TextView
         android:id="@+id/tcCompanhia"
