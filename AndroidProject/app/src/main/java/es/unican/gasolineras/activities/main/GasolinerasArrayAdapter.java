@@ -32,6 +32,7 @@ public class GasolinerasArrayAdapter extends BaseAdapter {
     private final Context context;
 
     private Combustible combustibleSeleccionado;
+
     /**
      * Constructs an adapter to handle a list of gasolineras
      * @param context the application context
@@ -147,7 +148,8 @@ public class GasolinerasArrayAdapter extends BaseAdapter {
 
         }
         return convertView;
-        }
+    }
+
     private void setFuelPrice(View convertView, int labelId, int priceId, String labelText, String price, boolean visible) {
         TextView tvLabel = convertView.findViewById(labelId);
         tvLabel.setText(String.format("%s:", labelText));

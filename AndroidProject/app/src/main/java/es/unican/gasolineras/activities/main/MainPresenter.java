@@ -71,7 +71,7 @@ public class MainPresenter implements IMainContract.Presenter {
         List<Gasolinera> gasolinerasFiltradas = gasolineras;
 
         String finalProvincia = "-".equals(provincia) ? null : provincia;
-        String finalMunicipio = "".equals(municipio) ? null : municipio;
+        String finalMunicipio = "-".equals(municipio) ? null : municipio;
         String finalCompanhia = "-".equals(companhia) ? null : companhia;
 
         if (finalProvincia != null) {
@@ -152,7 +152,12 @@ public class MainPresenter implements IMainContract.Presenter {
         view.showStations(gasolinerasAOrdenar);
     }
 
-    // Método auxiliar para obtener el precio del combustible
+    /**
+     * Método auxiliar para obtener el precio del combustible
+     * @param gasolinera la gasolinera de la que se queire obtener los precios
+     * @param combustible el tipo de combustible del que se quiere obtener el precio
+     * @return el precio del tipo de combustible seleccionado en la gasolinera seleccionada
+     */
     private double getPrecioCombustible(Gasolinera gasolinera, Combustible combustible) {
         switch (combustible) {
             case GASOLEOA:

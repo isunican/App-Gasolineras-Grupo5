@@ -52,9 +52,9 @@ public interface IMainContract {
          * @param provincia La provincia por la que filtrar. Puede ser "-" para indicar que no se
          *                  debe filtar por provincia.
          * @param municipio El municipio por el que filtrar. Puede ser "-" para indicar que no se
-         *          *                  debe filtar por municipio.
+         *                  debe filtar por municipio.
          * @param companhia La compnhia por la que filtrar. Puede ser "-" para indicar que no se
-         *          *                  debe filtar por companhia.
+         *                  debe filtar por companhia.
          * @param abierto Un boolean que indica si se debe filtar por gasolineras abiertas.
          * @throws DataAccessException Si ocurre un error al acceder a los datos
          */
@@ -64,7 +64,6 @@ public interface IMainContract {
          * Según el nombre de la provincia, en caso de éxito devuelve los municipios de esta y, en caso de error lanza un mensaje.
          *
          * @param provinciaNombre El nombre de la provincia por la que se filtraran los municipios.
-         *
          */
         public void onProvinciaSelected(String provinciaNombre);
 

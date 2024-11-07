@@ -8,6 +8,7 @@ import java.util.List;
 import es.unican.gasolineras.model.Gasolinera;
 
 public class Generador {
+
     /**
      * Genera una lista de gasolineras.
      */
@@ -27,6 +28,7 @@ public class Generador {
 
         return gasolineras;
     }
+
     /**
      * Genera una lista de gasolineras , algunas de ellas con datos vacios.
      */
@@ -51,7 +53,6 @@ public class Generador {
         return gasolineras;
     }
 
-
     /**
      * Genera una lista de gasolineras , con los horarios cerrados.
      */
@@ -75,8 +76,6 @@ public class Generador {
 
         return gasolineras;
     }
-
-
 
     /**
      * Genera un horario cerrado a partir de la hora y minuto actuales
@@ -104,7 +103,6 @@ public class Generador {
         return String.format("%02d:%02d", hora % 24, minuto);  // Ajusta para mantener la hora en el rango de 0-23
     }
 
-
     /**
      * Crea una gasolinera.
      *
@@ -117,8 +115,8 @@ public class Generador {
      * @param horario horario de la gasolinera.
      * @param gasoleoA precio del gasoleo en la gasolinera.
      * @param gasolina95E5 precio del 95 en la gasolinera.
-
      */
+
     private static Gasolinera crearGasolinera(String id, String rotulo, String cp, String direccion, String municipio, String localidad, String horario, double gasoleoA, double gasolina95E5) {
         Gasolinera gasolinera = new Gasolinera();
         gasolinera.setId(id);

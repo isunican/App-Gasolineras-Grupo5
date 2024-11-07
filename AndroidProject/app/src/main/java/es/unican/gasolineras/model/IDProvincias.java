@@ -67,8 +67,7 @@ public enum IDProvincias {
         this.id = id;
         this.nombre = nombre;
     }
-
-
+    
     /**
      * Devuelve el id de la provincia pasada como parametro.
      *

@@ -3,7 +3,6 @@ package es.unican.gasolineras.common;
 
 import java.util.Calendar;
 
-
 public class Tiempo {
 
     /*
@@ -31,7 +30,6 @@ public class Tiempo {
 
         return minutoActual;
     }
-
 
     /*
      * Obtiene la letra del día actual

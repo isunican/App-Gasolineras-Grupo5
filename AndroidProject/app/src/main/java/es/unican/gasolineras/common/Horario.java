@@ -24,9 +24,6 @@ public class Horario {
         return horarios;
     }
 
-
-
-
     /*
         * Comprueba si el horario de la gasolinera está abierto
         * @param horario el horario en formato String
@@ -89,7 +86,6 @@ public class Horario {
             }
             return "Cerrado";
         }
-
         if (horario.contains("S-D: 24H")) {
             if (Tiempo.letraDiaActual().equals("D") || Tiempo.letraDiaActual().equals("S")) {
                 return "Abierto";
@@ -97,9 +93,7 @@ public class Horario {
             return "Cerrado";
         }
 
-
         // Obtener la hora actual
-
         if (compruebaHorario(horario)) {
             return "Abierto";
         } else {
@@ -120,8 +114,6 @@ public class Horario {
      */
     public static boolean compruebaHorario (String horario) throws IllegalArgumentException {
         // Separar los horarios por días
-
-
         String[] horarios = obtenerHorario(horario);
         if(horario.isEmpty()){
             return false;
@@ -289,5 +281,4 @@ public class Horario {
         int letraDiaActual = calendar.get(Calendar.DAY_OF_WEEK);
         return dias[letraDiaActual] == 1;
     }
-
 }
