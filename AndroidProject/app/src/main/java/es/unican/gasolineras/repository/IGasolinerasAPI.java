@@ -23,6 +23,12 @@ public interface IGasolinerasAPI {
     @GET("EstacionesTerrestres/")
     Call<GasolinerasResponse> gasolineras();
 
+    /**
+     * Retrieve "municipios filtered by "provincia"
+     * <a href="https://https://sedeaplicaciones.minetur.gob.es/ServiciosRESTCarburantes/PreciosCarburantes/help/operations/MunicipiosPorProvincia">API</a>
+     * @param idProvincia la provincia de la que obtener los municipios
+     * @return una lista de municipios.
+     */
     @GET("Listados/MunicipiosPorProvincia/{IDPROVINCIA}")
     Call<List<Municipio>> municipiosPorProvincia(@Path("IDPROVINCIA") String idProvincia);
 }

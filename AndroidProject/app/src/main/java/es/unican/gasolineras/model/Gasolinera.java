@@ -68,6 +68,7 @@ public class Gasolinera {
             return (gasoleoA + gasolina95E5 * 2) / 3;
         }
     }
+
     /**
      * Comprueba si la gasolinera está abierta en el horario actual.
      *

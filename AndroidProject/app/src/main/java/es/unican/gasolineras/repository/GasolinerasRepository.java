@@ -62,6 +62,4 @@ public class GasolinerasRepository implements IGasolinerasRepository {
             }
         });
     }
-
-
 }

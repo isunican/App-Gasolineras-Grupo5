@@ -67,7 +67,12 @@ public enum IDProvincias {
         this.id = id;
         this.nombre = nombre;
     }
-
+    
+    /**
+     * Devuelve el id de la provincia pasada como parametro.
+     *
+     * @param  nombreProvincia Nombre de la provincia a obtener el código.
+     */
     public static String getCodigoByProvincia(String nombreProvincia) {
         if (nombreProvincia == null || nombreProvincia.equals("-")) { return null; }
         for (IDProvincias provincia : IDProvincias.values()) {
