@@ -12,10 +12,13 @@ import es.unican.gasolineras.model.Orden;
 import es.unican.gasolineras.repository.ICallBack;
 import es.unican.gasolineras.repository.IGasolinerasRepository;
 import lombok.Setter;
+import lombok.Getter;
 
 /**
  * The presenter of the main activity of the application. It controls {@link MainView}
  */
+@Setter
+@Getter
 public class MainPresenter implements IMainContract.Presenter {
 
     /** The view that is controlled by this presenter */
