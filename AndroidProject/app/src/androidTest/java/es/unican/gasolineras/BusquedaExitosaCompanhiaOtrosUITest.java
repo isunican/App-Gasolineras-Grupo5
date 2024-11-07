@@ -79,8 +79,8 @@ public class BusquedaExitosaCompanhiaOtrosUITest {
         Espresso.onView(withId(R.id.lvStations)).check(matches(isDisplayed())).check(matches(listSize(2)));
         DataInteraction elementoLista1 = onData(anything()).inAdapterView(withId(R.id.lvStations)).atPosition(0);
         elementoLista1.onChildView(withId(R.id.tvName)).check(matches(withText("Otros")));
-        DataInteraction elementoLista2 = onData(anything()).inAdapterView(withId(R.id.lvStations)).atPosition(0);
-        elementoLista1.onChildView(withId(R.id.tvName)).check(matches(withText("Otros")));
+        DataInteraction elementoLista2 = onData(anything()).inAdapterView(withId(R.id.lvStations)).atPosition(1);
+        elementoLista2.onChildView(withId(R.id.tvName)).check(matches(withText("")));
 
 
         //Espresso.onView(withText("Cargadas 2 gasolineras")).inRoot(RootMatchers.withDecorView(not(decorView))).check(matches(isDisplayed()));
