@@ -71,10 +71,10 @@ public class MainPresenter implements IMainContract.Presenter {
         List<Gasolinera> gasolinerasFiltradas = gasolineras;
 
         String finalProvincia = "-".equals(provincia) ? null : provincia;
-        String finalMunicipio = "-".equals(municipio) ? null : municipio;
+        String finalMunicipio = "".equals(municipio) ? null : municipio;
         String finalCompanhia = "-".equals(companhia) ? null : companhia;
 
-        if (finalProvincia != null || finalMunicipio != null) {
+        if (finalProvincia != null) {
             gasolinerasFiltradas = filtros.filtrarPorProvinciaYMunicipio(gasolinerasFiltradas,
                     finalProvincia, finalMunicipio);
         }

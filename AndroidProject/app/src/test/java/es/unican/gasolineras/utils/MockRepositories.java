@@ -1,4 +1,4 @@
-package es.unican.gasolineras.main;
+package es.unican.gasolineras.utils;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doAnswer;
@@ -6,10 +6,7 @@ import static org.mockito.Mockito.mock;
 
 import android.content.Context;
 
-import java.util.List;
-
 import es.unican.gasolineras.common.Utils;
-import es.unican.gasolineras.model.Gasolinera;
 import es.unican.gasolineras.repository.ICallBack;
 import es.unican.gasolineras.repository.IGasolinerasRepository;
 
