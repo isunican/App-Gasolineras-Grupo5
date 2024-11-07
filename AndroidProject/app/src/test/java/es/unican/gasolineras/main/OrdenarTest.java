@@ -48,50 +48,36 @@ public class OrdenarTest {
         when(repsol.getGasoleoA()).thenReturn(1.5);
         when(repsol.getGasolina95E5()).thenReturn(1.5);
         when(repsol.getGasolina98E5()).thenReturn(1.5);
-        when(repsol.getProvincia()).thenReturn("Cantabria");
-        when(repsol.getMunicipio()).thenReturn("Santander");
 
         when(carrefour.getBiodiesel()).thenReturn(1.6);
         when(carrefour.getGasoleoA()).thenReturn(1.6);
         when(carrefour.getGasolina95E5()).thenReturn(1.6);
         when(carrefour.getGasolina98E5()).thenReturn(1.6);
-        when(carrefour.getProvincia()).thenReturn("Cantabria");
-        when(carrefour.getMunicipio()).thenReturn("Santander");
 
         when(ballenoil.getBiodiesel()).thenReturn(1.7);
         when(ballenoil.getGasoleoA()).thenReturn(1.7);
         when(ballenoil.getGasolina95E5()).thenReturn(1.7);
         when(ballenoil.getGasolina98E5()).thenReturn(1.7);
-        when(ballenoil.getProvincia()).thenReturn("Cantabria");
-        when(ballenoil.getMunicipio()).thenReturn("Guarnizo");
 
         when(shell.getBiodiesel()).thenReturn(1.8);
         when(shell.getGasoleoA()).thenReturn(1.8);
         when(shell.getGasolina95E5()).thenReturn(1.8);
         when(shell.getGasolina98E5()).thenReturn(1.8);
-        when(shell.getProvincia()).thenReturn("Cantabria");
-        when(shell.getMunicipio()).thenReturn("Maliaño");
 
         when(petronor.getBiodiesel()).thenReturn(1.9);
-        when(petronor.getGasoleoA()).thenReturn(1.9);
+        when(petronor.getGasoleoA()).thenReturn(0.0);
         when(petronor.getGasolina95E5()).thenReturn(1.9);
         when(petronor.getGasolina98E5()).thenReturn(1.9);
-        when(petronor.getProvincia()).thenReturn("Asturias");
-        when(petronor.getMunicipio()).thenReturn("Gijón");
 
         when(avia.getBiodiesel()).thenReturn(2.0);
-        when(avia.getGasoleoA()).thenReturn(2.0);
+        when(avia.getGasoleoA()).thenReturn(0.0);
         when(avia.getGasolina95E5()).thenReturn(2.0);
         when(avia.getGasolina98E5()).thenReturn(2.0);
-        when(avia.getProvincia()).thenReturn("Coruña (A)");
-        when(avia.getMunicipio()).thenReturn("Carballo");
 
         when(cepsa.getBiodiesel()).thenReturn(2.1);
         when(cepsa.getGasoleoA()).thenReturn(2.1);
         when(cepsa.getGasolina95E5()).thenReturn(2.1);
         when(cepsa.getGasolina98E5()).thenReturn(2.1);
-        when(cepsa.getProvincia()).thenReturn("");
-        when(cepsa.getMunicipio()).thenReturn("Ferrol");
 
         presenter.setGasolineras(gasolineras);
 
@@ -100,6 +86,8 @@ public class OrdenarTest {
     @Test
     public void testOrdenarGasolinerasPorPrecio() {
         presenter.setGasolinerasFiltradas(gasolineras);
+
+        // Test ordenar por precio de gasolina 95 ascendente
         presenter.ordenarGasolinerasPorPrecio(Combustible.BIODIESEL, Orden.ASCENDENTE);
         assertEquals(presenter.getGasolineras().get(0), repsol);
         assertEquals(presenter.getGasolineras().get(1), carrefour);
@@ -109,6 +97,7 @@ public class OrdenarTest {
         assertEquals(presenter.getGasolineras().get(5), avia);
         assertEquals(presenter.getGasolineras().get(6), cepsa);
 
+        // Test ordenar por precio de gasolina 95 descendente
         presenter.ordenarGasolinerasPorPrecio(Combustible.BIODIESEL, Orden.DESCENDENTE);
         assertEquals(presenter.getGasolineras().get(0), cepsa);
         assertEquals(presenter.getGasolineras().get(1), avia);
@@ -117,6 +106,31 @@ public class OrdenarTest {
         assertEquals(presenter.getGasolineras().get(4), ballenoil);
         assertEquals(presenter.getGasolineras().get(5), carrefour);
         assertEquals(presenter.getGasolineras().get(6), repsol);
+
+        // Test ordenar por precio de gasolina 98 ascendente con precios 0.0 que se colocan al final
+        presenter.ordenarGasolinerasPorPrecio(Combustible.GASOLEOA, Orden.ASCENDENTE);
+        assertEquals(presenter.getGasolineras().get(0), repsol);
+        assertEquals(presenter.getGasolineras().get(1), carrefour);
+        assertEquals(presenter.getGasolineras().get(2), ballenoil);
+        assertEquals(presenter.getGasolineras().get(3), shell);
+        assertEquals(presenter.getGasolineras().get(4), cepsa);
+        assertEquals(presenter.getGasolineras().get(5), avia);
+        assertEquals(presenter.getGasolineras().get(6), petronor);
+
+        // Test ordenar por precio de gasolina 98 descendente con precios 0.0 que se colocan al final
+        presenter.ordenarGasolinerasPorPrecio(Combustible.GASOLEOA, Orden.DESCENDENTE);
+        assertEquals(presenter.getGasolineras().get(0), cepsa);
+        assertEquals(presenter.getGasolineras().get(1), shell);
+        assertEquals(presenter.getGasolineras().get(2), ballenoil);
+        assertEquals(presenter.getGasolineras().get(3), carrefour);
+        assertEquals(presenter.getGasolineras().get(4), repsol);
+        assertEquals(presenter.getGasolineras().get(5), avia);
+        assertEquals(presenter.getGasolineras().get(6), petronor);
+
+        // Test ordenar lista vacía
+        presenter.setGasolinerasFiltradas(new ArrayList<>());
+        presenter.ordenarGasolinerasPorPrecio(Combustible.GASOLEOA, Orden.DESCENDENTE);
+        assertTrue(presenter.getGasolinerasFiltradas().isEmpty());
     }
 
     @Test
