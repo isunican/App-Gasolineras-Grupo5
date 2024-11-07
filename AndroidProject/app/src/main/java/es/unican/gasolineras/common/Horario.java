@@ -289,5 +289,4 @@ public class Horario {
         int letraDiaActual = calendar.get(Calendar.DAY_OF_WEEK);
         return dias[letraDiaActual] == 1;
     }
-
 }
