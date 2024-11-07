@@ -29,11 +29,19 @@ public class FiltrosTest {
     private Gasolinera avia;
     private Gasolinera cepsa;
 
+    private List<Gasolinera> gasolineras2;
+    private Gasolinera repsol1;
+    private Gasolinera repsol2;
+    private Gasolinera gasofa;
+    private Gasolinera sinRotulo;
+
+
+
     @Before
     public void setUp() {
         filtros = new Filtros();
 
-        // Mock de las gasolineras
+        // Mock de las gasolineras filtrarPorProvinciaYMunicipio
         repsol = Mockito.mock(Gasolinera.class);
         carrefour = Mockito.mock(Gasolinera.class);
         ballenoil = Mockito.mock(Gasolinera.class);
@@ -41,8 +49,12 @@ public class FiltrosTest {
         petronor = Mockito.mock(Gasolinera.class);
         avia = Mockito.mock(Gasolinera.class);
         cepsa = Mockito.mock(Gasolinera.class);
+        repsol1 = Mockito.mock(Gasolinera.class);
+        repsol2 = Mockito.mock(Gasolinera.class);
+        gasofa = Mockito.mock(Gasolinera.class);
+        sinRotulo = Mockito.mock(Gasolinera.class);
 
-        // Mock de datos
+        // Mock de datos filtrarPorProvinciaYMunicipio
         when(repsol.getProvincia()).thenReturn("Cantabria");
         when(repsol.getMunicipio()).thenReturn("Santander");
 
@@ -65,8 +77,22 @@ public class FiltrosTest {
         when(cepsa.getMunicipio()).thenReturn("Ferrol");
 
         gasolineras = new ArrayList<>(Arrays.asList(repsol, carrefour, ballenoil, shell, petronor, avia, cepsa));
+
+        // Mock de las gasolineras filtrarPorCompanhia
+        //Mock de los datos
+        when(repsol1.getRotulo()).thenReturn("Repsol");
+        when(repsol2.getRotulo()).thenReturn("Repsol");
+        when(cepsa.getRotulo()).thenReturn("Cepsa");
+        when(carrefour.getRotulo()).thenReturn("Carrefour");
+        when(gasofa.getRotulo()).thenReturn("Otros");
+        when(sinRotulo.getRotulo()).thenReturn(null);
+
+        gasolineras2 = new ArrayList<>(Arrays.asList(repsol1, repsol2, cepsa, carrefour, gasofa, sinRotulo));
+
+
     }
 
+    //Test filtrarPorProvinciaYMunicipio
     // Caso A: Provincia y municipio válidos
     @Test
     public void testUD1A() {
@@ -129,5 +155,43 @@ public class FiltrosTest {
         List<Gasolinera> resultado = filtros.filtrarPorProvinciaYMunicipio(Collections.emptyList(), "Cantabria", "Santander");
         assertNull(resultado);
     }
+
+
+    //Test filtrarPorCompanhia
+    //Caso A: Compañia conocida
+    @Test
+    public void testUD2A(){
+
+        List<Gasolinera> resultado = filtros.filtrarPorCompanhia(gasolineras2,"REPSOL");
+        assertEquals(Arrays.asList(repsol1, repsol2), resultado);
+
+    }
+
+    //CASO B: Compañía vacia
+    @Test
+    public void testUD2B(){
+
+        List<Gasolinera> resultado = filtros.filtrarPorCompanhia(gasolineras2,"");
+        assertEquals(Arrays.asList(repsol1, repsol2, cepsa, carrefour, gasofa, sinRotulo), resultado);
+
+    }
+
+    //CASO C: COMPAÑÍA "OTROS"
+    @Test
+    public void testUD2C(){
+
+        List<Gasolinera> resultado = filtros.filtrarPorCompanhia(gasolineras2,"Otros");
+        assertEquals(Arrays.asList(gasofa, sinRotulo), resultado);
+
+    }
+
+    //CASO C: LISTA GASOLINERAS VACIA
+    @Test
+    public void testUD2D(){
+        List<Gasolinera> resultado = filtros.filtrarPorCompanhia(Collections.emptyList(),"-");
+        assertEquals(Collections.emptyList(),resultado);
+
+    }
+
 
 }

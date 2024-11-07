@@ -26,6 +26,18 @@ public class Generador {
         return gasolineras;
     }
 
+    public static List<Gasolinera> generarGasolinerasCompanhia(){
+        List<Gasolinera> gasolineras = new ArrayList<>();
+        gasolineras.add(crearGasolinera("Repsol1", "Repsol1", "28001", "Calle A", "Santander", "Cantabria", "L-D: 24H", 1.35, 1.40));
+        gasolineras.add(crearGasolinera("Repsol2", "Repsol2", "28002", "Calle B", "Santander", "Cantabria", "L-D: 24H", 1.30, 1.38));
+        gasolineras.add(crearGasolinera("Cepsa", "Cepsa", "28004", "Calle D", "Las Rozas", "Madrid", "L-D: 24H", 1.28, 1.36));
+        gasolineras.add(crearGasolinera("Carrefour", "Carrefour", "28003", "Calle C", "Sestao", "Bilbao", "L-D: 24H", 1.32, 1.37));
+        gasolineras.add(crearGasolinera("Gasofa", "Otros", "28003", "Calle C", "Maliaño", "Cantabria", "L-D: 24H", 1.32, 1.37));
+        gasolineras.add(crearGasolinera("SinRotulo", "", "28004", "Calle D", "Oviedo", "Asturias", "L-D: 24H", 1.28, 1.36));
+        return gasolineras;
+    }
+
+
     public static List<Gasolinera> generarGasolinerasDatosVacios() {
         List<Gasolinera> gasolineras = new ArrayList<>();
 
@@ -83,6 +95,9 @@ public class Generador {
     private static String formatoHora(int hora, int minuto) {
         return String.format("%02d:%02d", hora % 24, minuto);  // Ajusta para mantener la hora en el rango de 0-23
     }
+
+
+
 
     private static Gasolinera crearGasolinera(String id, String rotulo, String cp, String direccion, String municipio, String localidad, String horario, double gasoleoA, double gasolina95E5) {
         Gasolinera gasolinera = new Gasolinera();

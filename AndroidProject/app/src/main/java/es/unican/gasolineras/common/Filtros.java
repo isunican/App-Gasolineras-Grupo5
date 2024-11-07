@@ -68,15 +68,23 @@ public class Filtros implements IFiltros {
     public List<Gasolinera> filtrarPorCompanhia(List<Gasolinera> gasolineras, String companhia) {
         List<Gasolinera> resultado = new ArrayList<>();
 
+        // Si el filtro de la compañía está vacío, incluir todas las gasolineras
+        if (companhia == null || companhia.isEmpty()) {
+            resultado.addAll(gasolineras);
+            return resultado;
+        }
+
         if ("Otros".equalsIgnoreCase(companhia)) {
             for (Gasolinera gasolinera : gasolineras) {
-                if (!esCompanhiaConocida(gasolinera.getRotulo())) {
+                String rotulo = gasolinera.getRotulo();
+                if (rotulo == null || !esCompanhiaConocida(rotulo)) {
                     resultado.add(gasolinera);
                 }
             }
         } else {
             for (Gasolinera gasolinera : gasolineras) {
-                if (gasolinera.getRotulo().toLowerCase().contains(companhia.toLowerCase())) {
+                String rotulo = gasolinera.getRotulo();
+                if (rotulo != null && rotulo.toLowerCase().contains(companhia.toLowerCase())) {
                     resultado.add(gasolinera);
                 }
             }
