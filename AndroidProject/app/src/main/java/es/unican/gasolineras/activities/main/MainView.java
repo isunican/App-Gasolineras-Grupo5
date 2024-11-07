@@ -188,14 +188,12 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
         spnProvincias.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                String provinciaSeleccionada = (String) spnProvincias.getSelectedItem();
+                String provinciaSeleccionada = spnProvincias.getSelectedItem().toString();
                 presenter.onProvinciaSelected(provinciaSeleccionada);
             }
 
             @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-                // No acción
-            }
+            public void onNothingSelected(AdapterView<?> parent) { }
         });
 
         String[] provinciasArray = getResources().getStringArray(R.array.provincias_espana);
@@ -215,7 +213,8 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
                 .setView(view)
                 .setPositiveButton("Buscar", (dialog, which) -> {
                     String provincia = spnProvincias.getSelectedItem().toString();
-                    String municipio = spnMunicipios.getSelectedItem().toString();
+                    String municipio = spnMunicipios.getSelectedItem() != null ?
+                            spnMunicipios.getSelectedItem().toString() : "";
                     String companhia = spnCompanhia.getSelectedItem().toString();
                     boolean abierto = checkEstado.isChecked();
 
@@ -232,8 +231,6 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
                 .create()
                 .show();
     }
-
-
 
     @Override
     public void showOrdenarPopUp() {

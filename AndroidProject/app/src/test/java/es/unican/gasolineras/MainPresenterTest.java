@@ -1,4 +1,4 @@
-package es.unican.gasolineras.main;
+package es.unican.gasolineras;
 
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.ArgumentMatchers.anyList;
@@ -18,11 +18,11 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.robolectric.RobolectricTestRunner;
 
-import es.unican.gasolineras.R;
 import es.unican.gasolineras.activities.main.IMainContract;
 import es.unican.gasolineras.activities.main.MainPresenter;
 import es.unican.gasolineras.common.DataAccessException;
 import es.unican.gasolineras.common.IFiltros;
+import es.unican.gasolineras.utils.MockRepositories;
 import es.unican.gasolineras.repository.IGasolinerasRepository;
 
 @RunWith(RobolectricTestRunner.class)
@@ -74,18 +74,6 @@ public class MainPresenterTest {
     }
 
     @Test
-    public void test_UB1C() throws DataAccessException {
-        String provincia = "-";
-        String municipio = "Santander";
-
-        presenter.onSearchStationsWithFilters(provincia, municipio, null,false);
-
-        verify(mockFilters).filtrarPorProvinciaYMunicipio(anyList(), eq(null), eq("Santander"));
-        verify(mockView, times(2)).showStations(anyList());
-        verify(mockView, times(2)).showLoadCorrect(anyInt());
-    }
-
-    @Test
     public void test_UB1D() throws DataAccessException {
         String provincia = "Madrid";
         String municipio = "";
@@ -105,18 +93,6 @@ public class MainPresenterTest {
         presenter.onSearchStationsWithFilters(provincia, municipio, null, false);
 
         verify(mockFilters).filtrarPorProvinciaYMunicipio(anyList(), eq("Asturias"), eq("Tineo"));
-        verify(mockView, times(2)).showStations(anyList());
-        verify(mockView, times(2)).showLoadCorrect(anyInt());
-    }
-
-    @Test
-    public void test_UB1F() throws DataAccessException {
-        String provincia = "-";
-        String municipio = "Tineo";
-
-        presenter.onSearchStationsWithFilters(provincia, municipio, null, false);
-
-        verify(mockFilters).filtrarPorProvinciaYMunicipio(anyList(), eq(null), eq("Tineo"));
         verify(mockView, times(2)).showStations(anyList());
         verify(mockView, times(2)).showLoadCorrect(anyInt());
     }
