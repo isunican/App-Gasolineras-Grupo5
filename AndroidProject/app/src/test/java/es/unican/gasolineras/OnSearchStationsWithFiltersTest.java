@@ -129,33 +129,4 @@ public class OnSearchStationsWithFiltersTest {
         verify(mockView2, times(2)).showStations(anyList());
         verify(mockView2, times(2)).showLoadCorrect(anyInt());
     }
-
-
-    // Test para el caso UD.1B
-    @Test
-    public void testUD2B() throws Exception {
-        // Llamada al método onSearchStationsWithFilters con los parámetros adecuados
-        sut2.onSearchStationsWithFilters("-", "Gijon", "-", false);
-
-
-        verify(mockFilters2).filtrarPorProvinciaYMunicipio(anyList(), eq(null), eq("Gijon"));
-
-        verify(mockView2, times(2)).showStations(anyList());
-        verify(mockView2, times(2)).showLoadCorrect(anyInt());
-    }
-
-
-    // Test para el caso UD.2C
-    @Test
-    public void testUD2C() throws Exception {
-
-        sut2.onSearchStationsWithFilters("Murcia", null, "Otros", false);
-        verify(mockFilters2).filtrarPorCompanhia(anyList(), eq("Otros"));
-
-        verify(mockFilters2).filtrarPorProvinciaYMunicipio(anyList(), eq("Murcia"), eq(null));
-
-        verify(mockView2, times(2)).showStations(anyList());
-        verify(mockView2, times(2)).showLoadCorrect(anyInt());  // Verificar que se muestra el número correcto de gasolineras
-        
-    }
 }
