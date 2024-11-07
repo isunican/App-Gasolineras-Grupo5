@@ -39,7 +39,6 @@ import es.unican.gasolineras.repository.IGasolinerasRepository;
 @UninstallModules(RepositoriesModule.class)
 @RunWith(AndroidJUnit4.class)
 public class BuscarGasolinerasAbiertasUITest {
-
         //Vista
         View decorView;
         @BindValue
