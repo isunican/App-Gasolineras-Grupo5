@@ -9,6 +9,9 @@ import es.unican.gasolineras.model.Gasolinera;
 
 public class Generador {
 
+    /**
+     * Genera una lista de gasolineras.
+     */
     public static List<Gasolinera> generarGasolineras() {
         List<Gasolinera> gasolineras = new ArrayList<>();
 
@@ -26,6 +29,23 @@ public class Generador {
         return gasolineras;
     }
 
+    /**
+     * Genera una lista de gasolineras con companhias
+     */
+    public static List<Gasolinera> generarGasolinerasCompanhia(){
+        List<Gasolinera> gasolineras = new ArrayList<>();
+        gasolineras.add(crearGasolinera("Repsol1", "Repsol1", "28001", "Calle A", "Santander", "Cantabria", "L-D: 24H", 1.35, 1.40));
+        gasolineras.add(crearGasolinera("Repsol2", "Repsol2", "28002", "Calle B", "Santander", "Cantabria", "L-D: 24H", 1.30, 1.38));
+        gasolineras.add(crearGasolinera("Cepsa", "Cepsa", "28004", "Calle D", "Las Rozas", "Madrid", "L-D: 24H", 1.28, 1.36));
+        gasolineras.add(crearGasolinera("Carrefour", "Carrefour", "28003", "Calle C", "Sestao", "Bilbao", "L-D: 24H", 1.32, 1.37));
+        gasolineras.add(crearGasolinera("Gasofa", "Otros", "28003", "Calle C", "Maliaño", "Cantabria", "L-D: 24H", 1.32, 1.37));
+        gasolineras.add(crearGasolinera("SinRotulo", "", "28004", "Calle D", "Oviedo", "Asturias", "L-D: 24H", 1.28, 1.36));
+        return gasolineras;
+    }
+
+    /**
+     * Genera una lista de gasolineras , algunas de ellas con datos vacios.
+     */
     public static List<Gasolinera> generarGasolinerasDatosVacios() {
         List<Gasolinera> gasolineras = new ArrayList<>();
 
@@ -47,8 +67,9 @@ public class Generador {
         return gasolineras;
     }
 
-
-
+    /**
+     * Genera una lista de gasolineras , con los horarios cerrados.
+     */
     public static List<Gasolinera> generarGasolinerasCerradas() {
         List<Gasolinera> gasolineras = new ArrayList<>();
 
@@ -70,6 +91,12 @@ public class Generador {
         return gasolineras;
     }
 
+    /**
+     * Genera un horario cerrado a partir de la hora y minuto actuales
+     *
+     * @param horaActual la hora actual del dispositivo.
+     * @param minutoActual el minuto actual del dispositivo.
+     */
     private static String generarHorarioCerrado(int horaActual, int minutoActual) {
 
         int horaCierre = (horaActual - 1 + 24) % 24; // Hora de cierre es una hora antes de la actual
@@ -80,9 +107,29 @@ public class Generador {
         return horario;
     }
 
+    /**
+     * Pone en el formato correcto la hora y minutos pasados.
+     *
+     * @param hora la hora actual del dispositivo.
+     * @param minuto el minuto actual del dispositivo.
+     */
     private static String formatoHora(int hora, int minuto) {
         return String.format("%02d:%02d", hora % 24, minuto);  // Ajusta para mantener la hora en el rango de 0-23
     }
+
+    /**
+     * Crea una gasolinera.
+     *
+     * @param id id de la gasolinera.
+     * @param rotulo rótulo de la gasolinera.
+     * @param cp  código postal de la gasolinera
+     * @param direccion dirección de la gasolinera.
+     * @param municipio municipio de la gasolinera.
+     * @param localidad localidad de la gasolinera.
+     * @param horario horario de la gasolinera.
+     * @param gasoleoA precio del gasoleo en la gasolinera.
+     * @param gasolina95E5 precio del 95 en la gasolinera.
+     */
 
     private static Gasolinera crearGasolinera(String id, String rotulo, String cp, String direccion, String municipio, String localidad, String horario, double gasoleoA, double gasolina95E5) {
         Gasolinera gasolinera = new Gasolinera();

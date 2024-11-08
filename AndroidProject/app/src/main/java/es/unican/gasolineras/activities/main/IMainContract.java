@@ -4,6 +4,8 @@ import java.util.List;
 import es.unican.gasolineras.common.DataAccessException;
 import es.unican.gasolineras.model.Combustible;
 import es.unican.gasolineras.model.Gasolinera;
+import es.unican.gasolineras.model.Municipio;
+import es.unican.gasolineras.model.Orden;
 import es.unican.gasolineras.model.Orden;
 import es.unican.gasolineras.repository.IGasolinerasRepository;
 
@@ -39,9 +41,32 @@ public interface IMainContract {
          */
         public void onMenuInfoClicked();
 
+        /**
+         * The presenter is informed that the Filters item in the menu has been clicked
+         * Only the View should call this method
+         */
         public void onFilterButtonClicked();
 
-        public void onSearchStationsWithFilters(String provincia,String municipio, boolean abierto) throws DataAccessException;
+        /**
+         * Filtra y muestra la lista de gasolineras segun los filtros indicados.
+         *
+         * @param provincia La provincia por la que filtrar. Puede ser "-" para indicar que no se
+         *                  debe filtar por provincia.
+         * @param municipio El municipio por el que filtrar. Puede ser "-" para indicar que no se
+         *                  debe filtar por municipio.
+         * @param companhia La compnhia por la que filtrar. Puede ser "-" para indicar que no se
+         *                  debe filtar por companhia.
+         * @param abierto Un boolean que indica si se debe filtar por gasolineras abiertas.
+         * @throws DataAccessException Si ocurre un error al acceder a los datos
+         */
+        public void onSearchStationsWithFilters(String provincia,String municipio, String companhia, boolean abierto) throws DataAccessException;
+
+        /**
+         * Según el nombre de la provincia, en caso de éxito devuelve los municipios de esta y, en caso de error lanza un mensaje.
+         *
+         * @param provinciaNombre El nombre de la provincia por la que se filtraran los municipios.
+         */
+        public void onProvinciaSelected(String provinciaNombre);
 
         /**
          * Handles the event when the sort button is clicked, displaying the sort options popup.
@@ -54,15 +79,6 @@ public interface IMainContract {
          * @param orden the order (ascending or descending)
          */
         public void ordenarGasolinerasPorPrecio(Combustible combustible, Orden orden);
-
-        /**
-         * Helper method to get the price of the specified fuel type.
-         * @param gasolinera the gas station
-         * @param combustible the fuel type
-         * @return the fuel price
-         */
-        public double getPrecioCombustible(Gasolinera gasolinera, Combustible combustible);
-
     }
 
     /**
@@ -135,5 +151,11 @@ public interface IMainContract {
          * Only the Presenter should call this method
          */
         public void showOrdenarPopUp();
+
+        /**
+         * The view is requested to update the spinner content.
+         * Only the Presenter should call this method
+         */
+        public void updateMunicipiosSpinner(List<Municipio> municipios);
     }
 }

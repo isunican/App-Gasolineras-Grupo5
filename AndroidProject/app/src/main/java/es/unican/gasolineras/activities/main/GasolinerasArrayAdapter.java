@@ -157,8 +157,7 @@ public class GasolinerasArrayAdapter extends BaseAdapter {
 
         }
         return convertView;
-        }
-
+    }
 
     private void setFuelPrice(View convertView, int labelId, int priceId, String labelText, String price, boolean visible) {
         TextView tvLabel = convertView.findViewById(labelId);

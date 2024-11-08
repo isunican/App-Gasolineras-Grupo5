@@ -90,7 +90,6 @@ public class Horario {
             }
             return CERRADO;
         }
-
         if (horario.contains("S-D: 24H")) {
             if (Tiempo.letraDiaActual().equals("D") || Tiempo.letraDiaActual().equals("S")) {
                 return ABIERTO;
@@ -99,7 +98,6 @@ public class Horario {
         }
 
         // Obtener la hora actual
-
         if (compruebaHorario(horario)) {
             return ABIERTO;
         } else {
@@ -120,8 +118,6 @@ public class Horario {
      */
     public static boolean compruebaHorario (String horario) throws IllegalArgumentException {
         // Separar los horarios por días
-
-
         String[] horarios = obtenerHorario(horario);
         if(horario.isEmpty()){
             return false;
@@ -289,5 +285,4 @@ public class Horario {
         int letraDiaActual = calendar.get(Calendar.DAY_OF_WEEK);
         return dias[letraDiaActual] == 1;
     }
-
 }

@@ -10,22 +10,22 @@ public enum IDProvincias {
     ALBACETE("02", "Albacete"),
     ALICANTE("03", "Alicante"),
     ALMERIA("04", "Almería"),
-    ALAVA("01", "Álava"),
+    ALAVA("01", "Araba/Álava"),
     ASTURIAS("33", "Asturias"),
     AVILA("05", "Ávila"),
     BADAJOZ("06", "Badajoz"),
-    BALEARES("07", "Baleares"),
+    BALEARES("07", "Balears (Illes)"),
     BARCELONA("08", "Barcelona"),
     BIZKAIA("48", "Bizkaia"),
     BURGOS("09", "Burgos"),
     CACERES("10", "Cáceres"),
     CADIZ("11", "Cádiz"),
     CANTABRIA("39", "Cantabria"),
-    CASTELLON("12", "Castellón"),
+    CASTELLON("12", "Castellón / Castelló"),
     CEUTA("51", "Ceuta"),
     CIUDAD_REAL("13", "Ciudad Real"),
     CORDOBA("14", "Córdoba"),
-    CORUÑA("15", "A Coruña"),
+    CORUÑA("15", "Coruña (A)"),
     CUENCA("16", "Cuenca"),
     GIPUZKOA("20", "Gipuzkoa"),
     GIRONA("17", "Girona"),
@@ -44,9 +44,9 @@ public enum IDProvincias {
     NAVARRA("31", "Navarra"),
     OURENSE("32", "Ourense"),
     PALENCIA("34", "Palencia"),
-    LAS_PALMAS("35", "Las Palmas"),
+    LAS_PALMAS("35", "Palmas (Las)"),
     PONTEVEDRA("36", "Pontevedra"),
-    LA_RIOJA("26", "La Rioja"),
+    LA_RIOJA("26", "Rioja (La)"),
     SALAMANCA("37", "Salamanca"),
     SANTA_CRUZ_DE_TENERIFE("38", "Santa Cruz de Tenerife"),
     SEGOVIA("40", "Segovia"),
@@ -55,7 +55,7 @@ public enum IDProvincias {
     TARRAGONA("43", "Tarragona"),
     TERUEL("44", "Teruel"),
     TOLEDO("45", "Toledo"),
-    VALENCIA("46", "Valencia"),
+    VALENCIA("46", "Valencia / València"),
     VALLADOLID("47", "Valladolid"),
     ZAMORA("49", "Zamora"),
     ZARAGOZA("50", "Zaragoza");
@@ -67,7 +67,12 @@ public enum IDProvincias {
         this.id = id;
         this.nombre = nombre;
     }
-
+    
+    /**
+     * Devuelve el id de la provincia pasada como parametro.
+     *
+     * @param  nombreProvincia Nombre de la provincia a obtener el código.
+     */
     public static String getCodigoByProvincia(String nombreProvincia) {
         if (nombreProvincia == null || nombreProvincia.equals("-")) { return null; }
         for (IDProvincias provincia : IDProvincias.values()) {

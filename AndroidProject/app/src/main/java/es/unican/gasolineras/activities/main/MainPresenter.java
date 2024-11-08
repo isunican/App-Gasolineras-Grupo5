@@ -3,9 +3,11 @@ package es.unican.gasolineras.activities.main;
 import java.util.Comparator;
 import java.util.List;
 import es.unican.gasolineras.common.DataAccessException;
-import es.unican.gasolineras.common.Filtros;
+import es.unican.gasolineras.common.IFiltros;
 import es.unican.gasolineras.model.Combustible;
 import es.unican.gasolineras.model.Gasolinera;
+import es.unican.gasolineras.model.IDProvincias;
+import es.unican.gasolineras.model.Municipio;
 import es.unican.gasolineras.model.Orden;
 import es.unican.gasolineras.repository.ICallBack;
 import es.unican.gasolineras.repository.IGasolinerasRepository;
@@ -22,6 +24,8 @@ public class MainPresenter implements IMainContract.Presenter {
     /** The view that is controlled by this presenter */
     private IMainContract.View view;
     private List<Gasolinera> gasolineras;
+    @Setter
+    private IFiltros filtros;
     private List<Gasolinera> gasolinerasFiltradas;
 
     /**
@@ -61,20 +65,28 @@ public class MainPresenter implements IMainContract.Presenter {
     }
 
     /**
-     * @see IMainContract.Presenter#onSearchStationsWithFilters(String provincia, String municipio, boolean abierto)
+     * @see IMainContract.Presenter#onSearchStationsWithFilters(String provincia, String municipio,
+     *                                                          String companhia, boolean abierto)
      */
     @Override
-    public void onSearchStationsWithFilters(String provincia, String municipio, boolean abierto) throws DataAccessException {
+    public void onSearchStationsWithFilters(String provincia, String municipio, String companhia,
+                                            boolean abierto) throws DataAccessException {
+
         List<Gasolinera> gasolinerasFiltradas = gasolineras;
 
         String finalProvincia = "-".equals(provincia) ? null : provincia;
-        String finalMunicipio = "".equals(municipio) ? null : municipio;
+        String finalMunicipio = ("-".equals(municipio) || municipio.isEmpty()) ? null : municipio;
+        String finalCompanhia = "-".equals(companhia) ? null : companhia;
 
-        if (finalProvincia != null || finalMunicipio != null) {
-            gasolinerasFiltradas = Filtros.filtrarPorProvinciaYMunicipio(gasolinerasFiltradas, finalProvincia, finalMunicipio);
+        if (finalProvincia != null) {
+            gasolinerasFiltradas = filtros.filtrarPorProvinciaYMunicipio(gasolinerasFiltradas,
+                    finalProvincia, finalMunicipio);
+        }
+        if (finalCompanhia != null){
+            gasolinerasFiltradas = filtros.filtrarPorCompanhia(gasolinerasFiltradas, finalCompanhia);
         }
         if (abierto) {
-            gasolinerasFiltradas = Filtros.filtrarPorEstado(gasolinerasFiltradas);
+            gasolinerasFiltradas = filtros.filtrarPorEstado(gasolinerasFiltradas);
         }
 
         // Guarda la lista filtrada para utilizarla en la ordenación
@@ -84,39 +96,35 @@ public class MainPresenter implements IMainContract.Presenter {
         view.showLoadCorrect(gasolinerasFiltradas.size());
     }
 
-    /**
-     Loads the gas stations from the repository, and sends them to the view
-     */
-    private void load() {
-        IGasolinerasRepository repository = view.getGasolinerasRepository();
+    @Override
+    public void onProvinciaSelected(String provinciaNombre) {
+        String idProvincia = IDProvincias.getCodigoByProvincia(provinciaNombre);
+        if (idProvincia != null) {
+            view.getGasolinerasRepository().requestMunicipiosPorProvincia(new ICallBack<Municipio>() {
+                @Override
+                public void onSuccess(List<Municipio> municipios) {
+                    view.updateMunicipiosSpinner(municipios);
+                }
 
-        ICallBack callBack = new ICallBack() {
-
-            @Override
-            public void onSuccess(List<Gasolinera> stations) {
-                gasolineras = stations;
-                view.showStations(stations);
-                view.showLoadCorrect(stations.size());
-                gasolinerasFiltradas = stations;
-            }
-
-            @Override
-            public void onFailure(Throwable e) {
-                view.showLoadError();
-            }
-        };
-        repository.requestGasolineras(callBack);
+                @Override
+                public void onFailure(Throwable e) {
+                    view.showLoadError();
+                }
+                }, idProvincia);
+        }
     }
 
     /**
      * @see IMainContract.Presenter#onOrdenarButtonClicked()
      */
+    @Override
     public void onOrdenarButtonClicked() { view.showOrdenarPopUp(); }
 
 
     /**
      * @see IMainContract.Presenter#ordenarGasolinerasPorPrecio(Combustible combustible, Orden orden)
      */
+    @Override
     public void ordenarGasolinerasPorPrecio(Combustible combustible, Orden orden) {
         // Usa la lista filtrada
         List<Gasolinera> gasolinerasAOrdenar = this.gasolinerasFiltradas;
@@ -156,9 +164,12 @@ public class MainPresenter implements IMainContract.Presenter {
     }
 
     /**
-     * @see IMainContract.Presenter#getPrecioCombustible(Gasolinera gasolinera, Combustible combustible)
+     * Método auxiliar para obtener el precio del combustible
+     * @param gasolinera la gasolinera de la que se queire obtener los precios
+     * @param combustible el tipo de combustible del que se quiere obtener el precio
+     * @return el precio del tipo de combustible seleccionado en la gasolinera seleccionada
      */
-    public double getPrecioCombustible(Gasolinera gasolinera, Combustible combustible) {
+    private double getPrecioCombustible(Gasolinera gasolinera, Combustible combustible) {
         switch (combustible) {
             case GASOLEOA:
                 return gasolinera.getGasoleoA();
@@ -169,5 +180,29 @@ public class MainPresenter implements IMainContract.Presenter {
             default:
                 return gasolinera.getBiodiesel();
         }
+    }
+
+    /**
+     Loads the gas stations from the repository, and sends them to the view
+     */
+    private void load() {
+        IGasolinerasRepository repository = view.getGasolinerasRepository();
+
+        ICallBack<Gasolinera> callBack = new ICallBack<Gasolinera>() {
+
+            @Override
+            public void onSuccess(List<Gasolinera> stations) {
+                gasolineras = stations;
+                gasolinerasFiltradas = stations;
+                view.showStations(stations);
+                view.showLoadCorrect(stations.size());
+            }
+
+            @Override
+            public void onFailure(Throwable e) {
+                view.showLoadError();
+            }
+        };
+        repository.requestGasolineras(callBack);
     }
 }

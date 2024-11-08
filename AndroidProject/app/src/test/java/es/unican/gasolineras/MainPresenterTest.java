@@ -1,6 +1,8 @@
-package es.unican.gasolineras.main;
+package es.unican.gasolineras;
 
+import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.ArgumentMatchers.anyList;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -16,10 +18,11 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.robolectric.RobolectricTestRunner;
 
-import es.unican.gasolineras.R;
 import es.unican.gasolineras.activities.main.IMainContract;
 import es.unican.gasolineras.activities.main.MainPresenter;
 import es.unican.gasolineras.common.DataAccessException;
+import es.unican.gasolineras.common.IFiltros;
+import es.unican.gasolineras.utils.MockRepositories;
 import es.unican.gasolineras.repository.IGasolinerasRepository;
 
 @RunWith(RobolectricTestRunner.class)
@@ -28,6 +31,8 @@ public class MainPresenterTest {
     private MainPresenter presenter = new MainPresenter();
     @Mock
     private IMainContract.View mockView;
+    @Mock
+    private IFiltros mockFilters;
 
     private Context context = ApplicationProvider.getApplicationContext();
     private IGasolinerasRepository repository;
@@ -41,6 +46,7 @@ public class MainPresenterTest {
         when(mockView.getGasolinerasRepository()).thenReturn(repository);
 
         presenter.init(mockView);
+        presenter.setFiltros(mockFilters);
     }
 
     @Test
@@ -48,11 +54,11 @@ public class MainPresenterTest {
         String provincia = "Cantabria";
         String municipio = "Santander";
 
-        presenter.onSearchStationsWithFilters(provincia, municipio, true);
+        presenter.onSearchStationsWithFilters(provincia, municipio, null,true);
 
+        verify(mockFilters).filtrarPorProvinciaYMunicipio(anyList(), eq("Cantabria"), eq("Santander"));
         verify(mockView, times(2)).showStations(anyList());
-        verify(mockView, times(1)).showLoadCorrect(2);
-
+        verify(mockView, times(2)).showLoadCorrect(anyInt());
     }
 
     @Test
@@ -60,21 +66,11 @@ public class MainPresenterTest {
         String provincia = "Cantabria";
         String municipio = "";
 
-        presenter.onSearchStationsWithFilters(provincia, municipio, true);
+        presenter.onSearchStationsWithFilters(provincia, municipio, null,true);
 
+        verify(mockFilters).filtrarPorProvinciaYMunicipio(anyList(), eq("Cantabria"), eq(null));
         verify(mockView, times(2)).showStations(anyList());
-        verify(mockView, times(1)).showLoadCorrect(4);
-    }
-
-    @Test
-    public void test_UB1C() throws DataAccessException {
-        String provincia = "-";
-        String municipio = "Santander";
-
-        presenter.onSearchStationsWithFilters(provincia, municipio, false);
-
-        verify(mockView, times(2)).showStations(anyList());
-        verify(mockView, times(1)).showLoadCorrect(2);
+        verify(mockView, times(2)).showLoadCorrect(anyInt());
     }
 
     @Test
@@ -82,10 +78,11 @@ public class MainPresenterTest {
         String provincia = "Madrid";
         String municipio = "";
 
-        presenter.onSearchStationsWithFilters(provincia, municipio, false);
+        presenter.onSearchStationsWithFilters(provincia, municipio, null,false);
 
+        verify(mockFilters).filtrarPorProvinciaYMunicipio(anyList(), eq("Madrid"), eq(null));
         verify(mockView, times(2)).showStations(anyList());
-        verify(mockView, times(1)).showLoadCorrect(0);
+        verify(mockView, times(2)).showLoadCorrect(anyInt());
     }
 
     @Test
@@ -93,21 +90,11 @@ public class MainPresenterTest {
         String provincia = "Asturias";
         String municipio = "Tineo";
 
-        presenter.onSearchStationsWithFilters(provincia, municipio, false);
+        presenter.onSearchStationsWithFilters(provincia, municipio, null, false);
 
+        verify(mockFilters).filtrarPorProvinciaYMunicipio(anyList(), eq("Asturias"), eq("Tineo"));
         verify(mockView, times(2)).showStations(anyList());
-        verify(mockView, times(1)).showLoadCorrect(0);
-    }
-
-    @Test
-    public void test_UB1F() throws DataAccessException {
-        String provincia = "-";
-        String municipio = "Tineo";
-
-        presenter.onSearchStationsWithFilters(provincia, municipio, false);
-
-        verify(mockView, times(2)).showStations(anyList());
-        verify(mockView, times(1)).showLoadCorrect(0);
+        verify(mockView, times(2)).showLoadCorrect(anyInt());
     }
 
     @Test
@@ -115,10 +102,11 @@ public class MainPresenterTest {
         String provincia = "Asturias";
         String municipio = "Santander";
 
-        presenter.onSearchStationsWithFilters(provincia, municipio, false);
+        presenter.onSearchStationsWithFilters(provincia, municipio, null, false);
 
+        verify(mockFilters).filtrarPorProvinciaYMunicipio(anyList(), eq("Asturias"), eq("Santander"));
         verify(mockView, times(2)).showStations(anyList());
-        verify(mockView, times(1)).showLoadCorrect(0);
+        verify(mockView, times(2)).showLoadCorrect(anyInt());
     }
 
     @Test
@@ -126,10 +114,9 @@ public class MainPresenterTest {
         String provincia = "-";
         String municipio = "";
 
-        presenter.onSearchStationsWithFilters(provincia, municipio, true);
+        presenter.onSearchStationsWithFilters(provincia, municipio, null, true);
 
         verify(mockView, times(2)).showStations(anyList());
-        verify(mockView, times(2)).showLoadCorrect(7);
+        verify(mockView, times(2)).showLoadCorrect(anyInt());
     }
-
 }

@@ -45,19 +45,12 @@ public class BusquedaSinResultadosUITest {
     @Rule(order = 1)
     public ActivityScenarioRule<MainView> activityRule = new ActivityScenarioRule<>(MainView.class);
 
-    // I need the context to access resources, such as the json with test gas stations
     final Context context = InstrumentationRegistry.getInstrumentation().getTargetContext();
 
-    // Mock repository that provides data from a JSON file instead of downloading it from the internet.
     @BindValue
     final IGasolinerasRepository repository = getTestRepository(context, R.raw.gasolineras_test);
 
     View decorView;
-
-    @After
-    public void tearDown() throws InterruptedException {
-        Thread.sleep(2000);
-    }
 
     @Test
     public void test() {
