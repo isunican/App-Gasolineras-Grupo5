@@ -31,6 +31,7 @@ public class GasolinerasArrayAdapter extends BaseAdapter {
     /** Context of the application */
     private final Context context;
 
+    /** Selected fuel type for filtering or highlighting prices */
     private Combustible combustibleSeleccionado;
 
     /**
@@ -60,6 +61,14 @@ public class GasolinerasArrayAdapter extends BaseAdapter {
         return position;
     }
 
+    /**
+     * Provides a view for each gas station in the list.
+     *
+     * @param position the position of the gas station
+     * @param convertView the recycled view to populate
+     * @param parent the parent view group
+     * @return the view for the gas station at the specified position
+     */
     @SuppressLint("DiscouragedApi")  // to remove warnings about using getIdentifier
     @NonNull
     @Override

@@ -6,6 +6,7 @@ import es.unican.gasolineras.model.Combustible;
 import es.unican.gasolineras.model.Gasolinera;
 import es.unican.gasolineras.model.Municipio;
 import es.unican.gasolineras.model.Orden;
+import es.unican.gasolineras.model.Orden;
 import es.unican.gasolineras.repository.IGasolinerasRepository;
 
 /**
@@ -68,16 +69,14 @@ public interface IMainContract {
         public void onProvinciaSelected(String provinciaNombre);
 
         /**
-         * The presenter is informed that the Order button in the menu has been clicked
-         * Only the View should call this method
+         * Handles the event when the sort button is clicked, displaying the sort options popup.
          */
         public void onOrdenarButtonClicked();
 
         /**
-         * Filtra y muestra la lista de gasolineras segun los filtros indicados.
-         *
-         * @param combustible el combustible por el que filtrar.Por defecto es "diesel".
-         * @param orden El orden por el que filtrar.Por defecto es "ascedente".
+         * Sorts gas stations by the specified fuel type and order.
+         * @param combustible the fuel type to sort by
+         * @param orden the order (ascending or descending)
          */
         public void ordenarGasolinerasPorPrecio(Combustible combustible, Orden orden);
     }

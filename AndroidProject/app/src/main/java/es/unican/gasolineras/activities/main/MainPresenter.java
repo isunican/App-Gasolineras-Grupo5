@@ -114,9 +114,16 @@ public class MainPresenter implements IMainContract.Presenter {
         }
     }
 
+    /**
+     * @see IMainContract.Presenter#onOrdenarButtonClicked()
+     */
     @Override
     public void onOrdenarButtonClicked() { view.showOrdenarPopUp(); }
 
+
+    /**
+     * @see IMainContract.Presenter#ordenarGasolinerasPorPrecio(Combustible combustible, Orden orden)
+     */
     @Override
     public void ordenarGasolinerasPorPrecio(Combustible combustible, Orden orden) {
         // Usa la lista filtrada
