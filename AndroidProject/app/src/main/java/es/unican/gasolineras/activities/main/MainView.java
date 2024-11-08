@@ -206,6 +206,9 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
                 .show();
     }
 
+    /**
+     * @see IMainContract.View#showOrdenarPopUp()
+     */
     @Override
     public void showOrdenarPopUp() {
         LayoutInflater inflater = LayoutInflater.from(this);

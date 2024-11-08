@@ -2,7 +2,9 @@ package es.unican.gasolineras.activities.main;
 
 import java.util.List;
 import es.unican.gasolineras.common.DataAccessException;
+import es.unican.gasolineras.model.Combustible;
 import es.unican.gasolineras.model.Gasolinera;
+import es.unican.gasolineras.model.Orden;
 import es.unican.gasolineras.repository.IGasolinerasRepository;
 
 /**
@@ -40,6 +42,27 @@ public interface IMainContract {
         public void onFilterButtonClicked();
 
         public void onSearchStationsWithFilters(String provincia,String municipio, boolean abierto) throws DataAccessException;
+
+        /**
+         * Handles the event when the sort button is clicked, displaying the sort options popup.
+         */
+        public void onOrdenarButtonClicked();
+
+        /**
+         * Sorts gas stations by the specified fuel type and order.
+         * @param combustible the fuel type to sort by
+         * @param orden the order (ascending or descending)
+         */
+        public void ordenarGasolinerasPorPrecio(Combustible combustible, Orden orden);
+
+        /**
+         * Helper method to get the price of the specified fuel type.
+         * @param gasolinera the gas station
+         * @param combustible the fuel type
+         * @return the fuel price
+         */
+        public double getPrecioCombustible(Gasolinera gasolinera, Combustible combustible);
+
     }
 
     /**

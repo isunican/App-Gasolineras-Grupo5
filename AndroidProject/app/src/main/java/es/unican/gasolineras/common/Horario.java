@@ -7,6 +7,10 @@ import java.util.Calendar;
  */
 public class Horario {
 
+    // Constantes para los estados de apertura
+    private static final String ABIERTO = "Abierto";
+    private static final String CERRADO = "Cerrado";
+
     /*
     * Obtiene los horarios de una gasolinera
     * @param horario el horario en formato String
@@ -23,9 +27,6 @@ public class Horario {
         String[] horarios = horario.split(";");
         return horarios;
     }
-
-
-
 
     /*
         * Comprueba si el horario de la gasolinera está abierto
@@ -49,61 +50,60 @@ public class Horario {
         }
         if (horario.contains("L: 24H")) {
             if (Tiempo.letraDiaActual().equals("L")) {
-                return "Abierto";
+                return ABIERTO;
             }
-            return "Cerrado";
+            return CERRADO;
         }
         if (horario.contains("M: 24H")) {
             if (Tiempo.letraDiaActual().equals("M")) {
-                return "Abierto";
+                return ABIERTO;
             }
-            return "Cerrado";
+            return CERRADO;
         }
         if (horario.contains("X: 24H")) {
             if (Tiempo.letraDiaActual().equals("X")) {
-                return "Abierto";
+                return ABIERTO;
             }
-            return "Cerrado";
+            return CERRADO;
         }
         if (horario.contains("J: 24H")) {
             if (Tiempo.letraDiaActual().equals("J")) {
-                return "Abierto";
+                return ABIERTO;
             }
-            return "Cerrado";
+            return CERRADO;
         }
         if (horario.contains("V: 24H")) {
             if (Tiempo.letraDiaActual().equals("V")) {
-                return "Abierto";
+                return ABIERTO;
             }
-            return "Cerrado";
+            return CERRADO;
         }
         if (horario.contains("S: 24H")) {
             if (Tiempo.letraDiaActual().equals("S")) {
-                return "Abierto";
+                return ABIERTO;
             }
-            return "Cerrado";
+            return CERRADO;
         }
         if (horario.contains("D: 24H")) {
             if (Tiempo.letraDiaActual().equals("D")) {
-                return "Abierto";
+                return ABIERTO;
             }
-            return "Cerrado";
+            return CERRADO;
         }
 
         if (horario.contains("S-D: 24H")) {
             if (Tiempo.letraDiaActual().equals("D") || Tiempo.letraDiaActual().equals("S")) {
-                return "Abierto";
+                return ABIERTO;
             }
-            return "Cerrado";
+            return CERRADO;
         }
-
 
         // Obtener la hora actual
 
         if (compruebaHorario(horario)) {
-            return "Abierto";
+            return ABIERTO;
         } else {
-            return "Cerrado";
+            return CERRADO;
         }
     }
 

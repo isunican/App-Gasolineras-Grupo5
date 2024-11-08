@@ -108,9 +108,15 @@ public class MainPresenter implements IMainContract.Presenter {
         repository.requestGasolineras(callBack);
     }
 
+    /**
+     * @see IMainContract.Presenter#onOrdenarButtonClicked()
+     */
     public void onOrdenarButtonClicked() { view.showOrdenarPopUp(); }
 
 
+    /**
+     * @see IMainContract.Presenter#ordenarGasolinerasPorPrecio(Combustible combustible, Orden orden)
+     */
     public void ordenarGasolinerasPorPrecio(Combustible combustible, Orden orden) {
         // Usa la lista filtrada
         List<Gasolinera> gasolinerasAOrdenar = this.gasolinerasFiltradas;
@@ -149,8 +155,10 @@ public class MainPresenter implements IMainContract.Presenter {
         view.showStations(gasolinerasAOrdenar);
     }
 
-    // Método auxiliar para obtener el precio del combustible
-    private double getPrecioCombustible(Gasolinera gasolinera, Combustible combustible) {
+    /**
+     * @see IMainContract.Presenter#getPrecioCombustible(Gasolinera gasolinera, Combustible combustible)
+     */
+    public double getPrecioCombustible(Gasolinera gasolinera, Combustible combustible) {
         switch (combustible) {
             case GASOLEOA:
                 return gasolinera.getGasoleoA();
