@@ -20,7 +20,6 @@ import es.unican.gasolineras.model.GasolinerasResponse;
  * Utility methods that may be used by several classes
  */
 public class Utils {
-
     /**
      * Parses a list of gas stations from a json resource file.
      * The json must contain a serialized GasolinerasResponse object.

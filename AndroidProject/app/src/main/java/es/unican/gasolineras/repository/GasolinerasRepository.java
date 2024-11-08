@@ -1,8 +1,12 @@
 package es.unican.gasolineras.repository;
 
+import java.util.List;
+
 import javax.annotation.Nonnull;
 
+import es.unican.gasolineras.model.Gasolinera;
 import es.unican.gasolineras.model.GasolinerasResponse;
+import es.unican.gasolineras.model.Municipio;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -21,13 +25,12 @@ public class GasolinerasRepository implements IGasolinerasRepository {
 
     /**
      * Request gas stations from the Gasolineras real API.
-     * @see IGasolinerasRepository#requestGasolineras(ICallBack, String)
+     * @see IGasolinerasRepository#requestGasolineras(ICallBack)
      * @param cb the callback that will asynchronously process the returned gas stations
-     * @param ccaa id of the "comunidad autonoma"
      */
     @Override
-    public void requestGasolineras(ICallBack cb, String ccaa) {
-        Call<GasolinerasResponse> call = GasolinerasService.api.gasolineras(ccaa);
+    public void requestGasolineras(ICallBack<Gasolinera> cb) {
+        Call<GasolinerasResponse> call = GasolinerasService.api.gasolineras();
         call.enqueue(new Callback<GasolinerasResponse>() {
             @Override
             public void onResponse(@Nonnull Call<GasolinerasResponse> call, @Nonnull Response<GasolinerasResponse> response) {
@@ -38,6 +41,23 @@ public class GasolinerasRepository implements IGasolinerasRepository {
 
             @Override
             public void onFailure(@Nonnull Call<GasolinerasResponse> call, @Nonnull Throwable t) {
+                cb.onFailure(t);
+            }
+        });
+    }
+
+    @Override
+    public void requestMunicipiosPorProvincia(ICallBack<Municipio> cb, String idProvincia) {
+        Call<List<Municipio>> call = GasolinerasService.api.municipiosPorProvincia(idProvincia);
+        call.enqueue(new Callback<List<Municipio>>() {
+            @Override
+            public void onResponse(@Nonnull Call<List<Municipio>> call, @Nonnull Response<List<Municipio>> response) {
+                List<Municipio> municipios = response.body();
+                cb.onSuccess(municipios);
+            }
+
+            @Override
+            public void onFailure(@Nonnull Call<List<Municipio>> call, @Nonnull Throwable t) {
                 cb.onFailure(t);
             }
         });

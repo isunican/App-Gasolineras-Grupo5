@@ -1,0 +1,34 @@
+@startuml
+
+hide empty members
+
+class Gasolinera {
+    #  String id
+    #  String rotulo
+    #  String cp
+    #  String direccion
+    #  String municipio
+    #  String localidad
+    #  String horario
+    #  double gasoleoA
+    #  double gasolina95E5
+    #  double gasolina98E5
+    #  double biodiesel
+    -  String estado
+    +  calculateSummarizedPrice(): double
+    +  compruebaEstado(String horario): String
+    
+    
+}
+
+class GasolinerasResponse {
+    -  String fecha
+    -  String nota
+    -  String consulta
+  
+}
+
+
+GasolinerasResponse *-- "*" Gasolinera : gasolineras
+
+@enduml

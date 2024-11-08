@@ -1,9 +1,7 @@
 package es.unican.gasolineras.activities.info;
 
 import android.os.Bundle;
-
 import androidx.appcompat.app.AppCompatActivity;
-
 import es.unican.gasolineras.R;
 
 /**
@@ -17,4 +15,5 @@ public class InfoView extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_info_view);
     }
+
 }

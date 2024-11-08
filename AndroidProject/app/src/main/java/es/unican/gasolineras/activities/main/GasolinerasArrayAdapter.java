@@ -1,17 +1,15 @@
 package es.unican.gasolineras.activities.main;
 
-import static java.util.Collections.emptyList;
-
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -19,6 +17,7 @@ import androidx.annotation.Nullable;
 import java.util.List;
 
 import es.unican.gasolineras.R;
+import es.unican.gasolineras.model.Combustible;
 import es.unican.gasolineras.model.Gasolinera;
 
 /**
@@ -32,15 +31,19 @@ public class GasolinerasArrayAdapter extends BaseAdapter {
     /** Context of the application */
     private final Context context;
 
+    /** Selected fuel type for filtering or highlighting prices */
+    private Combustible combustibleSeleccionado;
+
     /**
      * Constructs an adapter to handle a list of gasolineras
      * @param context the application context
      * @param objects the list of gas stations
      */
-    public GasolinerasArrayAdapter(@NonNull Context context, @NonNull List<Gasolinera> objects) {
+    public GasolinerasArrayAdapter(@NonNull Context context, @NonNull List<Gasolinera> objects, Combustible combustibleSeleccionado) {
         // we know the parameters are not null because of the @NonNull annotation
         this.gasolineras = objects;
         this.context = context;
+        this.combustibleSeleccionado = combustibleSeleccionado;
     }
 
     @Override
@@ -58,6 +61,14 @@ public class GasolinerasArrayAdapter extends BaseAdapter {
         return position;
     }
 
+    /**
+     * Provides a view for each gas station in the list.
+     *
+     * @param position the position of the gas station
+     * @param convertView the recycled view to populate
+     * @param parent the parent view group
+     * @return the view for the gas station at the specified position
+     */
     @SuppressLint("DiscouragedApi")  // to remove warnings about using getIdentifier
     @NonNull
     @Override
@@ -89,6 +100,16 @@ public class GasolinerasArrayAdapter extends BaseAdapter {
                 view.setImageResource(imageID);
             }
         }
+        // status
+        {
+            TextView tv = convertView.findViewById(R.id.tvEstado);
+            try {
+                tv.setText(gasolinera.compruebaEstado(gasolinera.getHorario()));
+            } catch (IllegalArgumentException e) {
+                Toast.makeText(context, "Error de argumento: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                tv.setText("Error de argumento: " + e.getMessage());
+            }
+        }
 
         // name
         {
@@ -101,27 +122,50 @@ public class GasolinerasArrayAdapter extends BaseAdapter {
             TextView tv = convertView.findViewById(R.id.tvAddress);
             tv.setText(gasolinera.getDireccion());
         }
+        if (combustibleSeleccionado == null) {
+            setFuelPrice(convertView, R.id.tv95Label, R.id.tv95, context.getString(R.string.gasolina95label),
+                    String.valueOf(gasolinera.getGasolina95E5()), true);
+            setFuelPrice(convertView, R.id.tvDieselALabel, R.id.tvDieselA, context.getString(R.string.dieselAlabel),
+                    String.valueOf(gasolinera.getGasoleoA()), true);
+        } else {
+            switch (combustibleSeleccionado) {
+                case GASOLEOA:
+                    setFuelPrice(convertView, R.id.tv95Label, R.id.tv95, context.getString(R.string.dieselAlabel),
+                            String.valueOf(gasolinera.getGasoleoA()), true);
+                    setFuelPrice(convertView, R.id.tvDieselALabel, R.id.tvDieselA, context.getString(R.string.dieselAlabel),
+                            String.valueOf(gasolinera.getGasoleoA()), false);
+                    break;
+                case GASOLINA95E:
+                    setFuelPrice(convertView, R.id.tv95Label, R.id.tv95, context.getString(R.string.gasolina95label),
+                            String.valueOf(gasolinera.getGasolina95E5()), true);
+                    setFuelPrice(convertView, R.id.tvDieselALabel, R.id.tvDieselA, context.getString(R.string.dieselAlabel),
+                            String.valueOf(gasolinera.getGasoleoA()), false);
+                    break;
+                case GASOLINA98E:
+                    setFuelPrice(convertView, R.id.tv95Label, R.id.tv95, context.getString(R.string.gasolina98label),
+                            String.valueOf(gasolinera.getGasolina98E5()), true);
+                    setFuelPrice(convertView, R.id.tvDieselALabel, R.id.tvDieselA, context.getString(R.string.dieselAlabel),
+                            String.valueOf(gasolinera.getGasoleoA()), false);
+                    break;
+                case BIODIESEL:
+                    setFuelPrice(convertView, R.id.tv95Label, R.id.tv95, context.getString(R.string.biolabel),
+                            String.valueOf(gasolinera.getBiodiesel()), true);
+                    setFuelPrice(convertView, R.id.tvDieselALabel, R.id.tvDieselA, context.getString(R.string.dieselAlabel),
+                            String.valueOf(gasolinera.getGasoleoA()), false);
+                    break;
+            }
 
-        // gasolina 95 price
-        {
-            TextView tvLabel = convertView.findViewById(R.id.tv95Label);
-            String label = context.getResources().getString(R.string.gasolina95label);
-            tvLabel.setText(String.format("%s:", label));
-
-            TextView tv = convertView.findViewById(R.id.tv95);
-            tv.setText(String.valueOf(gasolinera.getGasolina95E5()));
         }
-
-        // diesel A price
-        {
-            TextView tvLabel = convertView.findViewById(R.id.tvDieselALabel);
-            String label = context.getResources().getString(R.string.dieselAlabel);
-            tvLabel.setText(String.format("%s:", label));
-
-            TextView tv = convertView.findViewById(R.id.tvDieselA);
-            tv.setText(String.valueOf(gasolinera.getGasoleoA()));
-        }
-
         return convertView;
+    }
+
+    private void setFuelPrice(View convertView, int labelId, int priceId, String labelText, String price, boolean visible) {
+        TextView tvLabel = convertView.findViewById(labelId);
+        tvLabel.setText(String.format("%s:", labelText));
+        tvLabel.setVisibility(visible ? View.VISIBLE : View.GONE);
+
+        TextView tvPrice = convertView.findViewById(priceId);
+        tvPrice.setText(price);
+        tvPrice.setVisibility(visible ? View.VISIBLE : View.GONE);
     }
 }

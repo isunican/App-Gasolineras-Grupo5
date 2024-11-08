@@ -18,5 +18,4 @@ public final class CustomTestRunner extends AndroidJUnitRunner {
             throws ClassNotFoundException, IllegalAccessException, InstantiationException {
         return super.newApplication(cl, HiltTestApplication.class.getName(), context);
     }
-
 }

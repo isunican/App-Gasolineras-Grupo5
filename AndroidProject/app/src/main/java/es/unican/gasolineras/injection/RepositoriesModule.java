@@ -24,5 +24,4 @@ public abstract class RepositoriesModule {
     public static IGasolinerasRepository provideRepository() {
         return GasolinerasRepository.INSTANCE;
     }
-
 }
