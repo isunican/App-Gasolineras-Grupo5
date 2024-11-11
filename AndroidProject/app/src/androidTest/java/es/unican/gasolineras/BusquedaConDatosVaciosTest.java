@@ -75,5 +75,4 @@ public class BusquedaConDatosVaciosTest {
         //Espresso.onView(withText("Cargadas 2 gasolineras")).inRoot(RootMatchers.withDecorView(not(decorView))).check(matches(isDisplayed()));
 
     }
-
 }
