@@ -7,6 +7,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.ListView;
@@ -190,8 +191,18 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
 
         asignaAdapterASpinner(spnProvincias, R.array.provincias_espana);
         asignaAdapterASpinner(spnCompanhia, R.array.lista_companhias);
-
         List<String> seleccionadosList = new ArrayList<>();
+
+        spnProvincias.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String provinciaSeleccionada = spnProvincias.getSelectedItem().toString();
+                presenter.onProvinciaSelected(provinciaSeleccionada);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) { }
+        });
 
         new AlertDialog.Builder(this)
                 .setTitle("Filtrar Gasolineras")
@@ -246,6 +257,9 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
                 .show();
     }
 
+    /**
+     * @see IMainContract.View#updateMunicipiosSpinner(List municipios) 
+     */
     @Override
     public void updateMunicipiosSpinner(List<Municipio> municipios) {
         List<String> nombresMunicipios = new ArrayList<>();
