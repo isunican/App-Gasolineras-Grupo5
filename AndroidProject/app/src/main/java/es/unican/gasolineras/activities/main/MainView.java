@@ -7,6 +7,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.ListView;
@@ -190,69 +191,28 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
 
         asignaAdapterASpinner(spnProvincias, R.array.provincias_espana);
         asignaAdapterASpinner(spnCompanhia, R.array.lista_companhias);
-
-        String[] opcionesCombustibles = getResources().getStringArray(R.array.lista_gasolinas);
-        boolean[] seleccionados = new boolean[opcionesCombustibles.length];
         List<String> seleccionadosList = new ArrayList<>();
+
+        spnProvincias.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String provinciaSeleccionada = spnProvincias.getSelectedItem().toString();
+                presenter.onProvinciaSelected(provinciaSeleccionada);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) { }
+        });
 
         new AlertDialog.Builder(this)
                 .setTitle("Filtrar Gasolineras")
                 .setView(view)
-                .setPositiveButton("Buscar", (dialog, which) -> {
-                    String provincia = spnProvincias.getSelectedItem().toString();
-                    String municipio = spnMunicipios.getSelectedItem() != null ?
-                            spnMunicipios.getSelectedItem().toString() : "";
-                    String companhia = spnCompanhia.getSelectedItem().toString();
-                    boolean abierto = checkEstado.isChecked();
-                    List<String> combustiblesSeleccionados = new ArrayList<>(seleccionadosList);
-
-                    try {
-                        presenter.onSearchStationsWithFilters(provincia, municipio, companhia, combustiblesSeleccionados, abierto);
-                    } catch (DataAccessException e) {
-                        throw new RuntimeException(e);
-                    }
-                    dialog.dismiss();
-                })
+                .setPositiveButton("Buscar", (dialog, which) -> applyFilters(spnProvincias, spnCompanhia, checkEstado, seleccionadosList))
                 .setNegativeButton("Cancelar", (dialog, which) -> dialog.dismiss())
                 .create()
                 .show();
 
-        rlCombustible.setOnClickListener(v -> {
-            AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            builder.setTitle("Tipología de Combustible");
-            builder.setMultiChoiceItems(opcionesCombustibles, seleccionados, (dialog, which, isChecked) -> {
-                if (isChecked) {
-                    seleccionadosList.add(opcionesCombustibles[which]);
-                } else {
-                    seleccionadosList.remove(opcionesCombustibles[which]);
-                }
-            });
-
-            builder.setPositiveButton("Aceptar", (dialog, which) -> {
-                if (seleccionadosList.isEmpty()) {
-                    tvCombustible.setText("Selecciona combustibles");
-                } else {
-                    StringBuilder stringBuilder = new StringBuilder();
-                    for (String s : seleccionadosList) {
-                        stringBuilder.append(s).append(", ");
-                    }
-                    if (stringBuilder.length() > 0) {
-                        stringBuilder.setLength(stringBuilder.length() - 2); // Elimina la última coma
-                    }
-                    tvCombustible.setText(stringBuilder.toString());
-                }
-            });
-
-            builder.setNegativeButton("Cancelar", (dialog, which) -> dialog.dismiss());
-
-            builder.setNeutralButton("Borrar", (dialog, which) -> {
-                seleccionadosList.clear();
-                Arrays.fill(seleccionados, false);
-                tvCombustible.setText("Selecciona combustibles");
-            });
-
-            builder.create().show();
-        });
+        configureFuelSelection(rlCombustible, tvCombustible, seleccionadosList);
     }
 
     /**
@@ -297,6 +257,9 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
                 .show();
     }
 
+    /**
+     * @see IMainContract.View#updateMunicipiosSpinner(List municipios) 
+     */
     @Override
     public void updateMunicipiosSpinner(List<Municipio> municipios) {
         List<String> nombresMunicipios = new ArrayList<>();
@@ -322,5 +285,63 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
                 android.R.layout.simple_spinner_item, array);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
+    }
+
+    private void applyFilters(Spinner spnProvincias, Spinner spnCompanhia, CheckBox checkEstado, List<String> seleccionadosList) {
+        String provincia = spnProvincias.getSelectedItem().toString();
+        String municipio = spnMunicipios.getSelectedItem() != null ?
+                spnMunicipios.getSelectedItem().toString() : "";
+        String companhia = spnCompanhia.getSelectedItem().toString();
+        boolean abierto = checkEstado.isChecked();
+        List<String> combustiblesSeleccionados = new ArrayList<>(seleccionadosList);
+
+        try {
+            presenter.onSearchStationsWithFilters(provincia, municipio, companhia, combustiblesSeleccionados, abierto);
+        } catch (DataAccessException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private void configureFuelSelection(RelativeLayout rlCombustible, TextView tvCombustible, List<String> seleccionadosList) {
+        String[] opcionesCombustibles = getResources().getStringArray(R.array.lista_gasolinas);
+        boolean[] seleccionados = new boolean[opcionesCombustibles.length];
+
+        rlCombustible.setOnClickListener(v -> {
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setTitle("Tipología de Combustible")
+                    .setMultiChoiceItems(opcionesCombustibles, seleccionados, (dialog, which, isChecked) -> {
+                        if (isChecked) {
+                            seleccionadosList.add(opcionesCombustibles[which]);
+                        } else {
+                            seleccionadosList.remove(opcionesCombustibles[which]);
+                        }
+                    })
+                    .setPositiveButton("Aceptar", (dialog, which) -> updateFuleText(tvCombustible, seleccionadosList))
+                    .setNegativeButton("Cancelar", (dialog, which) -> dialog.dismiss())
+                    .setNeutralButton("Borrar", (dialog, which) -> clearSelection(seleccionados, seleccionadosList, tvCombustible))
+                    .create()
+                    .show();
+        });
+    }
+
+    private void updateFuleText(TextView tvCombustible, List<String> seleccionadosList) {
+        if (seleccionadosList.isEmpty()) {
+            tvCombustible.setText("Selecciona combustibles");
+        } else {
+            StringBuilder stringBuilder = new StringBuilder();
+            for (String s : seleccionadosList) {
+                stringBuilder.append(s).append(", ");
+            }
+            if (stringBuilder.length() > 0) {
+                stringBuilder.setLength(stringBuilder.length() - 2); // Elimina la última coma
+            }
+            tvCombustible.setText(stringBuilder.toString());
+        }
+    }
+
+    private void clearSelection(boolean[] seleccionados, List<String> seleccionadosList, TextView tvCombustible) {
+        seleccionadosList.clear();
+        Arrays.fill(seleccionados, false);
+        tvCombustible.setText("Selecciona combustibles");
     }
 }
