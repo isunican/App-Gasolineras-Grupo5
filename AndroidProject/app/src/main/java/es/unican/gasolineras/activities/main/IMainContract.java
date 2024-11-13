@@ -58,10 +58,9 @@ public interface IMainContract {
          * @param combustibles El conjunto de combustibles por los que filtar. Puede ser "-" para
          *                    indicar que no se debe filtrar por combustible.
          * @param abierto Un boolean que indica si se debe filtar por gasolineras abiertas.
-         * @throws DataAccessException Si ocurre un error al acceder a los datos
          */
         public void onSearchStationsWithFilters(String provincia,String municipio, String companhia,
-                                                List<String> combustibles, boolean abierto) throws DataAccessException;
+                                                List<String> combustibles, boolean abierto);
 
         /**
          * Según el nombre de la provincia, en caso de éxito devuelve los municipios de esta y, en caso de error lanza un mensaje.
