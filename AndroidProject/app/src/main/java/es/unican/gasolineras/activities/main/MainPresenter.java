@@ -70,7 +70,7 @@ public class MainPresenter implements IMainContract.Presenter {
      */
     @Override
     public void onSearchStationsWithFilters(String provincia, String municipio, String companhia,
-                                            List<String> combustibles, boolean abierto) throws DataAccessException {
+                                            List<String> combustibles, boolean abierto) {
 
         List<Gasolinera> gasolinerasFiltradas = gasolineras;
 
