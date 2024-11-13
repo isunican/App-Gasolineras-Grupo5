@@ -23,6 +23,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
+        android:contentDescription="@string/logotipo_gasolinera"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toolbar"
@@ -59,7 +60,7 @@
         android:layout_width="101dp"
         android:layout_height="18dp"
         android:layout_marginTop="40dp"
-        android:text="Precio Gasolina:"
+        android:text="@string/precio_gasolina"
         app:layout_constraintStart_toStartOf="@+id/tPrecioDiesel"
         app:layout_constraintTop_toBottomOf="@+id/tPrecioDiesel" />
 
@@ -68,7 +69,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="40dp"
-        android:text="Precio Diesel:"
+        android:text="@string/precio_diesel"
         app:layout_constraintStart_toStartOf="@+id/tPrecioSumario"
         app:layout_constraintTop_toBottomOf="@+id/tPrecioSumario" />
 
@@ -77,7 +78,7 @@
         android:layout_height="wrap_content"
         android:layout_width="wrap_content"
         android:layout_marginTop="40dp"
-        android:text="Precio Sumario:"
+        android:text="@string/precio_sumario"
         app:layout_constraintStart_toStartOf="@+id/tHorario"
         app:layout_constraintTop_toBottomOf="@+id/tHorario"
         />
@@ -88,7 +89,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="40dp"
         android:layout_marginTop="200dp"
-        android:text="Rotulo:"
+        android:text="@string/rotulo"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toolbar" />
 
@@ -97,7 +98,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
-        android:text="Municipio:"
+        android:text="@string/municipio"
         app:layout_constraintStart_toStartOf="@+id/tDireccion"
         app:layout_constraintTop_toBottomOf="@+id/tDireccion" />
 
@@ -106,7 +107,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="40dp"
-        android:text="Horario:"
+        android:text="@string/horario"
         app:layout_constraintStart_toStartOf="@+id/tMunicipio"
         app:layout_constraintTop_toBottomOf="@+id/tMunicipio" />
 
@@ -115,7 +116,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="100dp"
-        android:text="Null"
+        android:text="@string/nulo"
         app:layout_constraintBottom_toBottomOf="@+id/tRotulo"
         app:layout_constraintStart_toEndOf="@+id/tRotulo" />
 
@@ -123,7 +124,7 @@
         android:id="@+id/tvMunicipio"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Null"
+        android:text="@string/nulo"
         app:layout_constraintBottom_toBottomOf="@+id/tMunicipio"
         app:layout_constraintStart_toStartOf="@+id/tvDireccion" />
 
@@ -131,7 +132,7 @@
         android:id="@+id/tvHorario"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Null"
+        android:text="@string/nulo"
         app:layout_constraintBottom_toBottomOf="@+id/tHorario"
         app:layout_constraintStart_toStartOf="@+id/tvMunicipio" />
 
@@ -140,7 +141,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
-        android:text="Direccion:"
+        android:text="@string/direccion"
         app:layout_constraintStart_toStartOf="@+id/tRotulo"
         app:layout_constraintTop_toBottomOf="@+id/tRotulo" />
 
@@ -148,7 +149,7 @@
         android:id="@+id/tvDireccion"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Null"
+        android:text="@string/nulo"
         app:layout_constraintBottom_toBottomOf="@+id/tDireccion"
         app:layout_constraintStart_toStartOf="@+id/tvRotulo" />
 

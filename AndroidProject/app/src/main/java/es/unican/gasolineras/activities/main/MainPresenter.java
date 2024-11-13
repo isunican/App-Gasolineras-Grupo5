@@ -2,7 +2,6 @@ package es.unican.gasolineras.activities.main;
 
 import java.util.Comparator;
 import java.util.List;
-import es.unican.gasolineras.common.DataAccessException;
 import es.unican.gasolineras.common.IFiltros;
 import es.unican.gasolineras.model.Combustible;
 import es.unican.gasolineras.model.Gasolinera;
@@ -66,11 +65,11 @@ public class MainPresenter implements IMainContract.Presenter {
 
     /**
      * @see IMainContract.Presenter#onSearchStationsWithFilters(String provincia, String municipio,
-     *                                                          String companhia, boolean abierto)
+     *                                                          String companhia, List companhia, boolean abierto)
      */
     @Override
     public void onSearchStationsWithFilters(String provincia, String municipio, String companhia,
-                                            boolean abierto) throws DataAccessException {
+                                            List<String> combustibles, boolean abierto) {
 
         List<Gasolinera> gasolinerasFiltradas = gasolineras;
 
@@ -110,7 +109,7 @@ public class MainPresenter implements IMainContract.Presenter {
                 public void onFailure(Throwable e) {
                     view.showLoadError();
                 }
-                }, idProvincia);
+            }, idProvincia);
         }
     }
 

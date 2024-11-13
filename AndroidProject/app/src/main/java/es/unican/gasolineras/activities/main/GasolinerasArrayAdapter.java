@@ -32,7 +32,7 @@ public class GasolinerasArrayAdapter extends BaseAdapter {
     private final Context context;
 
     /** Selected fuel type for filtering or highlighting prices */
-    private Combustible combustibleSeleccionado;
+    private final Combustible combustibleSeleccionado;
 
     /**
      * Constructs an adapter to handle a list of gasolineras
@@ -107,7 +107,7 @@ public class GasolinerasArrayAdapter extends BaseAdapter {
                 tv.setText(gasolinera.compruebaEstado(gasolinera.getHorario()));
             } catch (IllegalArgumentException e) {
                 Toast.makeText(context, "Error de argumento: " + e.getMessage(), Toast.LENGTH_SHORT).show();
-                tv.setText("Error de argumento: " + e.getMessage());
+                tv.setText(String.format("Error de argumento: %s", e.getMessage()));
             }
         }
 
