@@ -7,12 +7,12 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
-import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
@@ -21,6 +21,7 @@ import androidx.appcompat.widget.Toolbar;
 import org.parceler.Parcels;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import javax.inject.Inject;
 import dagger.hilt.android.AndroidEntryPoint;
@@ -184,29 +185,15 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
         spnMunicipios = view.findViewById(R.id.spnMunicipio);
         Spinner spnCompanhia = view.findViewById(R.id.spnCompanhia);
         CheckBox checkEstado = view.findViewById(R.id.cbAbierto);
+        RelativeLayout rlCombustible = view.findViewById(R.id.rlCombustible);
+        TextView tvCombustible = rlCombustible.findViewById(R.id.tvListaCombustibles);
 
-        spnProvincias.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                String provinciaSeleccionada = spnProvincias.getSelectedItem().toString();
-                presenter.onProvinciaSelected(provinciaSeleccionada);
-            }
+        asignaAdapterASpinner(spnProvincias, R.array.provincias_espana);
+        asignaAdapterASpinner(spnCompanhia, R.array.lista_companhias);
 
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) { }
-        });
-
-        String[] provinciasArray = getResources().getStringArray(R.array.provincias_espana);
-        ArrayAdapter<String> provinciasAdapter = new ArrayAdapter<>(this,
-                android.R.layout.simple_spinner_item, provinciasArray);
-        provinciasAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spnProvincias.setAdapter(provinciasAdapter);
-
-        String[] companhiasArray = getResources().getStringArray(R.array.lista_companhias);
-        ArrayAdapter<String> companhiasAdapter = new ArrayAdapter<>(this,
-                android.R.layout.simple_spinner_item, companhiasArray);
-        companhiasAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spnCompanhia.setAdapter(companhiasAdapter);
+        String[] opcionesCombustibles = getResources().getStringArray(R.array.lista_gasolinas);
+        boolean[] seleccionados = new boolean[opcionesCombustibles.length];
+        List<String> seleccionadosList = new ArrayList<>();
 
         new AlertDialog.Builder(this)
                 .setTitle("Filtrar Gasolineras")
@@ -217,19 +204,55 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
                             spnMunicipios.getSelectedItem().toString() : "";
                     String companhia = spnCompanhia.getSelectedItem().toString();
                     boolean abierto = checkEstado.isChecked();
+                    List<String> combustiblesSeleccionados = new ArrayList<>(seleccionadosList);
 
                     try {
-                        presenter.onSearchStationsWithFilters(provincia, municipio, companhia, abierto);
+                        presenter.onSearchStationsWithFilters(provincia, municipio, companhia, combustiblesSeleccionados, abierto);
                     } catch (DataAccessException e) {
                         throw new RuntimeException(e);
                     }
                     dialog.dismiss();
                 })
-                .setNegativeButton("Cancelar", (dialog, which) -> {
-                    dialog.dismiss();
-                })
+                .setNegativeButton("Cancelar", (dialog, which) -> dialog.dismiss())
                 .create()
                 .show();
+
+        rlCombustible.setOnClickListener(v -> {
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setTitle("Tipología de Combustible");
+            builder.setMultiChoiceItems(opcionesCombustibles, seleccionados, (dialog, which, isChecked) -> {
+                if (isChecked) {
+                    seleccionadosList.add(opcionesCombustibles[which]);
+                } else {
+                    seleccionadosList.remove(opcionesCombustibles[which]);
+                }
+            });
+
+            builder.setPositiveButton("Aceptar", (dialog, which) -> {
+                if (seleccionadosList.isEmpty()) {
+                    tvCombustible.setText("Selecciona combustibles");
+                } else {
+                    StringBuilder stringBuilder = new StringBuilder();
+                    for (String s : seleccionadosList) {
+                        stringBuilder.append(s).append(", ");
+                    }
+                    if (stringBuilder.length() > 0) {
+                        stringBuilder.setLength(stringBuilder.length() - 2); // Elimina la última coma
+                    }
+                    tvCombustible.setText(stringBuilder.toString());
+                }
+            });
+
+            builder.setNegativeButton("Cancelar", (dialog, which) -> dialog.dismiss());
+
+            builder.setNeutralButton("Borrar", (dialog, which) -> {
+                seleccionadosList.clear();
+                Arrays.fill(seleccionados, false);
+                tvCombustible.setText("Selecciona combustibles");
+            });
+
+            builder.create().show();
+        });
     }
 
     /**
@@ -285,5 +308,19 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
                 android.R.layout.simple_spinner_item, nombresMunicipios);
         municipiosAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spnMunicipios.setAdapter(municipiosAdapter);
+    }
+
+    /**
+     * Configura un Spinner con un ArrayAdapter basado en un recurso de array de strings.
+     *
+     * @param spinner El spinner al que se asignará el adapter.
+     * @param arrayResourceId El identificador del recurso del array.
+     */
+    private void asignaAdapterASpinner (Spinner spinner, int arrayResourceId) {
+        String[] array = getResources().getStringArray(arrayResourceId);
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
+                android.R.layout.simple_spinner_item, array);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter);
     }
 }

@@ -94,7 +94,7 @@ public class OnSearchStationsWithFiltersTest {
     public void testOnSearchStationsWithFilters_OpenStations_UD1a() throws Exception {
 
 
-            sut.onSearchStationsWithFilters("-", "", null, true);
+            sut.onSearchStationsWithFilters("-", "", null, null, true);
             verify(mockFilters).filtrarPorEstado(anyList());
             // Verificar que showStations fue llamado con 2 gasolineras abiertas
             verify(mockView, times(2)).showStations(anyList());
@@ -106,7 +106,7 @@ public class OnSearchStationsWithFiltersTest {
     @Test
     public void testOnSearchStationsWithFilters_AllStations_UD1b() throws Exception {
 
-        sut.onSearchStationsWithFilters("-", "", null, false);
+        sut.onSearchStationsWithFilters("-", "", null, null, false);
         verify(mockView, times(2)).showStations(anyList());
         verify(mockView, times(2)).showLoadCorrect(anyInt());  // Verificar que se muestra el número correcto de gasolineras
 
@@ -120,7 +120,7 @@ public class OnSearchStationsWithFiltersTest {
     public void testUD2A() throws Exception {
 
 
-        sut2.onSearchStationsWithFilters("Cantabria", "Santander", "Repsol", true);
+        sut2.onSearchStationsWithFilters("Cantabria", "Santander", "Repsol", null, true);
         verify(mockFilters2).filtrarPorCompanhia(anyList(), eq("Repsol"));
         verify(mockFilters2).filtrarPorEstado(anyList());
         verify(mockFilters2).filtrarPorProvinciaYMunicipio(anyList(), eq("Cantabria"), eq("Santander"));

@@ -6,7 +6,6 @@ import es.unican.gasolineras.model.Combustible;
 import es.unican.gasolineras.model.Gasolinera;
 import es.unican.gasolineras.model.Municipio;
 import es.unican.gasolineras.model.Orden;
-import es.unican.gasolineras.model.Orden;
 import es.unican.gasolineras.repository.IGasolinerasRepository;
 
 /**
@@ -56,10 +55,13 @@ public interface IMainContract {
          *                  debe filtar por municipio.
          * @param companhia La compnhia por la que filtrar. Puede ser "-" para indicar que no se
          *                  debe filtar por companhia.
+         * @param combustibles El conjunto de combustibles por los que filtar. Puede ser "-" para
+         *                    indicar que no se debe filtrar por combustible.
          * @param abierto Un boolean que indica si se debe filtar por gasolineras abiertas.
          * @throws DataAccessException Si ocurre un error al acceder a los datos
          */
-        public void onSearchStationsWithFilters(String provincia,String municipio, String companhia, boolean abierto) throws DataAccessException;
+        public void onSearchStationsWithFilters(String provincia,String municipio, String companhia,
+                                                List<String> combustibles, boolean abierto) throws DataAccessException;
 
         /**
          * Según el nombre de la provincia, en caso de éxito devuelve los municipios de esta y, en caso de error lanza un mensaje.

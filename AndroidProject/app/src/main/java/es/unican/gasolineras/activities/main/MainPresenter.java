@@ -66,11 +66,11 @@ public class MainPresenter implements IMainContract.Presenter {
 
     /**
      * @see IMainContract.Presenter#onSearchStationsWithFilters(String provincia, String municipio,
-     *                                                          String companhia, boolean abierto)
+     *                                                          String companhia, List companhia, boolean abierto)
      */
     @Override
     public void onSearchStationsWithFilters(String provincia, String municipio, String companhia,
-                                            boolean abierto) throws DataAccessException {
+                                            List<String> combustibles, boolean abierto) throws DataAccessException {
 
         List<Gasolinera> gasolinerasFiltradas = gasolineras;
 
@@ -110,7 +110,7 @@ public class MainPresenter implements IMainContract.Presenter {
                 public void onFailure(Throwable e) {
                     view.showLoadError();
                 }
-                }, idProvincia);
+            }, idProvincia);
         }
     }
 
