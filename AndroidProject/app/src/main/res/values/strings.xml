@@ -9,6 +9,22 @@
     <string name="loadCorrect">Se han cargado %d gasolineras</string>
     <string name="loadError">Ha habido un error cargando las gasolineras</string>
     <string name="info_text">Aplicación creada para el Proyecto Integrado Curso 2024-2025</string>
+    <string name="selecciona_combustibles">Selecciona combustibles</string>
+    <string name="precio_gasolina">Precio Gasolina:</string>
+    <string name="precio_diesel">Precio Diesel:</string>
+    <string name="precio_sumario">Precio Sumario:</string>
+    <string name="rotulo">Rotulo:</string>
+    <string name="municipio">Municipio:</string>
+    <string name="provincia">Provincia:</string>
+    <string name="horario">Horario:</string>
+    <string name="nulo">Null</string>
+    <string name="direccion">Dirección:</string>
+    <string name="logotipo_gasolinera">Logotipo de la compañía</string>
+    <string name="municipio_opcional">Municipio (opcional):</string>
+    <string name="compania">Compañía:</string>
+    <string name="combustible">Combustible:</string>
+    <string name="abierto">Abierto</string>
+    <string name="arrow_down">Arrow down</string>
     <string-array name="provincias_espana">
         <item>-</item>
         <item>ALBACETE</item>
