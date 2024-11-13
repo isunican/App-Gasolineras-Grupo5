@@ -54,7 +54,7 @@ public class MainPresenterTest {
         String provincia = "Cantabria";
         String municipio = "Santander";
 
-        presenter.onSearchStationsWithFilters(provincia, municipio, null,true);
+        presenter.onSearchStationsWithFilters(provincia, municipio, null, null, true);
 
         verify(mockFilters).filtrarPorProvinciaYMunicipio(anyList(), eq("Cantabria"), eq("Santander"));
         verify(mockView, times(2)).showStations(anyList());
@@ -66,7 +66,7 @@ public class MainPresenterTest {
         String provincia = "Cantabria";
         String municipio = "";
 
-        presenter.onSearchStationsWithFilters(provincia, municipio, null,true);
+        presenter.onSearchStationsWithFilters(provincia, municipio, null, null, true);
 
         verify(mockFilters).filtrarPorProvinciaYMunicipio(anyList(), eq("Cantabria"), eq(null));
         verify(mockView, times(2)).showStations(anyList());
@@ -78,7 +78,7 @@ public class MainPresenterTest {
         String provincia = "Madrid";
         String municipio = "";
 
-        presenter.onSearchStationsWithFilters(provincia, municipio, null,false);
+        presenter.onSearchStationsWithFilters(provincia, municipio, null, null, false);
 
         verify(mockFilters).filtrarPorProvinciaYMunicipio(anyList(), eq("Madrid"), eq(null));
         verify(mockView, times(2)).showStations(anyList());
@@ -90,7 +90,7 @@ public class MainPresenterTest {
         String provincia = "Asturias";
         String municipio = "Tineo";
 
-        presenter.onSearchStationsWithFilters(provincia, municipio, null, false);
+        presenter.onSearchStationsWithFilters(provincia, municipio, null, null, false);
 
         verify(mockFilters).filtrarPorProvinciaYMunicipio(anyList(), eq("Asturias"), eq("Tineo"));
         verify(mockView, times(2)).showStations(anyList());
@@ -102,7 +102,7 @@ public class MainPresenterTest {
         String provincia = "Asturias";
         String municipio = "Santander";
 
-        presenter.onSearchStationsWithFilters(provincia, municipio, null, false);
+        presenter.onSearchStationsWithFilters(provincia, municipio, null, null, false);
 
         verify(mockFilters).filtrarPorProvinciaYMunicipio(anyList(), eq("Asturias"), eq("Santander"));
         verify(mockView, times(2)).showStations(anyList());
@@ -114,7 +114,7 @@ public class MainPresenterTest {
         String provincia = "-";
         String municipio = "";
 
-        presenter.onSearchStationsWithFilters(provincia, municipio, null, true);
+        presenter.onSearchStationsWithFilters(provincia, municipio, null, null, true);
 
         verify(mockView, times(2)).showStations(anyList());
         verify(mockView, times(2)).showLoadCorrect(anyInt());

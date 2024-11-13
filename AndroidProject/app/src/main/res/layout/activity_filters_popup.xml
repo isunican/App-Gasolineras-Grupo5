@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
@@ -11,47 +12,90 @@
         android:layout_height="wrap_content"
         android:paddingBottom="8dp"
         android:text="Provincia:"
+        android:textColor="#000000"
         android:textSize="16sp" />
 
     <Spinner
         android:id="@+id/spnProvincias"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingBottom="12dp" />
+        android:minHeight="48dp"
+        android:paddingBottom="20dp" />
 
     <TextView
         android:id="@+id/tvMunicipio"
-        android:layout_width="wrap_content"
+        android:layout_width="380dp"
         android:layout_height="wrap_content"
-        android:paddingTop="16dp"
         android:paddingBottom="8dp"
-        android:text="Introduce el municipio (opcional)"
+        android:text="Municipio (opcional):"
+        android:textColor="#000000"
         android:textSize="16sp" />
 
     <Spinner
         android:id="@+id/spnMunicipio"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:minHeight="48dp"
         android:paddingBottom="12dp" />
 
     <TextView
-        android:id="@+id/tcCompanhia"
+        android:id="@+id/tvCompanhia"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingTop="16dp"
         android:paddingBottom="8dp"
         android:text="Compañía:"
+        android:textColor="#000000"
         android:textSize="16sp" />
 
     <Spinner
         android:id="@+id/spnCompanhia"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:minHeight="48dp"
         android:paddingBottom="12dp" />
+
+    <TextView
+        android:id="@+id/tvCombustible"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="8dp"
+        android:text="Combustible:"
+        android:textColor="#000000"
+        android:textSize="16sp" />
+
+    <RelativeLayout
+        android:id="@+id/rlCombustible"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="48dp"
+        android:paddingBottom="12dp">
+
+        <TextView
+            android:id="@+id/tvListaCombustibles"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_toStartOf="@+id/ivArrow"
+            android:layout_alignParentStart="true"
+            android:paddingStart="8dp"
+            android:text="Selecciona combustibles"
+            android:textSize="16sp"
+            android:ellipsize="end"
+            android:singleLine="false"
+            tools:ignore="RtlSymmetry" />
+
+        <ImageView
+            android:id="@+id/ivArrow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="12dp"
+            android:src="@drawable/ic_arrow_down" />
+    </RelativeLayout>
 
     <CheckBox
         android:id="@+id/cbAbierto"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Abierto" />
+        android:text="Abierto"
+        android:textColor="#000000" />
 </LinearLayout>

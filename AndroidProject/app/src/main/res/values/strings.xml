@@ -81,8 +81,12 @@
         <item>Otros</item>
     </string-array>
 
-    <string-array name="lista_municipios">
-        <item>-</item>
+    <string-array name="lista_gasolinas">
+        <item>Gasolina 95 E10</item>
+        <item>Gasolina 95 E5</item>
+        <item>Gasolina 95 E5 Premium</item>
+        <item>Gasolina 98 E10</item>
+        <item>Gasolina 98 E5</item>
     </string-array>
 </resources>
 
