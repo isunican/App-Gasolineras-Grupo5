@@ -1,7 +1,9 @@
 package es.unican.gasolineras.activities.main;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -44,6 +46,10 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
 
     /** The presenter of this view */
     private MainPresenter presenter;
+    private String provinciaSeleccionada;
+    private String companhiaSeleccionada;
+    private List<String> combustiblesSeleccionados;
+    private boolean estadoSeleccionado;
     private Combustible combustibleSeleccionado; // guarda la seleccion si se reabre el popup
     private Orden ordenSeleccionada;
     private Spinner spnMunicipios;
@@ -56,6 +62,12 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        provinciaSeleccionada = "-";
+        companhiaSeleccionada = "-";
+        estadoSeleccionado = false;
+        combustiblesSeleccionados = new ArrayList<>();
+        clearSelectedFuels();
 
         // The default theme does not include a toolbar.
         // In this app the toolbar is explicitly declared in the layout
@@ -190,8 +202,14 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
 
         asignaAdapterASpinner(spnProvincias, R.array.provincias_espana);
         asignaAdapterASpinner(spnCompanhia, R.array.lista_companhias);
-        List<String> combustiblesSeleccionados = new ArrayList<>();
+        List<String> tempCombustiblesSeleccionados = loadSelectedFuels();  // Cargar los combustibles seleccionados
 
+        loadFilters(spnProvincias, spnCompanhia, checkEstado);
+
+        // Actualizar el TextView con los combustibles seleccionados
+        updateFuelText(tvCombustible, tempCombustiblesSeleccionados);
+
+        // Configurar el Spinner para provincias
         spnProvincias.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -200,19 +218,25 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
             }
 
             @Override
-            public void onNothingSelected(AdapterView<?> parent) { }
+            public void onNothingSelected(AdapterView<?> parent) {}
         });
 
+        // Mostrar el cuadro de diálogo para filtros
         new AlertDialog.Builder(this)
                 .setTitle("Filtrar Gasolineras")
                 .setView(view)
-                .setPositiveButton("Buscar", (dialog, which) -> applyFilters(spnProvincias, spnCompanhia, checkEstado, combustiblesSeleccionados))
+                .setPositiveButton("Buscar", (dialog, which) -> {
+                    applyFilters(spnProvincias, spnCompanhia, checkEstado, tempCombustiblesSeleccionados);
+                    saveSelectedFuels(tempCombustiblesSeleccionados);  // Guardar los combustibles seleccionados
+                })
                 .setNegativeButton("Cancelar", (dialog, which) -> dialog.dismiss())
                 .create()
                 .show();
 
-        configureFuelSelection(rlCombustible, tvCombustible, combustiblesSeleccionados);
+        // Configurar la selección de combustibles
+        configureFuelSelection(rlCombustible, tvCombustible, tempCombustiblesSeleccionados);
     }
+
 
     /**
      * @see IMainContract.View#showOrdenarPopUp()
@@ -295,13 +319,13 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
      * @param combustiblesSeleccionados una lista con los combustibles seleccionados por el usuario.
      */
     private void applyFilters(Spinner spnProvincias, Spinner spnCompanhia, CheckBox checkEstado, List<String> combustiblesSeleccionados) {
-        String provincia = spnProvincias.getSelectedItem().toString();
+        provinciaSeleccionada = spnProvincias.getSelectedItem().toString();
         String municipio = spnMunicipios.getSelectedItem() != null ?
                 spnMunicipios.getSelectedItem().toString() : "";
-        String companhia = spnCompanhia.getSelectedItem().toString();
-        boolean abierto = checkEstado.isChecked();
+        companhiaSeleccionada = spnCompanhia.getSelectedItem().toString();
+        estadoSeleccionado = checkEstado.isChecked();
 
-        presenter.onSearchStationsWithFilters(provincia, municipio, companhia, combustiblesSeleccionados, abierto);
+        presenter.onSearchStationsWithFilters(provinciaSeleccionada, municipio, companhiaSeleccionada, combustiblesSeleccionados, estadoSeleccionado);
     }
 
     /**
@@ -310,25 +334,32 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
      *
      * @param rlCombustible   el contenedor que activa la seleccion de combustibles.
      * @param tvCombustible   el TextView que muestra la lista de combustibles seleccionados.
-     * @param combustiblesSeleccionados una lista para almacenar las opciones de combustibles seleccionadas.
+     * @param tempCombustiblesSeleccionados una lista para almacenar las opciones de combustibles seleccionadas.
      */
-    private void configureFuelSelection(RelativeLayout rlCombustible, TextView tvCombustible, List<String> combustiblesSeleccionados) {
+    private void configureFuelSelection(RelativeLayout rlCombustible, TextView tvCombustible, List<String> tempCombustiblesSeleccionados) {
         String[] opcionesCombustibles = getResources().getStringArray(R.array.lista_gasolinas);
         boolean[] seleccionados = new boolean[opcionesCombustibles.length];
+
+        // Marcar como seleccionados los combustibles que ya están en la lista de seleccionados
+        for (int i = 0; i < opcionesCombustibles.length; i++) {
+            if (tempCombustiblesSeleccionados.contains(opcionesCombustibles[i])) {
+                seleccionados[i] = true;
+            }
+        }
 
         rlCombustible.setOnClickListener(v -> {
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setTitle("Tipología de Combustible")
                     .setMultiChoiceItems(opcionesCombustibles, seleccionados, (dialog, which, isChecked) -> {
                         if (isChecked) {
-                            combustiblesSeleccionados.add(opcionesCombustibles[which]);
+                            tempCombustiblesSeleccionados.add(opcionesCombustibles[which]);
                         } else {
-                            combustiblesSeleccionados.remove(opcionesCombustibles[which]);
+                            tempCombustiblesSeleccionados.remove(opcionesCombustibles[which]);
                         }
                     })
-                    .setPositiveButton("Aceptar", (dialog, which) -> updateFuelText(tvCombustible, combustiblesSeleccionados))
+                    .setPositiveButton("Aceptar", (dialog, which) -> updateFuelText(tvCombustible, tempCombustiblesSeleccionados))
                     .setNegativeButton("Cancelar", (dialog, which) -> dialog.dismiss())
-                    .setNeutralButton("Borrar", (dialog, which) -> clearSelection(seleccionados, combustiblesSeleccionados, tvCombustible))
+                    .setNeutralButton("Borrar", (dialog, which) -> clearSelection(seleccionados, tempCombustiblesSeleccionados, tvCombustible))
                     .create()
                     .show();
         });
@@ -338,14 +369,14 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
      * Actualiza el texto del TextView para reflejar los combustibles seleccionados.
      *
      * @param tvCombustible   el TextView que mostrara los combustibles seleccionados.
-     * @param combustiblesSeleccionados una lista con los combustibles seleccionados por el usuario.
+     * @param tempCombustiblesSeleccionados una lista con los combustibles seleccionados por el usuario.
      */
-    private void updateFuelText(TextView tvCombustible, List<String> combustiblesSeleccionados) {
-        if (combustiblesSeleccionados.isEmpty()) {
+    private void updateFuelText(TextView tvCombustible, List<String> tempCombustiblesSeleccionados) {
+        if (tempCombustiblesSeleccionados.isEmpty()) {
             tvCombustible.setText(R.string.selecciona_combustibles);
         } else {
             StringBuilder stringBuilder = new StringBuilder();
-            for (String s : combustiblesSeleccionados) {
+            for (String s : tempCombustiblesSeleccionados) {
                 stringBuilder.append(s).append(", ");
             }
             if (stringBuilder.length() > 0) {
@@ -360,12 +391,64 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
      * el texto del TextView para reflejar el cambio.
      *
      * @param seleccionados   un array booleano que representa los elementos seleccionados.
-     * @param combustiblesSeleccionados una lista para almacenar las opciones de combustibles seleccionadas.
+     * @param tempCombustiblesSeleccionados una lista para almacenar las opciones de combustibles seleccionadas.
      * @param tvCombustible   el TextView que muestra la lista de combustibles seleccionados.
      */
-    private void clearSelection(boolean[] seleccionados, List<String> combustiblesSeleccionados, TextView tvCombustible) {
-        combustiblesSeleccionados.clear();
+    private void clearSelection(boolean[] seleccionados, List<String> tempCombustiblesSeleccionados, TextView tvCombustible) {
+        tempCombustiblesSeleccionados.clear();
         Arrays.fill(seleccionados, false);
         tvCombustible.setText(R.string.selecciona_combustibles);
     }
+
+    private void loadFilters(Spinner spnProvincias, Spinner spnCompanhia, CheckBox checkEstado) {
+        if (!provinciaSeleccionada.isEmpty()) {
+            int position = ((ArrayAdapter<String>) spnProvincias.getAdapter()).getPosition(provinciaSeleccionada);
+            spnProvincias.setSelection(position);
+        }
+        if (!companhiaSeleccionada.isEmpty()) {
+            int position = ((ArrayAdapter<String>) spnCompanhia.getAdapter()).getPosition(companhiaSeleccionada);
+            spnCompanhia.setSelection(position);
+        }
+        checkEstado.setChecked(estadoSeleccionado);
+    }
+
+
+
+    private void saveSelectedFuels(List<String> selectedFuels) {
+        SharedPreferences preferences = getSharedPreferences("FiltersPreferences", MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+
+        // Convertir la lista de combustibles seleccionados en una cadena separada por comas
+        String selectedFuelsString = TextUtils.join(",", selectedFuels);
+
+        // Guardar la cadena de combustibles seleccionados
+        editor.putString("selected_fuels", selectedFuelsString);
+        editor.apply();  // Guardar los cambios de manera asíncrona
+    }
+
+    private List<String> loadSelectedFuels() {
+        SharedPreferences preferences = getSharedPreferences("FiltersPreferences", MODE_PRIVATE);
+
+        // Recuperar la cadena de combustibles seleccionados
+        String selectedFuelsString = preferences.getString("selected_fuels", "");
+
+        // Convertir la cadena de combustibles seleccionados de vuelta a una lista
+        List<String> selectedFuels = new ArrayList<>();
+        if (!selectedFuelsString.isEmpty()) {
+            selectedFuels.addAll(Arrays.asList(selectedFuelsString.split(",")));
+        }
+
+        return selectedFuels;
+    }
+
+    private void clearSelectedFuels() {
+        // Obtener las SharedPreferences
+        SharedPreferences sharedPreferences = getSharedPreferences("FiltersPreferences", MODE_PRIVATE);
+
+        // Usar el editor de SharedPreferences para borrar la clave de combustibles
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.remove("selected_fuels"); // Elimina los combustibles seleccionados
+        editor.apply(); // Guardar los cambios
+    }
+
 }
