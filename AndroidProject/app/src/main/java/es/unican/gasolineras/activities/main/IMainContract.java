@@ -63,7 +63,8 @@ public interface IMainContract {
                                                 List<String> combustibles, boolean abierto);
 
         /**
-         * Según el nombre de la provincia, en caso de éxito devuelve los municipios de esta y, en caso de error lanza un mensaje.
+         * Según el nombre de la provincia, en caso de éxito devuelve los municipios de esta y, en
+         * caso de error lanza un mensaje.
          *
          * @param provinciaNombre El nombre de la provincia por la que se filtraran los municipios.
          */
@@ -142,20 +143,24 @@ public interface IMainContract {
         public void showInfoActivity();
 
         /**
-         * The view is requested to open the info activity.
-         * Only the Presenter should call this method
+         * Muestra un cuadro de dialogo emergente para configurar los filtros de busqueda de gasolineras.
+         * Permite al usuario seleccionar provincia, municipio, companhiía, estado de apertura, y
+         * tipos de combustibles, aplicando y guardando los filtros seleccionados al confirmar.
          */
         public void showFiltersPopUp();
 
         /**
-         * The view is requested to open the info activity.
-         * Only the Presenter should call this method
+         * Muestra un cuadro de dialogo emergente para ordenar las gasolineras.
+         * Permite al usuario seleccionar el tipo de combustible y el criterio
+         * de orden, aplicando la ordenacion al confirmar.
          */
         public void showOrdenarPopUp();
 
         /**
-         * The view is requested to update the spinner content.
-         * Only the Presenter should call this method
+         * Actualiza el spinner de municipios con una lista proporcionada.
+         * Anhade una opcion por defecto ("-") y establece el municipio previamente guardado si existe.
+         *
+         * @param municipios La lista de municipios para poblar el spinner.
          */
         public void updateMunicipiosSpinner(List<Municipio> municipios);
     }

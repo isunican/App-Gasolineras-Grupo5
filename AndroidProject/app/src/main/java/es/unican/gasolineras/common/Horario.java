@@ -11,15 +11,15 @@ public class Horario {
     private static final String ABIERTO = "Abierto";
     private static final String CERRADO = "Cerrado";
 
-    /*
-    * Obtiene los horarios de una gasolinera
-    * @param horario el horario en formato String
-    *               (ejemplo: "L-D: 06:00-22:00")
-    *              (ejemplo: "L-S: 07:00-22:00; D: 08:00-14:00")
-    *             (ejemplo: "L-V: 07:00-22:00; S: 08:00-14:00"; D: 08:00-14:00")
-    * @return un array con los horarios
-    * @throws IllegalArgumentException si el horario es nulo o vacío
-    */
+    /**
+     * Obtiene los horarios de una gasolinera
+     * @param horario el horario en formato String
+     *   (ejemplo: "L-D: 06:00-22:00")
+     *   (ejemplo: "L-S: 07:00-22:00; D: 08:00-14:00")
+     *   (ejemplo: "L-V: 07:00-22:00; S: 08:00-14:00"; D: 08:00-14:00")
+     * @return un array con los horarios
+     * @throws IllegalArgumentException si el horario es nulo o vacío
+     */
     public static String[] obtenerHorario (String horario) throws IllegalArgumentException {
         if (horario == null ) {
             throw new IllegalArgumentException("El horario no puede ser nulo o vacío");
@@ -28,15 +28,15 @@ public class Horario {
         return horarios;
     }
 
-    /*
-        * Comprueba si el horario de la gasolinera está abierto
-        * @param horario el horario en formato String
-        *               (ejemplo: "L-D: 06:00-22:00")
-        *              (ejemplo: "L-S: 07:00-22:00; D: 08:00-14:00")
-        *             (ejemplo: "L-V: 07:00-22:00; S: 08:00-14:00"; D: 08:00-14:00")
-        * @return "Abierto" si el horario de la gasolinera está abierto
-        * @return "Cerrado" si el horario de la gasolinera está cerrado
-        * @throws DataAccessException si el horario no es válido
+    /**
+     * Comprueba si el horario de la gasolinera está abierto
+     * @param horario el horario en formato String
+     *  (ejemplo: "L-D: 06:00-22:00")
+     *  (ejemplo: "L-S: 07:00-22:00; D: 08:00-14:00")
+     *  (ejemplo: "L-V: 07:00-22:00; S: 08:00-14:00"; D: 08:00-14:00")
+     * @return "Abierto" si el horario de la gasolinera está abierto
+     * @return "Cerrado" si el horario de la gasolinera está cerrado
+     * @throws DataAccessException si el horario no es válido
      */
     public static String estaAbierto(String horario) throws IllegalArgumentException {
 
@@ -105,16 +105,16 @@ public class Horario {
         }
     }
 
-    /*
-        * Comprueba si el horario de la gasolinera está abierto
-        * @param horario el horario en formato String
-        * (ejemplo: "L-D: 06:00-22:00")
-        * (ejemplo: "L-S: 07:00-22:00; D: 08:00-14:00")
-        * (ejemplo: "L-V: 07:00-22:00; S: 08:00-14:00"; D: 08:00-14:00")
-        * (ejemplo: "L-D: 24H")
-        *
-        * @return true si el horario de la gasolinera está abierto
-        * @return false si el horario de la gasolinera está cerrado
+    /**
+     * Comprueba si el horario de la gasolinera está abierto
+     * @param horario el horario en formato String
+     *  (ejemplo: "L-D: 06:00-22:00")
+     *  (ejemplo: "L-S: 07:00-22:00; D: 08:00-14:00")
+     *  (ejemplo: "L-V: 07:00-22:00; S: 08:00-14:00"; D: 08:00-14:00")
+     *  (ejemplo: "L-D: 24H")
+     *
+     * @return true si el horario de la gasolinera está abierto
+     * @return false si el horario de la gasolinera está cerrado
      */
     public static boolean compruebaHorario (String horario) throws IllegalArgumentException {
         // Separar los horarios por días
@@ -184,15 +184,13 @@ public class Horario {
         return false;
     }
 
-    /*
-        * Comprueba si el dia actual esta en la franja horaria
-        * @param letraletraDiaActual la letra del dia actual
-        * @param horario el horario en formato String
-        *               (ejemplo: "L-D: 06:00-22:00")
-        *              (ejemplo: "L-S: 07:00-22:00; D: 08:00-14:00")
-        *             (ejemplo: "L-V: 07:00-22:00; S: 08:00-14:00"; D: 08:00-14:00")
-        * @return true si el dia actual esta en la franja horaria
-        * @throws DataAccessException si el dia actual no es válido
+    /**
+     * Comprueba si el dia actual esta en la franja horaria
+     * @param horario el horario en formato String
+     *               (ejemplo: "L-D: 06:00-22:00")
+     *              (ejemplo: "L-S: 07:00-22:00; D: 08:00-14:00")
+     *             (ejemplo: "L-V: 07:00-22:00; S: 08:00-14:00"; D: 08:00-14:00")
+     * @return true si el dia actual esta en la franja horaria
      */
     public static boolean estaEnFranjaDia (String horario) throws IllegalArgumentException {
         String letraletraDiaActual = Tiempo.letraDiaActual();
@@ -276,13 +274,13 @@ public class Horario {
                 }
                 break;
 
-                // Si el caso es un valor no valido, no pasa nada
+            // Si el caso es un valor no valido, no pasa nada
             default:
                 break;
         }
         // Compruebo si el dia actual esta en la franja horaria
         Calendar calendar = Calendar.getInstance();
         int letraDiaActual = calendar.get(Calendar.DAY_OF_WEEK);
-        return dias[letraDiaActual] == 1;
+        return dias[letraDiaActual - 1] == 1;
     }
 }
