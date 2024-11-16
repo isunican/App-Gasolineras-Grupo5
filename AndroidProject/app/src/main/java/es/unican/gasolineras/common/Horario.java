@@ -12,14 +12,14 @@ public class Horario {
     private static final String CERRADO = "Cerrado";
 
     /**
-    * Obtiene los horarios de una gasolinera
-    * @param horario el horario en formato String
-    *   (ejemplo: "L-D: 06:00-22:00")
-    *   (ejemplo: "L-S: 07:00-22:00; D: 08:00-14:00")
-    *   (ejemplo: "L-V: 07:00-22:00; S: 08:00-14:00"; D: 08:00-14:00")
-    * @return un array con los horarios
-    * @throws IllegalArgumentException si el horario es nulo o vacío
-    */
+     * Obtiene los horarios de una gasolinera
+     * @param horario el horario en formato String
+     *   (ejemplo: "L-D: 06:00-22:00")
+     *   (ejemplo: "L-S: 07:00-22:00; D: 08:00-14:00")
+     *   (ejemplo: "L-V: 07:00-22:00; S: 08:00-14:00"; D: 08:00-14:00")
+     * @return un array con los horarios
+     * @throws IllegalArgumentException si el horario es nulo o vacío
+     */
     public static String[] obtenerHorario (String horario) throws IllegalArgumentException {
         if (horario == null ) {
             throw new IllegalArgumentException("El horario no puede ser nulo o vacío");
@@ -274,7 +274,7 @@ public class Horario {
                 }
                 break;
 
-                // Si el caso es un valor no valido, no pasa nada
+            // Si el caso es un valor no valido, no pasa nada
             default:
                 break;
         }
