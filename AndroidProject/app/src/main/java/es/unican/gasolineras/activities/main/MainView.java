@@ -184,6 +184,9 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
 
     }
 
+    /**
+     * @see IMainContract.View#showFiltersPopUp()
+     */
     @Override
     public void showFiltersPopUp() {
         LayoutInflater inflater = LayoutInflater.from(this);
@@ -218,13 +221,7 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
                 .setTitle("Filtrar Gasolineras")
                 .setView(view)
                 .setPositiveButton("Buscar", (dialog, which) -> {
-                    filtros.setProvincia(spnProvincias.getSelectedItem().toString());
-                    filtros.setMunicipio(spnMunicipios.getSelectedItem() != null ?
-                            spnMunicipios.getSelectedItem().toString() : "-");
-                    filtros.setCompanhia(spnCompanhia.getSelectedItem().toString());
-                    filtros.setEstadoAbierto(checkEstado.isChecked());
-
-                    aplicarFiltros(filtros);
+                    aplicarFiltros(filtros, spnProvincias, spnCompanhia, checkEstado);
                     guardarFiltros(filtros);
                 })
                 .setNegativeButton("Cancelar", (dialog, which) -> dialog.dismiss())
@@ -301,6 +298,13 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
         }
     }
 
+    /**
+     * Obtiene la posición de un valor especifico dentro del adaptador de un Spinner.
+     *
+     * @param spinner El Spinner cuyo adaptador se va a buscar.
+     * @param value   El valor a encontrar dentro del adaptador.
+     * @return La posicion del valor en el adaptador, o -1 si el valor no esta presente o el adaptador es nulo.
+     */
     private int getPositionInSpinner(Spinner spinner, String value) {
         if (spinner.getAdapter() == null) {
             return -1;
@@ -318,7 +322,7 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
     /**
      * Configura un Spinner con un ArrayAdapter basado en un recurso de array de strings.
      *
-     * @param spinner El spinner al que se asignará el adapter.
+     * @param spinner El spinner al que se asignara el adapter.
      * @param arrayResourceId El identificador del recurso del array.
      */
     private void asignaAdapterASpinner (Spinner spinner, int arrayResourceId) {
@@ -329,6 +333,11 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
         spinner.setAdapter(adapter);
     }
 
+    /**
+     * Carga los filtros guardados desde las preferencias.
+     *
+     * @return Un objeto {@link FiltrosSeleccionados} con los valores almacenados.
+     */
     private FiltrosSeleccionados cargarFiltros() {
         SharedPreferences preferences = getSharedPreferences("FiltersPreferences", MODE_PRIVATE);
 
@@ -347,6 +356,15 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
         return filtros;
     }
 
+    /**
+     * Aplica los filtros seleccionados para realizar la busqueda de gasolineras.
+     *
+     * @param filtros
+     * @param spnProvincias Spinner para la seleccion de provincia.
+     * @param spnCompanhia Spinner para la seleccion de companhia.
+     * @param checkEstado Checkbox para indicar el estado de apertura.
+     * @param tvCombustible TextView que indica los combustibles seleciconados.
+     */
     private void configurarFiltros(FiltrosSeleccionados filtros, Spinner spnProvincias, Spinner spnMunicipios,
                                    Spinner spnCompanhia, CheckBox checkEstado, TextView tvCombustible) {
         // Configurar spinner provincia
@@ -371,7 +389,23 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
         });
     }
 
-    private void aplicarFiltros(FiltrosSeleccionados filtros) {
+    /**
+     * Aplica los filtros seleccionados al objeto de filtros y ejecuta la busqueda de estaciones
+     * con los valores proporcionados en los controles de la interfaz.
+     *
+     * @param filtros        Objeto que almacena los valores seleccionados de los filtros.
+     * @param spnProvincias  Spinner para seleccionar la provincia.
+     * @param spnCompanhia   Spinner para seleccionar la companhia.
+     * @param checkEstado    Checkbox que indica si se debe filtrar por estaciones abiertas.
+     */
+    private void aplicarFiltros(FiltrosSeleccionados filtros, Spinner spnProvincias,
+                                Spinner spnCompanhia, CheckBox checkEstado) {
+        filtros.setProvincia(spnProvincias.getSelectedItem().toString());
+        filtros.setMunicipio(spnMunicipios.getSelectedItem() != null ?
+                spnMunicipios.getSelectedItem().toString() : "-");
+        filtros.setCompanhia(spnCompanhia.getSelectedItem().toString());
+        filtros.setEstadoAbierto(checkEstado.isChecked());
+
         presenter.onSearchStationsWithFilters(
                 filtros.getProvincia(),
                 filtros.getMunicipio(),
@@ -381,11 +415,15 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
         );
     }
 
+    /**
+     * Guarda los filtros seleccionados en las preferencias compartidas.
+     *
+     * @param filtros Los filtros seleccionados que se deben guardar.
+     */
     private void guardarFiltros(FiltrosSeleccionados filtros) {
         SharedPreferences preferences = getSharedPreferences("FiltersPreferences", MODE_PRIVATE);
         SharedPreferences.Editor editor = preferences.edit();
 
-        // Guardar filtros individuales
         editor.putString("provincia", filtros.getProvincia());
         editor.putString("municipio", filtros.getMunicipio());
         editor.putString("companhia", filtros.getCompanhia());
@@ -395,7 +433,7 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
         String combustiblesString = TextUtils.join(",", filtros.getCombustibles());
         editor.putString("combustibles_seleccionados", combustiblesString);
 
-        editor.apply(); // Guardar los cambios de forma asíncrona
+        editor.apply();
     }
 
     /**
@@ -435,7 +473,12 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
         });
     }
 
-
+    /**
+     * Actualiza el texto de un TextView con la lista de combustibles seleccionados.
+     * Si no hay combustibles seleccionados, muestra un texto indicando que se deben seleccionar.
+     *
+     * @param tvCombustible El TextView a actualizar con los combustibles seleccionados.
+     */
     private void updateFuelText(TextView tvCombustible) {
         if (combustiblesSeleccionados.isEmpty()) {
             tvCombustible.setText(R.string.selecciona_combustibles);
@@ -465,6 +508,9 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
         tvCombustible.setText(R.string.selecciona_combustibles);
     }
 
+    /**
+     * Restablece las preferencias compartidas eliminando todos los filtros guardados.
+     */
     private void resetSharedPreferences() {
         SharedPreferences preferences = getSharedPreferences("FiltersPreferences", MODE_PRIVATE);
         SharedPreferences.Editor editor = preferences.edit();
