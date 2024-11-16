@@ -281,6 +281,6 @@ public class Horario {
         // Compruebo si el dia actual esta en la franja horaria
         Calendar calendar = Calendar.getInstance();
         int letraDiaActual = calendar.get(Calendar.DAY_OF_WEEK);
-        return dias[letraDiaActual] == 1;
+        return dias[letraDiaActual - 1] == 1;
     }
 }

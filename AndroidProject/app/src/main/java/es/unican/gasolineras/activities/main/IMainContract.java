@@ -1,5 +1,7 @@
 package es.unican.gasolineras.activities.main;
 
+import android.widget.TextView;
+
 import java.util.List;
 import es.unican.gasolineras.common.DataAccessException;
 import es.unican.gasolineras.model.Combustible;
@@ -158,5 +160,7 @@ public interface IMainContract {
          * Only the Presenter should call this method
          */
         public void updateMunicipiosSpinner(List<Municipio> municipios);
+
+
     }
 }

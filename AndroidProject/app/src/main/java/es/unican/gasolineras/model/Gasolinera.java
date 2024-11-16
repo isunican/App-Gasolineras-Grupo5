@@ -36,10 +36,14 @@ public class Gasolinera {
     @SerializedName("Provincia")                    protected String provincia;
     @SerializedName("Horario")                      protected String horario;
 
-    @SerializedName("Precio Gasoleo A")             protected double gasoleoA;
-    @SerializedName("Precio Gasolina 95 E5")        protected double gasolina95E5;
-    @SerializedName("Precio Gasolina 98 E5")        protected double gasolina98E5;
-    @SerializedName("Precio Biodiesel")             protected double biodiesel;
+    @SerializedName("Precio Gasoleo A")                     protected double gasoleoA;
+    @SerializedName("Precio Gasolina 95 E5")                protected double gasolina95E5;
+    @SerializedName("Precio Gasolina 95 E10")               protected double gasolina95E10;
+    @SerializedName("Precio Gasolina 95 E5 Premium")        protected double gasolina95E5PREM;
+    @SerializedName("Precio Gasolina 98 E5")                protected double gasolina98E5;
+    @SerializedName("Precio Gasolina 98 E10")               protected double gasolina98E10;
+    @SerializedName("Precio Biodiesel")                     protected double biodiesel;
+
 
     private String estado;
 

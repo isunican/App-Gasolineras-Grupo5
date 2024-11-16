@@ -1,6 +1,10 @@
 <resources>
     <string name="app_name">Gasolineras</string>
-    <string name="gasolina95label">Gasolina95</string>
+    <string name="gasolina95E5label">Gasolina95E5</string>
+    <string name="gasolina95E5Premlabel">Gasolina95E5Premium</string>
+    <string name="gasolina95E10label">Gasolina95E10</string>
+    <string name="gasolina98E5label">Gasolina98E5</string>
+    <string name="gasolina98E10label">Gasolina98E10</string>
     <string name="dieselAlabel">Diesel</string>
     <string name="gasolina98label">Gasolina98</string>
     <string name="biolabel">Biodiesel</string>
@@ -98,11 +102,11 @@
     </string-array>
 
     <string-array name="lista_gasolinas">
-        <item>Gasolina 95 E10</item>
         <item>Gasolina 95 E5</item>
         <item>Gasolina 95 E5 Premium</item>
-        <item>Gasolina 98 E10</item>
+        <item>Gasolina 95 E10</item>
         <item>Gasolina 98 E5</item>
+        <item>Gasolina 98 E10</item>
     </string-array>
 </resources>
 
