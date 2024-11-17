@@ -91,7 +91,7 @@ public class OnSearchStationsWithFiltersTest {
     //Test onSearchStationsWithFilters Horario
     // Test para el caso UD.1a (Gasolineras abiertas)
     @Test
-    public void testOnSearchStationsWithFilters_OpenStations_UD1a() throws Exception {
+    public void testOnSearchStationsWithFilters_OpenStations_UD1a() {
 
 
             sut.onSearchStationsWithFilters("-", "", null, null, true);
@@ -104,7 +104,7 @@ public class OnSearchStationsWithFiltersTest {
 
     // Test para el caso UD.1b (Todas las gasolineras)
     @Test
-    public void testOnSearchStationsWithFilters_AllStations_UD1b() throws Exception {
+    public void testOnSearchStationsWithFilters_AllStations_UD1b() {
 
         sut.onSearchStationsWithFilters("-", "", null, null, false);
         verify(mockView, times(2)).showStations(anyList());
@@ -117,7 +117,7 @@ public class OnSearchStationsWithFiltersTest {
 
     // Test para el caso UD.1a
     @Test
-    public void testUD2A() throws Exception {
+    public void testUD2A() {
 
 
         sut2.onSearchStationsWithFilters("Cantabria", "Santander", "Repsol", null, true);
@@ -133,7 +133,7 @@ public class OnSearchStationsWithFiltersTest {
 
     // Test para el caso UD.1B
     @Test
-    public void testUD2B() throws Exception {
+    public void testUD2B() {
         // Llamada al método onSearchStationsWithFilters con los parámetros adecuados
         sut2.onSearchStationsWithFilters("Asturias", "Gijon", "", null,false);
 
@@ -147,7 +147,7 @@ public class OnSearchStationsWithFiltersTest {
 
     // Test para el caso UD.2C
     @Test
-    public void testUD2C() throws Exception {
+    public void testUD2C() {
 
         sut2.onSearchStationsWithFilters("Murcia", "-", "Otros", null,false);
         verify(mockFilters2).filtrarPorCompanhia(anyList(), eq("Otros"));

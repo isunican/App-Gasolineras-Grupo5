@@ -80,35 +80,11 @@ public class GasolinerasArrayAdapter extends BaseAdapter {
         }
 
         // logo
-        {
-            String rotulo = gasolinera.getRotulo().toLowerCase();
+        setLogo(convertView, gasolinera);
 
-            int imageID = context.getResources()
-                    .getIdentifier(rotulo, "drawable", context.getPackageName());
-
-            // Si el rotulo son sólo numeros, el método getIdentifier simplemente devuelve
-            // como imageID esos números, pero eso va a fallar porque no tendré ningún recurso
-            // que coincida con esos números
-            if (imageID == 0 || TextUtils.isDigitsOnly(rotulo)) {
-                imageID = context.getResources()
-                        .getIdentifier("generic", "drawable", context.getPackageName());
-            }
-
-            if (imageID != 0) {
-                ImageView view = convertView.findViewById(R.id.ivLogo);
-                view.setImageResource(imageID);
-            }
-        }
         // status
-        {
-            TextView tv = convertView.findViewById(R.id.tvEstado);
-            try {
-                tv.setText(gasolinera.compruebaEstado(gasolinera.getHorario()));
-            } catch (IllegalArgumentException e) {
-                Toast.makeText(context, "Error de argumento: " + e.getMessage(), Toast.LENGTH_SHORT).show();
-                tv.setText(String.format("Error de argumento: %s", e.getMessage()));
-            }
-        }
+        setStatus(convertView, gasolinera);
+
 
         // name
         {
@@ -199,6 +175,51 @@ public class GasolinerasArrayAdapter extends BaseAdapter {
         }
         return convertView;
     }
+
+
+    /**
+     * Sets the appropriate logo for the given Gasolinera.
+     *
+     * @param convertView The view containing the ImageView.
+     * @param gasolinera The Gasolinera object for the current list item.
+     */
+    private void setLogo(View convertView, Gasolinera gasolinera) {
+        String rotulo = gasolinera.getRotulo().toLowerCase();
+        int imageID = context.getResources()
+                .getIdentifier(rotulo, "drawable", context.getPackageName());
+
+        // Handle the case where the resource is not found or rotulo is numeric
+        if (imageID == 0 || TextUtils.isDigitsOnly(rotulo)) {
+            imageID = context.getResources()
+                    .getIdentifier("generic", "drawable", context.getPackageName());
+        }
+
+        // Set the image resource if a valid ID is found
+        if (imageID != 0) {
+            ImageView view = convertView.findViewById(R.id.ivLogo);
+            view.setImageResource(imageID);
+        }
+    }
+
+
+    /**
+     * Sets the status text for the Gasolinera and handles exceptions.
+     *
+     * @param convertView The view containing the TextView.
+     * @param gasolinera The Gasolinera object for the current list item.
+     */
+    private void setStatus(View convertView, Gasolinera gasolinera) {
+        TextView tv = convertView.findViewById(R.id.tvEstado);
+        try {
+            tv.setText(gasolinera.compruebaEstado(gasolinera.getHorario()));
+        } catch (IllegalArgumentException e) {
+            String errorMessage = String.format("Error de argumento: %s", e.getMessage());
+            Toast.makeText(context, errorMessage, Toast.LENGTH_SHORT).show();
+            tv.setText(errorMessage);
+        }
+    }
+
+
 
     private void setFuelPrice(View convertView, int labelId, int priceId, String labelText, String price, boolean visible) {
         TextView tvLabel = convertView.findViewById(labelId);

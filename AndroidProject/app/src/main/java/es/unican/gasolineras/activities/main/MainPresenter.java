@@ -146,7 +146,7 @@ public class MainPresenter implements IMainContract.Presenter {
         };
 
         // Si el orden es descendente, cambiamos la comparación sin afectar a los 0.0
-        if (orden == "Descendente") {
+        if (orden.equals("Descendente")) {
             comparator = (g1, g2) -> {
                 double precio1 = getPrecioCombustible(g1, combustible);
                 double precio2 = getPrecioCombustible(g2, combustible);
