@@ -49,7 +49,7 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
     /** The presenter of this view */
     private MainPresenter presenter;
     private List<String> combustiblesSeleccionados;
-    private Combustible combustibleSeleccionado; // guarda la seleccion si se reabre el popup
+    private List<Combustible> combustibleSeleccionado; // guarda la seleccion si se reabre el popup
     private Orden ordenSeleccionada;
     private Spinner spnMunicipios;
 
@@ -253,7 +253,8 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
 
         // Establecer las selecciones previas si existen
         if (combustibleSeleccionado != null) {
-            spnCombustible.setSelection(combustibleSeleccionado.ordinal());
+            spnCombustible.setSelection(combustibleSeleccionado.get(0).ordinal());
+            combustibleSeleccionado.clear();
         }
         if (ordenSeleccionada != null) {
             spnOrden.setSelection(ordenSeleccionada.ordinal());
@@ -263,10 +264,10 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
                 .setTitle("Ordenar Gasolineras")
                 .setView(view)
                 .setPositiveButton("Ordenar", (dialog, which) -> {
-                    combustibleSeleccionado = (Combustible) spnCombustible.getSelectedItem();
+                    combustibleSeleccionado.add((Combustible) spnCombustible.getSelectedItem());
                     ordenSeleccionada = (Orden) spnOrden.getSelectedItem();
 
-                    presenter.ordenarGasolinerasPorPrecio(combustibleSeleccionado, ordenSeleccionada);
+                    presenter.ordenarGasolinerasPorPrecio(combustibleSeleccionado.get(0), ordenSeleccionada);
                     dialog.dismiss();
                 })
                 .setNegativeButton("Cancelar", (dialog, which) -> dialog.dismiss())
