@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="top|center">
+
+    <EditText
+        android:layout_marginTop="100dp"
+        android:id="@+id/etLatitud"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="numberDecimal"
+        android:hint="Latitud"
+        android:gravity="center"/>
+
+    <EditText
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="60dp"
+        android:id="@+id/etLongitud"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="numberDecimal"
+        android:hint="Longitud"
+        android:gravity="center"/>
+
+    <TextView
+    android:id="@+id/tvDistancia"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:textSize="24sp"
+    android:text="0" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height= "wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:text="0" />
+        <com.google.android.material.slider.Slider
+            android:id="@+id/main_slider"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:text="500" />
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/btnBuscar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Buscar"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"
+        android:background="@color/black"
+        android:textColor="@color/white"
+        android:padding="10dp"
+        android:gravity="center"/>
+
+</LinearLayout>
