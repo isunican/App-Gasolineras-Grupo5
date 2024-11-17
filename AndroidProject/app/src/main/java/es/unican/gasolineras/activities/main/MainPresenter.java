@@ -161,6 +161,64 @@ public class MainPresenter implements IMainContract.Presenter {
         gasolinerasAOrdenar.sort(comparator);
         // Mostramos la lista ordenada
         view.showStations(gasolinerasAOrdenar);
+
+    }
+
+    @Override
+    public void onCoordinatesButtonClicked() {view.showCoordinatesPopUp();}
+
+    @Override
+    public void searchWithCoordinates(Double longitud, Double latitud, int distancia){
+
+        List<Gasolinera> gasolinerasFiltradas = this.gasolineras;
+
+        for(Gasolinera g: gasolinerasFiltradas){
+
+            String longitudStr = g.getLongitud(); // Obtener longitud como String
+            String latitudStr = g.getLatitud();  // Obtener latitud como String
+            // Convertir a Double
+            Double longitudGasolinera = Double.parseDouble(longitudStr);
+            Double latitudGasolinera = Double.parseDouble(latitudStr);
+
+            if(!estaEnCoordenadas(longitud, latitud, distancia, longitudGasolinera, latitudGasolinera)){
+                gasolinerasFiltradas.remove(g);
+            }
+        }
+
+        this.gasolineras = gasolinerasFiltradas;
+
+        view.showStations(gasolinerasFiltradas);
+
+        view.showLoadCorrect(gasolinerasFiltradas.size());
+
+
+    }
+
+    private boolean estaEnCoordenadas(Double longitudSelec, Double latitudSelec, int distancia, Double longitudGasolinera, Double latitudGasolinera){
+        final double RADIO_TIERRA_KM = 6371.0; // Radio de la Tierra en kilómetros
+
+        // Convertir todas las coordenadas a radianes
+        double latitudSelecRad = Math.toRadians(latitudSelec);
+        double longitudSelecRad = Math.toRadians(longitudSelec);
+        double latitudGasolineraRad = Math.toRadians(latitudGasolinera);
+        double longitudGasolineraRad = Math.toRadians(longitudGasolinera);
+
+        // Diferencias entre las coordenadas
+        double dLat = latitudGasolineraRad - latitudSelecRad;
+        double dLon = longitudGasolineraRad - longitudSelecRad;
+
+        // Fórmula de Haversine
+        double a = Math.sin(dLat / 2) * Math.sin(dLat / 2)
+                + Math.cos(latitudSelecRad) * Math.cos(latitudGasolineraRad)
+                * Math.sin(dLon / 2) * Math.sin(dLon / 2);
+        double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+
+        // Calcular la distancia en kilómetros
+        double distanciaCalculada = RADIO_TIERRA_KM * c;
+
+        // Comprobar si la distancia calculada está dentro del radio especificado
+        return distanciaCalculada <= distancia;
+
     }
 
     /**

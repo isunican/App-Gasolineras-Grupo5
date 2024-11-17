@@ -79,6 +79,16 @@ public interface IMainContract {
          * @param orden the order (ascending or descending)
          */
         public void ordenarGasolinerasPorPrecio(Combustible combustible, Orden orden);
+
+        /**
+         * Handles the event when the coordinates button is clicked, displaying the coordinates options popup.
+         */
+        public void onCoordinatesButtonClicked();
+
+        public void searchWithCoordinates(Double longitud, Double latitud, int distancia);
+
+
+
     }
 
     /**
@@ -151,6 +161,10 @@ public interface IMainContract {
          * Only the Presenter should call this method
          */
         public void showOrdenarPopUp();
+
+
+        public void showCoordinatesPopUp();
+
 
         /**
          * The view is requested to update the spinner content.

@@ -35,6 +35,8 @@ public class Gasolinera {
     @SerializedName("Municipio")                    protected String municipio;
     @SerializedName("Provincia")                    protected String provincia;
     @SerializedName("Horario")                      protected String horario;
+    @SerializedName("Latitud")                      protected String latitud;
+    @SerializedName("Longitud (WGS84)")             protected String longitud;
 
     @SerializedName("Precio Gasoleo A")             protected double gasoleoA;
     @SerializedName("Precio Gasolina 95 E5")        protected double gasolina95E5;
