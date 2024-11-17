@@ -34,4 +34,14 @@ public interface IFiltros {
      * Si la companhia es "Otros", devuelve las gasolineras que no son de ninguna marca conocida.
      */
     public List<Gasolinera> filtrarPorCompanhia(List<Gasolinera> gasolineras, String companhia);
+
+
+    /**
+     * Filtra una lista de gasolineras por companhia.
+     *
+     * @param gasolineras La lista de gasolineras a filtar.
+     * @param combustibles La lista que contiene los carburantes por los que filtrar.
+     * @return Una lista de gasolineras que contienen al menos uno de los carburantes.
+     */
+    public List<Gasolinera> filtrarPorCombustibles(List<Gasolinera> gasolineras, List<String> combustibles);
 }

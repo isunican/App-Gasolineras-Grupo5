@@ -71,7 +71,7 @@ public class OrdenarPorPrecioAscUITest {
                         .inRoot(isPlatformPopup())
                         .perform(click());
                 Espresso.onView(withId(R.id.spnCombustible)).perform(click());
-                onView(withText(allOf(is("BIODIESEL"), instanceOf(String.class))))
+                onView(withText(allOf(is("Biodiesel"), instanceOf(String.class))))
                         .inRoot(isPlatformPopup())
                         .perform(click());
                 Espresso.onView(withText("Ordenar")).perform(click());

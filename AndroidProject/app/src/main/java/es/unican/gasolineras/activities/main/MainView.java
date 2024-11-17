@@ -48,7 +48,7 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
     /** The presenter of this view */
     private MainPresenter presenter;
     private List<String> combustiblesSeleccionados;
-    private Combustible combustibleSeleccionado; // guarda la seleccion si se reabre el popup
+    private List<Combustible> combustibleOrdenar = new ArrayList<>(); // guarda la seleccion si se reabre el popup
     private Orden ordenSeleccionada;
     private Spinner spnMunicipios;
 
@@ -143,7 +143,7 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
     @Override
     public void showStations(List<Gasolinera> stations) {
         ListView list = findViewById(R.id.lvStations);
-        GasolinerasArrayAdapter adapter = new GasolinerasArrayAdapter(this, stations, combustibleSeleccionado);
+        GasolinerasArrayAdapter adapter = new GasolinerasArrayAdapter(this, stations, combustibleOrdenar);
         list.setAdapter(adapter);
     }
 
@@ -214,7 +214,7 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
             }
 
             @Override
-            public void onNothingSelected(AdapterView<?> parent) {}
+            public void onNothingSelected(AdapterView<?> parent) { }
         });
 
         new AlertDialog.Builder(this)
@@ -251,8 +251,9 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
         spnOrden.setAdapter(adapterOrden);
 
         // Establecer las selecciones previas si existen
-        if (combustibleSeleccionado != null) {
-            spnCombustible.setSelection(combustibleSeleccionado.ordinal());
+        if (combustibleOrdenar != null && !combustibleOrdenar.isEmpty()) {
+            spnCombustible.setSelection(combustibleOrdenar.get(0).ordinal());
+            combustibleOrdenar.clear();
         }
         if (ordenSeleccionada != null) {
             spnOrden.setSelection(ordenSeleccionada.ordinal());
@@ -262,10 +263,10 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
                 .setTitle("Ordenar Gasolineras")
                 .setView(view)
                 .setPositiveButton("Ordenar", (dialog, which) -> {
-                    combustibleSeleccionado = (Combustible) spnCombustible.getSelectedItem();
+                    combustibleOrdenar.add((Combustible) spnCombustible.getSelectedItem());
                     ordenSeleccionada = (Orden) spnOrden.getSelectedItem();
 
-                    presenter.ordenarGasolinerasPorPrecio(combustibleSeleccionado, ordenSeleccionada);
+                    presenter.ordenarGasolinerasPorPrecio(combustibleOrdenar.get(0), ordenSeleccionada);
                     dialog.dismiss();
                 })
                 .setNegativeButton("Cancelar", (dialog, which) -> dialog.dismiss())
@@ -279,7 +280,7 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
     @Override
     public void updateMunicipiosSpinner(List<Municipio> municipios) {
         List<String> nombresMunicipios = new ArrayList<>();
-        nombresMunicipios.add("-"); // Añadir opción por defecto
+        nombresMunicipios.add("-");
         for (Municipio municipio : municipios) {
             nombresMunicipios.add(municipio.getNombre());
         }
@@ -299,7 +300,7 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
     }
 
     /**
-     * Obtiene la posición de un valor especifico dentro del adaptador de un Spinner.
+     * Obtiene la posicion de un valor especifico dentro del adaptador de un Spinner.
      *
      * @param spinner El Spinner cuyo adaptador se va a buscar.
      * @param value   El valor a encontrar dentro del adaptador.
@@ -322,7 +323,7 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
     /**
      * Configura un Spinner con un ArrayAdapter basado en un recurso de array de strings.
      *
-     * @param spinner El spinner al que se asignara el adapter.
+     * @param spinner El spinner al que se asignará el adapter.
      * @param arrayResourceId El identificador del recurso del array.
      */
     private void asignaAdapterASpinner (Spinner spinner, int arrayResourceId) {
@@ -355,7 +356,6 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
 
         return filtros;
     }
-
     /**
      * Aplica los filtros seleccionados para realizar la busqueda de gasolineras.
      *
@@ -388,7 +388,6 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
             if (posMunicipio >= 0) spnMunicipios.setSelection(posMunicipio);
         });
     }
-
     /**
      * Aplica los filtros seleccionados al objeto de filtros y ejecuta la busqueda de estaciones
      * con los valores proporcionados en los controles de la interfaz.
@@ -432,7 +431,6 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
         // Guardar combustibles seleccionados como cadena separada por comas
         String combustiblesString = TextUtils.join(",", filtros.getCombustibles());
         editor.putString("combustibles_seleccionados", combustiblesString);
-
         editor.apply();
     }
 
@@ -518,3 +516,5 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
         editor.apply();
     }
 }
+
+

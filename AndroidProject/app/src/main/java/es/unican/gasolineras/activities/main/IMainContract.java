@@ -1,5 +1,7 @@
 package es.unican.gasolineras.activities.main;
 
+import android.widget.TextView;
+
 import java.util.List;
 import es.unican.gasolineras.common.DataAccessException;
 import es.unican.gasolineras.model.Combustible;
@@ -163,5 +165,7 @@ public interface IMainContract {
          * @param municipios La lista de municipios para poblar el spinner.
          */
         public void updateMunicipiosSpinner(List<Municipio> municipios);
+
+
     }
 }

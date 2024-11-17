@@ -5,10 +5,14 @@ package es.unican.gasolineras.model;
  * Each fuel type has a display name for user-friendly representation.
  */
 public enum Combustible {
-    GASOLEOA("DIESEL"),
-    GASOLINA95E("GASOLINA 95"),
-    GASOLINA98E("GASOLINA 98"),
-    BIODIESEL("BIODIESEL");
+    GASOLEOA("Diesel"),
+    GASOLINA95E5("Gasolina 95 E5"),
+    GASOLINA95E5PREM("Gasolina 95 E5 Premium"),
+    GASOLINA95E10("Gasolina 95 E10"),
+    GASOLINA98E5("Gasolina 98 E5"),
+    GASOLINA98E10("Gasolina 98 E10"),
+    BIODIESEL("Biodiesel");
+
 
     /** The display name of the fuel type. */
     private final String displayName;

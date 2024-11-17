@@ -2,6 +2,8 @@ package es.unican.gasolineras.activities.main;
 
 import java.util.Comparator;
 import java.util.List;
+
+import es.unican.gasolineras.R;
 import es.unican.gasolineras.common.IFiltros;
 import es.unican.gasolineras.model.Combustible;
 import es.unican.gasolineras.model.Gasolinera;
@@ -77,6 +79,7 @@ public class MainPresenter implements IMainContract.Presenter {
         String finalMunicipio = ("-".equals(municipio) || municipio.isEmpty()) ? null : municipio;
         String finalCompanhia = "-".equals(companhia) ? null : companhia;
 
+
         if (finalProvincia != null) {
             gasolinerasFiltradas = filtros.filtrarPorProvinciaYMunicipio(gasolinerasFiltradas,
                     finalProvincia, finalMunicipio);
@@ -86,6 +89,10 @@ public class MainPresenter implements IMainContract.Presenter {
         }
         if (abierto) {
             gasolinerasFiltradas = filtros.filtrarPorEstado(gasolinerasFiltradas);
+        }
+        if (combustibles != null && !combustibles.isEmpty()){
+            gasolinerasFiltradas = filtros.filtrarPorCombustibles(gasolinerasFiltradas,combustibles);
+
         }
 
         // Guarda la lista filtrada para utilizarla en la ordenación
@@ -172,10 +179,16 @@ public class MainPresenter implements IMainContract.Presenter {
         switch (combustible) {
             case GASOLEOA:
                 return gasolinera.getGasoleoA();
-            case GASOLINA95E:
+            case GASOLINA95E5:
                 return gasolinera.getGasolina95E5();
-            case GASOLINA98E:
+            case GASOLINA95E5PREM:
+                return gasolinera.getGasolina95E5PREM();
+            case GASOLINA95E10:
+                return gasolinera.getGasolina95E10();
+            case GASOLINA98E5:
                 return gasolinera.getGasolina98E5();
+            case GASOLINA98E10:
+                return gasolinera.getGasolina98E10();
             default:
                 return gasolinera.getBiodiesel();
         }
