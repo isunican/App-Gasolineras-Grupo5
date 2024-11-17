@@ -21,7 +21,6 @@ import org.robolectric.RobolectricTestRunner;
 
 import es.unican.gasolineras.activities.main.IMainContract;
 import es.unican.gasolineras.activities.main.MainPresenter;
-import es.unican.gasolineras.common.DataAccessException;
 import es.unican.gasolineras.common.IFiltros;
 import es.unican.gasolineras.utils.MockRepositories;
 import es.unican.gasolineras.repository.IGasolinerasRepository;

@@ -20,6 +20,11 @@ import es.unican.gasolineras.repository.GasolinerasRepository;
 @InstallIn(ActivityComponent.class)
 public abstract class RepositoriesModule {
 
+
+    private RepositoriesModule() {
+        throw new UnsupportedOperationException("Cannot instantiate RepositoriesModule class");
+    }
+
     @Provides
     public static IGasolinerasRepository provideRepository() {
         return GasolinerasRepository.INSTANCE;
