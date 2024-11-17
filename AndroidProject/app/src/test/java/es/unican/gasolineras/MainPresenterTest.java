@@ -18,6 +18,8 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.robolectric.RobolectricTestRunner;
 
+import java.util.List;
+
 import es.unican.gasolineras.activities.main.IMainContract;
 import es.unican.gasolineras.activities.main.MainPresenter;
 import es.unican.gasolineras.common.DataAccessException;
@@ -37,17 +39,20 @@ public class MainPresenterTest {
     private Context context = ApplicationProvider.getApplicationContext();
     private IGasolinerasRepository repository;
 
+
     @Before
     public void setUp() {
         MockitoAnnotations.openMocks(this);
 
         // Carga el repositorio de prueba con datos del JSON
         repository = MockRepositories.getTestRepository(context, R.raw.gasolineras_test);
+
         when(mockView.getGasolinerasRepository()).thenReturn(repository);
 
         presenter.init(mockView);
         presenter.setFiltros(mockFilters);
     }
+
 
     @Test
     public void test_UB1A() throws DataAccessException {

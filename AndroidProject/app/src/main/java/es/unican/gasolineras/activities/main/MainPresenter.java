@@ -90,7 +90,7 @@ public class MainPresenter implements IMainContract.Presenter {
         if (abierto) {
             gasolinerasFiltradas = filtros.filtrarPorEstado(gasolinerasFiltradas);
         }
-        if (!combustibles.isEmpty()){
+        if (combustibles != null && !combustibles.isEmpty()){
             gasolinerasFiltradas = filtros.filtrarPorCombustibles(gasolinerasFiltradas,combustibles);
 
         }

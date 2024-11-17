@@ -135,10 +135,10 @@ public class OnSearchStationsWithFiltersTest {
     @Test
     public void testUD2B() throws Exception {
         // Llamada al método onSearchStationsWithFilters con los parámetros adecuados
-        sut2.onSearchStationsWithFilters("-", "Gijon", "", false);
+        sut2.onSearchStationsWithFilters("Asturias", "Gijon", "", null,false);
 
 
-        verify(mockFilters2).filtrarPorProvinciaYMunicipio(anyList(), eq(null), eq("Gijon"));
+        verify(mockFilters2).filtrarPorProvinciaYMunicipio(anyList(), eq("Asturias"), eq("Gijon"));
 
         verify(mockView2, times(2)).showStations(anyList());
         verify(mockView2, times(2)).showLoadCorrect(anyInt());
@@ -149,7 +149,7 @@ public class OnSearchStationsWithFiltersTest {
     @Test
     public void testUD2C() throws Exception {
 
-        sut2.onSearchStationsWithFilters("Murcia", null, "Otros", false);
+        sut2.onSearchStationsWithFilters("Murcia", "-", "Otros", null,false);
         verify(mockFilters2).filtrarPorCompanhia(anyList(), eq("Otros"));
 
         verify(mockFilters2).filtrarPorProvinciaYMunicipio(anyList(), eq("Murcia"), eq(null));

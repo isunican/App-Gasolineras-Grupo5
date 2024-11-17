@@ -15,7 +15,6 @@ import android.widget.CheckBox;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
-import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
@@ -49,7 +48,7 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
     /** The presenter of this view */
     private MainPresenter presenter;
     private List<String> combustiblesSeleccionados;
-    private List<Combustible> combustibleSeleccionado; // guarda la seleccion si se reabre el popup
+    private List<Combustible> combustibleOrdenar = new ArrayList<>(); // guarda la seleccion si se reabre el popup
     private Orden ordenSeleccionada;
     private Spinner spnMunicipios;
 
@@ -144,7 +143,7 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
     @Override
     public void showStations(List<Gasolinera> stations) {
         ListView list = findViewById(R.id.lvStations);
-        GasolinerasArrayAdapter adapter = new GasolinerasArrayAdapter(this, stations, combustibleSeleccionado);
+        GasolinerasArrayAdapter adapter = new GasolinerasArrayAdapter(this, stations, combustibleOrdenar);
         list.setAdapter(adapter);
     }
 
@@ -252,9 +251,9 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
         spnOrden.setAdapter(adapterOrden);
 
         // Establecer las selecciones previas si existen
-        if (combustibleSeleccionado != null) {
-            spnCombustible.setSelection(combustibleSeleccionado.get(0).ordinal());
-            combustibleSeleccionado.clear();
+        if (combustibleOrdenar != null && !combustibleOrdenar.isEmpty()) {
+            spnCombustible.setSelection(combustibleOrdenar.get(0).ordinal());
+            combustibleOrdenar.clear();
         }
         if (ordenSeleccionada != null) {
             spnOrden.setSelection(ordenSeleccionada.ordinal());
@@ -264,10 +263,10 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
                 .setTitle("Ordenar Gasolineras")
                 .setView(view)
                 .setPositiveButton("Ordenar", (dialog, which) -> {
-                    combustibleSeleccionado.add((Combustible) spnCombustible.getSelectedItem());
+                    combustibleOrdenar.add((Combustible) spnCombustible.getSelectedItem());
                     ordenSeleccionada = (Orden) spnOrden.getSelectedItem();
 
-                    presenter.ordenarGasolinerasPorPrecio(combustibleSeleccionado.get(0), ordenSeleccionada);
+                    presenter.ordenarGasolinerasPorPrecio(combustibleOrdenar.get(0), ordenSeleccionada);
                     dialog.dismiss();
                 })
                 .setNegativeButton("Cancelar", (dialog, which) -> dialog.dismiss())
