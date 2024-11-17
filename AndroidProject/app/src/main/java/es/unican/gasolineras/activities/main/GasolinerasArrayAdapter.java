@@ -170,6 +170,8 @@ public class GasolinerasArrayAdapter extends BaseAdapter {
                         seleccionados++;
                         }
                         break;
+                    default:
+                        break;
             }
 
         }
