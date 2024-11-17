@@ -5,6 +5,11 @@ import java.util.Calendar;
 
 public class Tiempo {
 
+
+
+    private Tiempo() {
+        throw new UnsupportedOperationException("Cannot instantiate Tiempo class");
+    }
     /**
     * Obtiene la hora actual
     * @return la hora actual

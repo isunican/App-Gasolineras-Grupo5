@@ -17,7 +17,7 @@ public class Filtros implements IFiltros {
         List<Gasolinera> resultado = new ArrayList<>();
 
         if (gasolineras.isEmpty()) {
-            return null;
+            return resultado;
         }
 
         if (provincia != null && municipio != null) {
@@ -151,6 +151,8 @@ public class Filtros implements IFiltros {
                             resultado.add(g);
                             anhadida = true;
                         }
+                        break;
+                    default:
                         break;
                 }
             }

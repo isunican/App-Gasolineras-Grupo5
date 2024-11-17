@@ -4,11 +4,7 @@ import static es.unican.gasolineras.common.Horario.estaAbierto;
 
 import com.google.gson.annotations.SerializedName;
 
-import es.unican.gasolineras.common.DataAccessException;
-import es.unican.gasolineras.common.Horario;
 import org.parceler.Parcel;
-import java.util.Date;
-import java.util.Calendar;
 import lombok.Getter;
 import lombok.Setter;
 
