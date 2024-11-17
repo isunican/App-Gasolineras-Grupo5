@@ -17,7 +17,6 @@ import android.content.Context;
 import android.view.View;
 
 import androidx.test.espresso.Espresso;
-import androidx.test.espresso.matcher.RootMatchers;
 import androidx.test.ext.junit.rules.ActivityScenarioRule;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.platform.app.InstrumentationRegistry;
@@ -33,7 +32,6 @@ import dagger.hilt.android.testing.HiltAndroidTest;
 import dagger.hilt.android.testing.UninstallModules;
 import es.unican.gasolineras.activities.main.MainView;
 import es.unican.gasolineras.injection.RepositoriesModule;
-import es.unican.gasolineras.model.Orden;
 import es.unican.gasolineras.repository.IGasolinerasRepository;
 
 @HiltAndroidTest
@@ -65,11 +63,11 @@ public class OrdenarPorPrecioDescUITest {
     public void ordenarPorPrecioDesc() {
         Espresso.onView(withId(R.id.menuOrdenButton)).perform(click());
         Espresso.onView(withId(R.id.spnOrden)).perform(click());
-        onView(withText(allOf(is("DESCENDENTE"), instanceOf(String.class))))
+        onView(withText(allOf(is("Descendente"), instanceOf(String.class))))
                 .inRoot(isPlatformPopup())
                 .perform(click());
         Espresso.onView(withId(R.id.spnCombustible)).perform(click());
-        onView(withText(allOf(is("Diesel"), instanceOf(String.class))))
+        onView(withText(allOf(is("Gasóleo A"), instanceOf(String.class))))
                 .inRoot(isPlatformPopup())
                 .perform(click());
         Espresso.onView(withText("Ordenar")).perform(click());

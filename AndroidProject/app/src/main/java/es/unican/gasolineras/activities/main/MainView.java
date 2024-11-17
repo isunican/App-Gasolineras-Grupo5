@@ -31,12 +31,10 @@ import dagger.hilt.android.AndroidEntryPoint;
 import es.unican.gasolineras.R;
 import es.unican.gasolineras.activities.info.InfoView;
 import es.unican.gasolineras.activities.details.DetailsView;
-import es.unican.gasolineras.model.Combustible;
 import es.unican.gasolineras.common.Filtros;
 import es.unican.gasolineras.model.FiltrosSeleccionados;
 import es.unican.gasolineras.model.Gasolinera;
 import es.unican.gasolineras.model.Municipio;
-import es.unican.gasolineras.model.Orden;
 import es.unican.gasolineras.repository.IGasolinerasRepository;
 
 /**
@@ -48,10 +46,12 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
     /** The presenter of this view */
     private MainPresenter presenter;
     private List<String> combustiblesSeleccionados;
-    private List<Combustible> combustibleOrdenar = new ArrayList<>(); // guarda la seleccion si se reabre el popup
-    private Orden ordenSeleccionada;
+    private String combustibleOrdenar;
+    private String ordenSeleccionada;
     private Spinner spnMunicipios;
-
+    private static final String CANCELAR = "Cancelar";
+    private static final String FILTERSPREFERENCE = "FiltersPreference";
+    private static final String MUNICIPIO = "municipio";
     /** The repository to access the data. This is automatically injected by Hilt in this class */
     @Inject
     IGasolinerasRepository repository;
@@ -143,7 +143,7 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
     @Override
     public void showStations(List<Gasolinera> stations) {
         ListView list = findViewById(R.id.lvStations);
-        GasolinerasArrayAdapter adapter = new GasolinerasArrayAdapter(this, stations, combustibleOrdenar);
+        GasolinerasArrayAdapter adapter = new GasolinerasArrayAdapter(this, stations, combustiblesSeleccionados);
         list.setAdapter(adapter);
     }
 
@@ -214,7 +214,9 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
             }
 
             @Override
-            public void onNothingSelected(AdapterView<?> parent) { }
+            public void onNothingSelected(AdapterView<?> parent) {
+                //No hace nada
+            }
         });
 
         new AlertDialog.Builder(this)
@@ -224,7 +226,7 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
                     aplicarFiltros(filtros, spnProvincias, spnCompanhia, checkEstado);
                     guardarFiltros(filtros);
                 })
-                .setNegativeButton("Cancelar", (dialog, which) -> dialog.dismiss())
+                .setNegativeButton(CANCELAR, (dialog, which) -> dialog.dismiss())
                 .create()
                 .show();
 
@@ -242,34 +244,36 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
         Spinner spnCombustible = view.findViewById(R.id.spnCombustible);
         Spinner spnOrden = view.findViewById(R.id.spnOrden);
 
-        ArrayAdapter<Combustible> adapterCombustible = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, Combustible.values());
-        adapterCombustible.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spnCombustible.setAdapter(adapterCombustible);
+        asignaAdapterASpinner(spnCombustible, R.array.lista_combustibles);
+        asignaAdapterASpinner(spnOrden, R.array.lista_orden);
 
-        ArrayAdapter<Orden> adapterOrden = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, Orden.values());
-        adapterOrden.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spnOrden.setAdapter(adapterOrden);
-
-        // Establecer las selecciones previas si existen
-        if (combustibleOrdenar != null && !combustibleOrdenar.isEmpty()) {
-            spnCombustible.setSelection(combustibleOrdenar.get(0).ordinal());
-            combustibleOrdenar.clear();
+        if (combustibleOrdenar != null) {
+            spnCombustible.setSelection(getPositionInSpinner(spnCombustible, combustibleOrdenar));
+        }
+        if (!combustiblesSeleccionados.isEmpty()) {
+            ArrayAdapter<String> adapter1 = new ArrayAdapter<>(this,
+                    android.R.layout.simple_spinner_item, combustiblesSeleccionados);
+            adapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            spnCombustible.setAdapter(adapter1);
+            if (combustibleOrdenar != null) {
+                spnCombustible.setSelection(adapter1.getPosition(combustibleOrdenar));
+            }
         }
         if (ordenSeleccionada != null) {
-            spnOrden.setSelection(ordenSeleccionada.ordinal());
+            spnOrden.setSelection(getPositionInSpinner(spnOrden, ordenSeleccionada));
         }
 
         new AlertDialog.Builder(this)
                 .setTitle("Ordenar Gasolineras")
                 .setView(view)
                 .setPositiveButton("Ordenar", (dialog, which) -> {
-                    combustibleOrdenar.add((Combustible) spnCombustible.getSelectedItem());
-                    ordenSeleccionada = (Orden) spnOrden.getSelectedItem();
+                    combustibleOrdenar = spnCombustible.getSelectedItem().toString();
+                    ordenSeleccionada = spnOrden.getSelectedItem().toString();
 
-                    presenter.ordenarGasolinerasPorPrecio(combustibleOrdenar.get(0), ordenSeleccionada);
+                    presenter.ordenarGasolinerasPorPrecio(combustibleOrdenar, ordenSeleccionada);
                     dialog.dismiss();
                 })
-                .setNegativeButton("Cancelar", (dialog, which) -> dialog.dismiss())
+                .setNegativeButton(CANCELAR, (dialog, which) -> dialog.dismiss())
                 .create()
                 .show();
     }
@@ -291,8 +295,8 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
 
         spnMunicipios.setAdapter(municipiosAdapter);
 
-        SharedPreferences prefs = getSharedPreferences("FiltersPreferences", MODE_PRIVATE);
-        String municipioGuardado = prefs.getString("municipio", "-");
+        SharedPreferences prefs = getSharedPreferences(FILTERSPREFERENCE, MODE_PRIVATE);
+        String municipioGuardado = prefs.getString(MUNICIPIO, "-");
         int municipioPosition = getPositionInSpinner(spnMunicipios, municipioGuardado);
         if (municipioPosition >= 0) {
             spnMunicipios.setSelection(municipioPosition);
@@ -340,11 +344,11 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
      * @return Un objeto {@link FiltrosSeleccionados} con los valores almacenados.
      */
     private FiltrosSeleccionados cargarFiltros() {
-        SharedPreferences preferences = getSharedPreferences("FiltersPreferences", MODE_PRIVATE);
+        SharedPreferences preferences = getSharedPreferences(FILTERSPREFERENCE, MODE_PRIVATE);
 
         FiltrosSeleccionados filtros = new FiltrosSeleccionados();
         filtros.setProvincia(preferences.getString("provincia", ""));
-        filtros.setMunicipio(preferences.getString("municipio", ""));
+        filtros.setMunicipio(preferences.getString(MUNICIPIO, ""));
         filtros.setCompanhia(preferences.getString("companhia", ""));
         filtros.setEstadoAbierto(preferences.getBoolean("estado_abierto", false));
 
@@ -420,11 +424,11 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
      * @param filtros Los filtros seleccionados que se deben guardar.
      */
     private void guardarFiltros(FiltrosSeleccionados filtros) {
-        SharedPreferences preferences = getSharedPreferences("FiltersPreferences", MODE_PRIVATE);
+        SharedPreferences preferences = getSharedPreferences(FILTERSPREFERENCE, MODE_PRIVATE);
         SharedPreferences.Editor editor = preferences.edit();
 
         editor.putString("provincia", filtros.getProvincia());
-        editor.putString("municipio", filtros.getMunicipio());
+        editor.putString(MUNICIPIO, filtros.getMunicipio());
         editor.putString("companhia", filtros.getCompanhia());
         editor.putBoolean("estado_abierto", filtros.isEstadoAbierto());
 
@@ -464,7 +468,7 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
                         }
                     })
                     .setPositiveButton("Aceptar", (dialog, which) -> updateFuelText(tvCombustible))
-                    .setNegativeButton("Cancelar", (dialog, which) -> dialog.dismiss())
+                    .setNegativeButton(CANCELAR, (dialog, which) -> dialog.dismiss())
                     .setNeutralButton("Borrar", (dialog, which) -> clearSelection(seleccionados, tempCombustiblesSeleccionados, tvCombustible))
                     .create()
                     .show();
@@ -510,7 +514,7 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
      * Restablece las preferencias compartidas eliminando todos los filtros guardados.
      */
     private void resetSharedPreferences() {
-        SharedPreferences preferences = getSharedPreferences("FiltersPreferences", MODE_PRIVATE);
+        SharedPreferences preferences = getSharedPreferences(FILTERSPREFERENCE, MODE_PRIVATE);
         SharedPreferences.Editor editor = preferences.edit();
         editor.clear();
         editor.apply();

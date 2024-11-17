@@ -1,13 +1,9 @@
 package es.unican.gasolineras.activities.main;
 
-import android.widget.TextView;
-
 import java.util.List;
-import es.unican.gasolineras.common.DataAccessException;
-import es.unican.gasolineras.model.Combustible;
+
 import es.unican.gasolineras.model.Gasolinera;
 import es.unican.gasolineras.model.Municipio;
-import es.unican.gasolineras.model.Orden;
 import es.unican.gasolineras.repository.IGasolinerasRepository;
 
 /**
@@ -82,7 +78,7 @@ public interface IMainContract {
          * @param combustible the fuel type to sort by
          * @param orden the order (ascending or descending)
          */
-        public void ordenarGasolinerasPorPrecio(Combustible combustible, Orden orden);
+        public void ordenarGasolinerasPorPrecio(String combustible, String orden);
     }
 
     /**

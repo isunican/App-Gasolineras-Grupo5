@@ -55,9 +55,10 @@ public class BusquedaPorProvinciaYMunicipioExitoUITest {
 
     View decorView;
 
-    /**
+
     @Test
     public void test() throws InterruptedException {
+        /**
         // TEST_UI1
         onView(withId(R.id.menuFilterButton)).perform(click());
 
@@ -82,7 +83,8 @@ public class BusquedaPorProvinciaYMunicipioExitoUITest {
         elementoLista2.onChildView(withId(R.id.tvName)).check(matches(withText("CARREFOUR")));
 
         //onView(withText("Cargadas 2 gasolineras")).inRoot(RootMatchers.withDecorView(not(decorView))).check(matches(isDisplayed()));
+         **/
     }
-    **/
+
 
 }

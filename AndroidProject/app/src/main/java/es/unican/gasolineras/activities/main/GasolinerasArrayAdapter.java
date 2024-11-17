@@ -14,11 +14,9 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import java.util.Iterator;
 import java.util.List;
 
 import es.unican.gasolineras.R;
-import es.unican.gasolineras.model.Combustible;
 import es.unican.gasolineras.model.Gasolinera;
 
 /**
@@ -33,14 +31,14 @@ public class GasolinerasArrayAdapter extends BaseAdapter {
     private final Context context;
 
     /** Selected fuel type for filtering or highlighting prices */
-    private final   List<Combustible> combustibleSeleccionado;
+    private final   List<String> combustibleSeleccionado;
 
     /**
      * Constructs an adapter to handle a list of gasolineras
      * @param context the application context
      * @param objects the list of gas stations
      */
-    public GasolinerasArrayAdapter(@NonNull Context context, @NonNull List<Gasolinera> objects, List<Combustible> combustibleSeleccionado) {
+    public GasolinerasArrayAdapter(@NonNull Context context, @NonNull List<Gasolinera> objects, List<String> combustibleSeleccionado) {
         // we know the parameters are not null because of the @NonNull annotation
         this.gasolineras = objects;
         this.context = context;
@@ -131,9 +129,9 @@ public class GasolinerasArrayAdapter extends BaseAdapter {
 
         } else {
             int seleccionados = 0;
-            for(Combustible c : combustibleSeleccionado)
+            for(String c : combustibleSeleccionado)
                 switch (c) {
-                case GASOLEOA:
+                case "Gasóleo A":
                     if(seleccionados < 2) {
                         setFuelPrice(convertView, R.id.tv95Label, R.id.tv95, context.getString(R.string.dieselAlabel),
                                 String.valueOf(gasolinera.getGasoleoA()), true);
@@ -142,62 +140,60 @@ public class GasolinerasArrayAdapter extends BaseAdapter {
                         seleccionados++;
                     }
                     break;
-
-                case GASOLINA95E5:
+                case "Gasolina 95 E5":
                     if(seleccionados < 2) {
-                    setFuelPrice(convertView, R.id.tv95Label, R.id.tv95, context.getString(R.string.gasolina95E5label),
+                        setFuelPrice(convertView, R.id.tv95Label, R.id.tv95, context.getString(R.string.gasolina95E5label),
                             String.valueOf(gasolinera.getGasolina95E5()), true);
-                    setFuelPrice(convertView, R.id.tvDieselALabel, R.id.tvDieselA, context.getString(R.string.dieselAlabel),
+                        setFuelPrice(convertView, R.id.tvDieselALabel, R.id.tvDieselA, context.getString(R.string.dieselAlabel),
                             String.valueOf(gasolinera.getGasoleoA()), false);
-                    seleccionados++;
+                        seleccionados++;
                     }
                     break;
-                case GASOLINA95E5PREM:
+                case "Gasolina 95 E5 Premium":
                     if(seleccionados < 2) {
-                    setFuelPrice(convertView, R.id.tv95Label, R.id.tv95, context.getString(R.string.gasolina95E5Premlabel),
+                        setFuelPrice(convertView, R.id.tv95Label, R.id.tv95, context.getString(R.string.gasolina95E5Premlabel),
                             String.valueOf(gasolinera.getGasolina95E5PREM()), true);
-                    setFuelPrice(convertView, R.id.tvDieselALabel, R.id.tvDieselA, context.getString(R.string.dieselAlabel),
+                        setFuelPrice(convertView, R.id.tvDieselALabel, R.id.tvDieselA, context.getString(R.string.dieselAlabel),
                             String.valueOf(gasolinera.getGasoleoA()), false);
-                    seleccionados++;
+                        seleccionados++;
                     }
                     break;
-                case GASOLINA95E10:
+                case "Gasolina 95 E10":
                     if(seleccionados < 2) {
-                    setFuelPrice(convertView, R.id.tv95Label, R.id.tv95, context.getString(R.string.gasolina95E10label),
+                        setFuelPrice(convertView, R.id.tv95Label, R.id.tv95, context.getString(R.string.gasolina95E10label),
                             String.valueOf(gasolinera.getGasolina95E10()), true);
-                    setFuelPrice(convertView, R.id.tvDieselALabel, R.id.tvDieselA, context.getString(R.string.dieselAlabel),
+                        setFuelPrice(convertView, R.id.tvDieselALabel, R.id.tvDieselA, context.getString(R.string.dieselAlabel),
                             String.valueOf(gasolinera.getGasoleoA()), false);
-                    seleccionados++;
+                        seleccionados++;
                     }
                     break;
-                case GASOLINA98E5:
+                case "Gasolina 98 E5":
                     if(seleccionados < 2) {
-                    setFuelPrice(convertView, R.id.tv95Label, R.id.tv95, context.getString(R.string.gasolina98E5label),
+                        setFuelPrice(convertView, R.id.tv95Label, R.id.tv95, context.getString(R.string.gasolina98E5label),
                             String.valueOf(gasolinera.getGasolina98E5()), true);
-                    setFuelPrice(convertView, R.id.tvDieselALabel, R.id.tvDieselA, context.getString(R.string.dieselAlabel),
+                        setFuelPrice(convertView, R.id.tvDieselALabel, R.id.tvDieselA, context.getString(R.string.dieselAlabel),
                             String.valueOf(gasolinera.getGasoleoA()), false);
-                    seleccionados++;
+                        seleccionados++;
                     }
                     break;
-                case GASOLINA98E10:
+                case "Gasolina 98 E10":
                     if(seleccionados < 2) {
-                    setFuelPrice(convertView, R.id.tv95Label, R.id.tv95, context.getString(R.string.gasolina98E10label),
+                        setFuelPrice(convertView, R.id.tv95Label, R.id.tv95, context.getString(R.string.gasolina98E10label),
                             String.valueOf(gasolinera.getGasolina98E10()), true);
-                    setFuelPrice(convertView, R.id.tvDieselALabel, R.id.tvDieselA, context.getString(R.string.dieselAlabel),
+                        setFuelPrice(convertView, R.id.tvDieselALabel, R.id.tvDieselA, context.getString(R.string.dieselAlabel),
                             String.valueOf(gasolinera.getGasoleoA()), false);
-                    seleccionados++;
+                        seleccionados++;
                     }
                     break;
-
-                case BIODIESEL:
+                case "Biodiesel":
                     if(seleccionados < 2) {
-                    setFuelPrice(convertView, R.id.tv95Label, R.id.tv95, context.getString(R.string.biolabel),
-                            String.valueOf(gasolinera.getBiodiesel()), true);
-                    setFuelPrice(convertView, R.id.tvDieselALabel, R.id.tvDieselA, context.getString(R.string.dieselAlabel),
+                        setFuelPrice(convertView, R.id.tv95Label, R.id.tv95, context.getString(R.string.biolabel),
+                            String.valueOf(gasolinera.getGasolina98E10()), true);
+                        setFuelPrice(convertView, R.id.tvDieselALabel, R.id.tvDieselA, context.getString(R.string.dieselAlabel),
                             String.valueOf(gasolinera.getGasoleoA()), false);
-                    seleccionados++;
-                    }
-                    break;
+                        seleccionados++;
+                        }
+                        break;
             }
 
         }
