@@ -49,7 +49,9 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
     private String combustibleOrdenar;
     private String ordenSeleccionada;
     private Spinner spnMunicipios;
-
+    private static final String CANCELAR = "Cancelar";
+    private static final String FILTERSPREFERENCE = "FiltersPreference";
+    private static final String MUNICIPIO = "municipio";
     /** The repository to access the data. This is automatically injected by Hilt in this class */
     @Inject
     IGasolinerasRepository repository;
@@ -212,7 +214,9 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
             }
 
             @Override
-            public void onNothingSelected(AdapterView<?> parent) { }
+            public void onNothingSelected(AdapterView<?> parent) {
+                //No hace nada
+            }
         });
 
         new AlertDialog.Builder(this)
@@ -222,7 +226,7 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
                     aplicarFiltros(filtros, spnProvincias, spnCompanhia, checkEstado);
                     guardarFiltros(filtros);
                 })
-                .setNegativeButton("Cancelar", (dialog, which) -> dialog.dismiss())
+                .setNegativeButton(CANCELAR, (dialog, which) -> dialog.dismiss())
                 .create()
                 .show();
 
@@ -269,7 +273,7 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
                     presenter.ordenarGasolinerasPorPrecio(combustibleOrdenar, ordenSeleccionada);
                     dialog.dismiss();
                 })
-                .setNegativeButton("Cancelar", (dialog, which) -> dialog.dismiss())
+                .setNegativeButton(CANCELAR, (dialog, which) -> dialog.dismiss())
                 .create()
                 .show();
     }
@@ -291,8 +295,8 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
 
         spnMunicipios.setAdapter(municipiosAdapter);
 
-        SharedPreferences prefs = getSharedPreferences("FiltersPreferences", MODE_PRIVATE);
-        String municipioGuardado = prefs.getString("municipio", "-");
+        SharedPreferences prefs = getSharedPreferences(FILTERSPREFERENCE, MODE_PRIVATE);
+        String municipioGuardado = prefs.getString(MUNICIPIO, "-");
         int municipioPosition = getPositionInSpinner(spnMunicipios, municipioGuardado);
         if (municipioPosition >= 0) {
             spnMunicipios.setSelection(municipioPosition);
@@ -340,11 +344,11 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
      * @return Un objeto {@link FiltrosSeleccionados} con los valores almacenados.
      */
     private FiltrosSeleccionados cargarFiltros() {
-        SharedPreferences preferences = getSharedPreferences("FiltersPreferences", MODE_PRIVATE);
+        SharedPreferences preferences = getSharedPreferences(FILTERSPREFERENCE, MODE_PRIVATE);
 
         FiltrosSeleccionados filtros = new FiltrosSeleccionados();
         filtros.setProvincia(preferences.getString("provincia", ""));
-        filtros.setMunicipio(preferences.getString("municipio", ""));
+        filtros.setMunicipio(preferences.getString(MUNICIPIO, ""));
         filtros.setCompanhia(preferences.getString("companhia", ""));
         filtros.setEstadoAbierto(preferences.getBoolean("estado_abierto", false));
 
@@ -420,11 +424,11 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
      * @param filtros Los filtros seleccionados que se deben guardar.
      */
     private void guardarFiltros(FiltrosSeleccionados filtros) {
-        SharedPreferences preferences = getSharedPreferences("FiltersPreferences", MODE_PRIVATE);
+        SharedPreferences preferences = getSharedPreferences(FILTERSPREFERENCE, MODE_PRIVATE);
         SharedPreferences.Editor editor = preferences.edit();
 
         editor.putString("provincia", filtros.getProvincia());
-        editor.putString("municipio", filtros.getMunicipio());
+        editor.putString(MUNICIPIO, filtros.getMunicipio());
         editor.putString("companhia", filtros.getCompanhia());
         editor.putBoolean("estado_abierto", filtros.isEstadoAbierto());
 
@@ -464,7 +468,7 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
                         }
                     })
                     .setPositiveButton("Aceptar", (dialog, which) -> updateFuelText(tvCombustible))
-                    .setNegativeButton("Cancelar", (dialog, which) -> dialog.dismiss())
+                    .setNegativeButton(CANCELAR, (dialog, which) -> dialog.dismiss())
                     .setNeutralButton("Borrar", (dialog, which) -> clearSelection(seleccionados, tempCombustiblesSeleccionados, tvCombustible))
                     .create()
                     .show();
@@ -510,7 +514,7 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
      * Restablece las preferencias compartidas eliminando todos los filtros guardados.
      */
     private void resetSharedPreferences() {
-        SharedPreferences preferences = getSharedPreferences("FiltersPreferences", MODE_PRIVATE);
+        SharedPreferences preferences = getSharedPreferences(FILTERSPREFERENCE, MODE_PRIVATE);
         SharedPreferences.Editor editor = preferences.edit();
         editor.clear();
         editor.apply();

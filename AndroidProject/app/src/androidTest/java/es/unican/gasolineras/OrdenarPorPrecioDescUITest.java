@@ -63,11 +63,11 @@ public class OrdenarPorPrecioDescUITest {
     public void ordenarPorPrecioDesc() {
         Espresso.onView(withId(R.id.menuOrdenButton)).perform(click());
         Espresso.onView(withId(R.id.spnOrden)).perform(click());
-        onView(withText(allOf(is("DESCENDENTE"), instanceOf(String.class))))
+        onView(withText(allOf(is("Descendente"), instanceOf(String.class))))
                 .inRoot(isPlatformPopup())
                 .perform(click());
         Espresso.onView(withId(R.id.spnCombustible)).perform(click());
-        onView(withText(allOf(is("Diesel"), instanceOf(String.class))))
+        onView(withText(allOf(is("Gasóleo A"), instanceOf(String.class))))
                 .inRoot(isPlatformPopup())
                 .perform(click());
         Espresso.onView(withText("Ordenar")).perform(click());

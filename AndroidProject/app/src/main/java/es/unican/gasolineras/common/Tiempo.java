@@ -61,6 +61,8 @@ public class Tiempo {
             case Calendar.SUNDAY:
                 letraletraDiaActual = "D";
                 break;
+            default:
+                break;
         }
         return letraletraDiaActual;
     }

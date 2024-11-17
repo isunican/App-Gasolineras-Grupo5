@@ -235,6 +235,8 @@ public class Horario {
             case "D":
                 dias[6] = 1;
                 break;
+            default:
+                break;
         }
         // Cojo el segundo valor de dias [1] y lo comparo con los dias de la semana, marco a 1 ese dia y todos los anteriories
         switch (diasIniFin[1]) {
