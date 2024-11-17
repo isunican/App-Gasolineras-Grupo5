@@ -68,6 +68,5 @@ public class BusquedaExitosaCompanhiaVaciaUITest {
         //comprueba que aparece el numero de gasolineras correcta
         Espresso.onView(withId(R.id.lvStations)).check(matches(isDisplayed())).check(matches(listSize(6)));
 
-        //Espresso.onView(withText("Cargadas 2 gasolineras")).inRoot(RootMatchers.withDecorView(not(decorView))).check(matches(isDisplayed()));
     }
 }

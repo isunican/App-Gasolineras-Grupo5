@@ -2,14 +2,11 @@ package es.unican.gasolineras;
 
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
-import static androidx.test.espresso.action.ViewActions.scrollTo;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
-import static org.hamcrest.CoreMatchers.anything;
 import static org.hamcrest.Matchers.allOf;
 import static org.hamcrest.Matchers.instanceOf;
 import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.not;
 import static es.unican.gasolineras.utils.MockRepositories.getTestRepository;
 import static androidx.test.espresso.matcher.RootMatchers.isPlatformPopup;
 
@@ -21,7 +18,6 @@ import androidx.test.ext.junit.rules.ActivityScenarioRule;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.platform.app.InstrumentationRegistry;
 
-import org.junit.After;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -54,10 +50,7 @@ public class OrdenarPorPrecioDescUITest {
 
     View decorView;
 
-    @After
-    public void tearDown() throws InterruptedException {
-        Thread.sleep(2000);
-    }
+
 
     @Test
     public void ordenarPorPrecioDesc() {

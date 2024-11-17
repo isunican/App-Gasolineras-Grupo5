@@ -132,7 +132,7 @@ public class OrdenarTest {
     }
 
     @Test
-    public void testInit() throws DataAccessException {
+    public void testInit() {
         when(mockView.getGasolinerasRepository()).thenReturn(repository);
         presenter.init(mockView);
         assertEquals(presenter.getView(), mockView);

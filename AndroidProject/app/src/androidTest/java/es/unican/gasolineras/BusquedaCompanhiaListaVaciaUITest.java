@@ -56,7 +56,7 @@ public class BusquedaCompanhiaListaVaciaUITest {
         hiltRule.inject();
     }
     @Test
-    public void testCompanhia_UI1() throws InterruptedException {
+    public void testCompanhia_UI1() {
         Espresso.onView(withId(R.id.menuFilterButton)).perform(click());
         Espresso.onView(withId(R.id.spnCompanhia)).perform(click());
         Espresso.onData(allOf(is(instanceOf(String.class)), is("Ballenoil")))
