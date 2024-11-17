@@ -31,12 +31,10 @@ import dagger.hilt.android.AndroidEntryPoint;
 import es.unican.gasolineras.R;
 import es.unican.gasolineras.activities.info.InfoView;
 import es.unican.gasolineras.activities.details.DetailsView;
-import es.unican.gasolineras.model.Combustible;
 import es.unican.gasolineras.common.Filtros;
 import es.unican.gasolineras.model.FiltrosSeleccionados;
 import es.unican.gasolineras.model.Gasolinera;
 import es.unican.gasolineras.model.Municipio;
-import es.unican.gasolineras.model.Orden;
 import es.unican.gasolineras.repository.IGasolinerasRepository;
 
 /**
@@ -48,8 +46,8 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
     /** The presenter of this view */
     private MainPresenter presenter;
     private List<String> combustiblesSeleccionados;
-    private List<Combustible> combustibleOrdenar = new ArrayList<>(); // guarda la seleccion si se reabre el popup
-    private Orden ordenSeleccionada;
+    private String combustibleOrdenar;
+    private String ordenSeleccionada;
     private Spinner spnMunicipios;
 
     /** The repository to access the data. This is automatically injected by Hilt in this class */
@@ -143,7 +141,7 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
     @Override
     public void showStations(List<Gasolinera> stations) {
         ListView list = findViewById(R.id.lvStations);
-        GasolinerasArrayAdapter adapter = new GasolinerasArrayAdapter(this, stations, combustibleOrdenar);
+        GasolinerasArrayAdapter adapter = new GasolinerasArrayAdapter(this, stations, combustiblesSeleccionados);
         list.setAdapter(adapter);
     }
 
@@ -242,31 +240,33 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
         Spinner spnCombustible = view.findViewById(R.id.spnCombustible);
         Spinner spnOrden = view.findViewById(R.id.spnOrden);
 
-        ArrayAdapter<Combustible> adapterCombustible = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, Combustible.values());
-        adapterCombustible.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spnCombustible.setAdapter(adapterCombustible);
+        asignaAdapterASpinner(spnCombustible, R.array.lista_combustibles);
+        asignaAdapterASpinner(spnOrden, R.array.lista_orden);
 
-        ArrayAdapter<Orden> adapterOrden = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, Orden.values());
-        adapterOrden.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spnOrden.setAdapter(adapterOrden);
-
-        // Establecer las selecciones previas si existen
-        if (combustibleOrdenar != null && !combustibleOrdenar.isEmpty()) {
-            spnCombustible.setSelection(combustibleOrdenar.get(0).ordinal());
-            combustibleOrdenar.clear();
+        if (combustibleOrdenar != null) {
+            spnCombustible.setSelection(getPositionInSpinner(spnCombustible, combustibleOrdenar));
+        }
+        if (!combustiblesSeleccionados.isEmpty()) {
+            ArrayAdapter<String> adapter1 = new ArrayAdapter<>(this,
+                    android.R.layout.simple_spinner_item, combustiblesSeleccionados);
+            adapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            spnCombustible.setAdapter(adapter1);
+            if (combustibleOrdenar != null) {
+                spnCombustible.setSelection(adapter1.getPosition(combustibleOrdenar));
+            }
         }
         if (ordenSeleccionada != null) {
-            spnOrden.setSelection(ordenSeleccionada.ordinal());
+            spnOrden.setSelection(getPositionInSpinner(spnOrden, ordenSeleccionada));
         }
 
         new AlertDialog.Builder(this)
                 .setTitle("Ordenar Gasolineras")
                 .setView(view)
                 .setPositiveButton("Ordenar", (dialog, which) -> {
-                    combustibleOrdenar.add((Combustible) spnCombustible.getSelectedItem());
-                    ordenSeleccionada = (Orden) spnOrden.getSelectedItem();
+                    combustibleOrdenar = spnCombustible.getSelectedItem().toString();
+                    ordenSeleccionada = spnOrden.getSelectedItem().toString();
 
-                    presenter.ordenarGasolinerasPorPrecio(combustibleOrdenar.get(0), ordenSeleccionada);
+                    presenter.ordenarGasolinerasPorPrecio(combustibleOrdenar, ordenSeleccionada);
                     dialog.dismiss();
                 })
                 .setNegativeButton("Cancelar", (dialog, which) -> dialog.dismiss())

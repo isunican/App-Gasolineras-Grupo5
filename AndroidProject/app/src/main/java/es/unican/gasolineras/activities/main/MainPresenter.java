@@ -3,13 +3,10 @@ package es.unican.gasolineras.activities.main;
 import java.util.Comparator;
 import java.util.List;
 
-import es.unican.gasolineras.R;
 import es.unican.gasolineras.common.IFiltros;
-import es.unican.gasolineras.model.Combustible;
 import es.unican.gasolineras.model.Gasolinera;
 import es.unican.gasolineras.model.IDProvincias;
 import es.unican.gasolineras.model.Municipio;
-import es.unican.gasolineras.model.Orden;
 import es.unican.gasolineras.repository.ICallBack;
 import es.unican.gasolineras.repository.IGasolinerasRepository;
 import lombok.Setter;
@@ -127,11 +124,11 @@ public class MainPresenter implements IMainContract.Presenter {
     public void onOrdenarButtonClicked() { view.showOrdenarPopUp(); }
 
 
-    /**
-     * @see IMainContract.Presenter#ordenarGasolinerasPorPrecio(Combustible combustible, Orden orden)
+    /**s
+     * @see IMainContract.Presenter#ordenarGasolinerasPorPrecio(String combustible, String orden)
      */
     @Override
-    public void ordenarGasolinerasPorPrecio(Combustible combustible, Orden orden) {
+    public void ordenarGasolinerasPorPrecio(String combustible, String orden) {
         // Usa la lista filtrada
         List<Gasolinera> gasolinerasAOrdenar = this.gasolinerasFiltradas;
 
@@ -149,7 +146,7 @@ public class MainPresenter implements IMainContract.Presenter {
         };
 
         // Si el orden es descendente, cambiamos la comparación sin afectar a los 0.0
-        if (orden == Orden.DESCENDENTE) {
+        if (orden == "Descendente") {
             comparator = (g1, g2) -> {
                 double precio1 = getPrecioCombustible(g1, combustible);
                 double precio2 = getPrecioCombustible(g2, combustible);
@@ -175,19 +172,19 @@ public class MainPresenter implements IMainContract.Presenter {
      * @param combustible el tipo de combustible del que se quiere obtener el precio
      * @return el precio del tipo de combustible seleccionado en la gasolinera seleccionada
      */
-    private double getPrecioCombustible(Gasolinera gasolinera, Combustible combustible) {
+    private double getPrecioCombustible(Gasolinera gasolinera, String combustible) {
         switch (combustible) {
-            case GASOLEOA:
+            case "Gasóleo A":
                 return gasolinera.getGasoleoA();
-            case GASOLINA95E5:
+            case "Gasolina 95 E5":
                 return gasolinera.getGasolina95E5();
-            case GASOLINA95E5PREM:
+            case "Gasolina 95 E5 Premium":
                 return gasolinera.getGasolina95E5PREM();
-            case GASOLINA95E10:
+            case "Gasolina 95 E10":
                 return gasolinera.getGasolina95E10();
-            case GASOLINA98E5:
+            case "Gasolina 98 E5":
                 return gasolinera.getGasolina98E5();
-            case GASOLINA98E10:
+            case "Gasolina 98 E10":
                 return gasolinera.getGasolina98E10();
             default:
                 return gasolinera.getBiodiesel();

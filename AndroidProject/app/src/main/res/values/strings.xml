@@ -108,5 +108,20 @@
         <item>Gasolina 98 E5</item>
         <item>Gasolina 98 E10</item>
     </string-array>
+
+    <string-array name="lista_combustibles">
+        <item>Gasóleo A</item>
+        <item>Biodiesel</item>
+        <item>Gasolina 95 E5</item>
+        <item>Gasolina 95 E5 Premium</item>
+        <item>Gasolina 95 E10</item>
+        <item>Gasolina 98 E5</item>
+        <item>Gasolina 98 E10</item>
+    </string-array>
+
+    <string-array name="lista_orden">
+        <item>Ascendente</item>
+        <item>Descendente</item>
+    </string-array>
 </resources>
 
