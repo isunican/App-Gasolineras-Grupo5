@@ -330,14 +330,13 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
             String distanciaStr = tvDistancia.getText().toString().replaceAll("[^\\d]", ""); // Extraer solo números
             int distancia = distanciaStr.isEmpty() ? 0 : Integer.parseInt(distanciaStr);
 
-            presenter.searchWithCoordinates(longitud,latitud,distancia);
+            presenter.searchWithCoordinates(longitud, latitud, distancia);
         } catch (NumberFormatException e) {
             // Manejar casos donde no se pueda convertir
             System.err.println("Error: Entrada no válida.");
         }
 
     }
-
 
     @Override
     public void updateMunicipiosSpinner(List<Municipio> municipios) {

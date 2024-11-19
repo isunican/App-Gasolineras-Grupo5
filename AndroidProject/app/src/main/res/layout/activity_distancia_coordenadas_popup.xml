@@ -14,7 +14,7 @@
         android:layout_marginTop="100dp"
         android:gravity="center"
         android:hint="Latitud"
-        android:inputType="text"
+        android:inputType="number|numberDecimal|numberSigned"
         android:maxLength="8" />
 
     <EditText
@@ -25,7 +25,7 @@
         android:layout_marginBottom="60dp"
         android:gravity="center"
         android:hint="Longitud"
-        android:inputType="text"
+        android:inputType="number|numberDecimal|numberSigned"
         android:maxLength="8" />
 
     <TextView

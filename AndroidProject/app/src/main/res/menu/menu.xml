@@ -4,7 +4,7 @@
 
     <item
         android:id="@+id/menuCoordenadasButton"
-        android:icon="@drawable/magnifying_glass"
+        android:icon="@drawable/ay_lupita"
         android:title="Coordenadas"
         app:showAsAction="always"/>
     <item
