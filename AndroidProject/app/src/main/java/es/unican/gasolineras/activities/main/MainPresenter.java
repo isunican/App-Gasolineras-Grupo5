@@ -30,7 +30,7 @@ public class MainPresenter implements IMainContract.Presenter {
     private IFiltros filtros;
     private List<Gasolinera> gasolinerasFiltradas;
     private List<Gasolinera> gasolinerasCoordenadas;
-    private boolean IsFiltro;
+    private boolean IsFiltro = true;
 
     /**
      * @see IMainContract.Presenter#init(IMainContract.View)
@@ -75,8 +75,13 @@ public class MainPresenter implements IMainContract.Presenter {
     @Override
     public void onSearchStationsWithFilters(String provincia, String municipio, String companhia,
                                             boolean abierto) throws DataAccessException {
+        List<Gasolinera> gasolinerasFiltradas;
+        if(IsFiltro) {
+             gasolinerasFiltradas = gasolineras;
+        }else{
 
-        List<Gasolinera> gasolinerasFiltradas = gasolineras;
+            gasolinerasFiltradas = gasolinerasCoordenadas;
+        }
 
         String finalProvincia = "-".equals(provincia) ? null : provincia;
         String finalMunicipio = ("-".equals(municipio) || municipio.isEmpty()) ? null : municipio;
@@ -95,7 +100,7 @@ public class MainPresenter implements IMainContract.Presenter {
 
         // Guarda la lista filtrada para utilizarla en la ordenación
         this.gasolinerasFiltradas = gasolinerasFiltradas;
-
+        IsFiltro = true;
         view.showStations(gasolinerasFiltradas);
         view.showLoadCorrect(gasolinerasFiltradas.size());
     }
@@ -198,8 +203,8 @@ public class MainPresenter implements IMainContract.Presenter {
         }
 
         this.gasolinerasCoordenadas = gasolinerasFiltradasCoordenadas;
-
-                // Actualizar la vista con las gasolineras filtradas
+        IsFiltro = false;
+        // Actualizar la vista con las gasolineras filtradas
         view.showStations(gasolinerasFiltradasCoordenadas);
         view.showLoadCorrect(gasolinerasFiltradasCoordenadas.size());
 
