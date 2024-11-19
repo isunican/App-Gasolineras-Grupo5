@@ -162,6 +162,5 @@ public interface IMainContract {
          */
         public void updateMunicipiosSpinner(List<Municipio> municipios);
 
-
     }
 }

@@ -85,7 +85,6 @@ public class GasolinerasArrayAdapter extends BaseAdapter {
         // status
         setStatus(convertView, gasolinera);
 
-
         // name
         {
             TextView tv = convertView.findViewById(R.id.tvName);
@@ -173,11 +172,9 @@ public class GasolinerasArrayAdapter extends BaseAdapter {
                     default:
                         break;
             }
-
         }
         return convertView;
     }
-
 
     /**
      * Sets the appropriate logo for the given Gasolinera.
@@ -221,8 +218,16 @@ public class GasolinerasArrayAdapter extends BaseAdapter {
         }
     }
 
-
-
+    /**
+     * Configura el precio del combustible en un elemento de vista.
+     *
+     * @param convertView la vista que contiene los elementos a configurar.
+     * @param labelId el ID del TextView que muestra la etiqueta del combustible.
+     * @param priceId el ID del TextView que muestra el precio del combustible.
+     * @param labelText el texto que se usará como etiqueta para el combustible.
+     * @param price el precio del combustible a mostrar.
+     * @param visible indica si los elementos de etiqueta y precio deben ser visibles.
+     */
     private void setFuelPrice(View convertView, int labelId, int priceId, String labelText, String price, boolean visible) {
         TextView tvLabel = convertView.findViewById(labelId);
         tvLabel.setText(String.format("%s:", labelText));

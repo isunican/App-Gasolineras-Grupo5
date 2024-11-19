@@ -99,6 +99,9 @@ public class MainPresenter implements IMainContract.Presenter {
         view.showLoadCorrect(gasolinerasFiltradas.size());
     }
 
+    /**
+     * @see IMainContract.Presenter#onProvinciaSelected(String provinciaNombre)
+     */
     @Override
     public void onProvinciaSelected(String provinciaNombre) {
         String idProvincia = IDProvincias.getCodigoByProvincia(provinciaNombre);

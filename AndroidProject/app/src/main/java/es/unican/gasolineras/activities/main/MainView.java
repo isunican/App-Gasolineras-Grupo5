@@ -22,7 +22,6 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import org.parceler.Parcels;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
