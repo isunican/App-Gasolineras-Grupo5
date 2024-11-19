@@ -2,6 +2,8 @@ package es.unican.gasolineras.activities.main;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -297,6 +299,8 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
 
         EditText etLongitud = view.findViewById(R.id.etLongitud);
         EditText etLatitud = view.findViewById(R.id.etLatitud);
+        compruebaFormato(etLongitud);
+        compruebaFormato(etLatitud);
         Slider slider = view.findViewById(R.id.main_slider);
         TextView tvDistancia = view.findViewById(R.id.tvDistancia);
 
@@ -336,6 +340,81 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
 
 
     }
+
+    private void compruebaFormato(EditText et){
+
+        et.addTextChangedListener(new TextWatcher() {
+            private boolean isUpdating = false; // Evita recursividad
+            private int cursorPosition = 0; // Guarda la posición del cursor
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                cursorPosition = et.getSelectionStart(); // Guarda la posición del cursor
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                // No acción necesaria durante el cambio
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (isUpdating) return; // Evita bucles infinitos
+                isUpdating = true;
+
+                String input = s.toString();
+
+                // Si el input está vacío, salir
+                if (input.isEmpty()) {
+                    isUpdating = false;
+                    return;
+                }
+
+                // Verifica si comienza con un signo negativo
+                boolean isNegative = input.startsWith("-");
+                if (isNegative) input = input.substring(1); // Remueve el signo para validar el resto
+
+                // Divide la entrada en partes (entero y decimal)
+                String[] parts = input.split("\\.", -1); // -1 para incluir un punto al final si lo hay
+                String integerPart = parts[0];
+                String decimalPart = parts.length > 1 ? parts[1] : "";
+
+                // Limita la parte entera a 2 dígitos
+                if (integerPart.length() > 2) {
+                    integerPart = integerPart.substring(0, 2);
+                }
+
+                // Limita la parte decimal a 4 dígitos
+                if (decimalPart.length() > 4) {
+                    decimalPart = decimalPart.substring(0, 4);
+                }
+
+                // Reconstruye el número formateado
+                String formatted = integerPart;
+                if (parts.length > 1) { // Si había un punto, preservarlo
+                    formatted += "." + decimalPart;
+                }
+                if (isNegative) {
+                    formatted = "-" + formatted;
+                }
+
+                // Calcular nueva posición del cursor
+                int newCursorPosition = cursorPosition + (formatted.length() - input.length());
+                newCursorPosition = Math.max(0, Math.min(newCursorPosition, formatted.length())); // Asegurar que esté dentro de límites
+
+                // Actualiza el texto en el EditText
+                et.removeTextChangedListener(this); // Desactiva temporalmente el listener
+                et.setText(formatted);
+                et.setSelection(newCursorPosition); // Restaurar posición del cursor
+                et.addTextChangedListener(this); // Reactiva el listener
+
+                isUpdating = false; // Restablece el estado
+            }
+        });
+
+    }
+
+
     private void applyCoordinates(EditText etLongitud, EditText etLatitud, TextView tvDistancia){
         try {
             // Obtener los valores de los EditText como String
