@@ -1,6 +1,7 @@
 package es.unican.gasolineras.activities.main;
 
 import java.util.List;
+
 import es.unican.gasolineras.model.Gasolinera;
 import es.unican.gasolineras.model.Municipio;
 import es.unican.gasolineras.repository.IGasolinerasRepository;
@@ -174,5 +175,6 @@ public interface IMainContract {
          * @param municipios La lista de municipios para poblar el spinner.
          */
         public void updateMunicipiosSpinner(List<Municipio> municipios);
+
     }
 }

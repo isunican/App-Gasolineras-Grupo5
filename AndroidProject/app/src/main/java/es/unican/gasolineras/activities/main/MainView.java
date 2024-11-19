@@ -27,7 +27,6 @@ import androidx.appcompat.widget.Toolbar;
 import com.google.android.material.slider.Slider;
 
 import org.parceler.Parcels;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;

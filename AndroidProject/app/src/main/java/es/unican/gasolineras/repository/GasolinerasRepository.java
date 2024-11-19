@@ -46,6 +46,12 @@ public class GasolinerasRepository implements IGasolinerasRepository {
         });
     }
 
+    /**
+     * Request the 'municipios' of a given 'provincia'
+     * @see IGasolinerasRepository#requestMunicipiosPorProvincia(ICallBack, String)
+     * @param cb the callback that will asynchronously process the returned gas stations
+     * @param idProvincia id de la provincia.
+     */
     @Override
     public void requestMunicipiosPorProvincia(ICallBack<Municipio> cb, String idProvincia) {
         Call<List<Municipio>> call = GasolinerasService.api.municipiosPorProvincia(idProvincia);
