@@ -1,6 +1,10 @@
 <resources>
     <string name="app_name">Gasolineras</string>
-    <string name="gasolina95label">Gasolina95</string>
+    <string name="gasolina95E5label">Gasolina95E5</string>
+    <string name="gasolina95E5Premlabel">Gasolina95E5Premium</string>
+    <string name="gasolina95E10label">Gasolina95E10</string>
+    <string name="gasolina98E5label">Gasolina98E5</string>
+    <string name="gasolina98E10label">Gasolina98E10</string>
     <string name="dieselAlabel">Diesel</string>
     <string name="gasolina98label">Gasolina98</string>
     <string name="biolabel">Biodiesel</string>
@@ -9,6 +13,7 @@
     <string name="loadCorrect">Se han cargado %d gasolineras</string>
     <string name="loadError">Ha habido un error cargando las gasolineras</string>
     <string name="info_text">Aplicación creada para el Proyecto Integrado Curso 2024-2025</string>
+    <string name="slider_desc" />
     <string name="selecciona_combustibles">Selecciona combustibles</string>
     <string name="precio_gasolina">Precio Gasolina:</string>
     <string name="precio_diesel">Precio Diesel:</string>
@@ -98,11 +103,26 @@
     </string-array>
 
     <string-array name="lista_gasolinas">
-        <item>Gasolina 95 E10</item>
         <item>Gasolina 95 E5</item>
         <item>Gasolina 95 E5 Premium</item>
-        <item>Gasolina 98 E10</item>
+        <item>Gasolina 95 E10</item>
         <item>Gasolina 98 E5</item>
+        <item>Gasolina 98 E10</item>
+    </string-array>
+
+    <string-array name="lista_combustibles">
+        <item>Gasóleo A</item>
+        <item>Biodiesel</item>
+        <item>Gasolina 95 E5</item>
+        <item>Gasolina 95 E5 Premium</item>
+        <item>Gasolina 95 E10</item>
+        <item>Gasolina 98 E5</item>
+        <item>Gasolina 98 E10</item>
+    </string-array>
+
+    <string-array name="lista_orden">
+        <item>Ascendente</item>
+        <item>Descendente</item>
     </string-array>
 </resources>
 

@@ -2,14 +2,11 @@ package es.unican.gasolineras;
 
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
-import static androidx.test.espresso.action.ViewActions.scrollTo;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
-import static org.hamcrest.CoreMatchers.anything;
 import static org.hamcrest.Matchers.allOf;
 import static org.hamcrest.Matchers.instanceOf;
 import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.not;
 import static es.unican.gasolineras.utils.MockRepositories.getTestRepository;
 import static androidx.test.espresso.matcher.RootMatchers.isPlatformPopup;
 
@@ -17,12 +14,10 @@ import android.content.Context;
 import android.view.View;
 
 import androidx.test.espresso.Espresso;
-import androidx.test.espresso.matcher.RootMatchers;
 import androidx.test.ext.junit.rules.ActivityScenarioRule;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.platform.app.InstrumentationRegistry;
 
-import org.junit.After;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -33,7 +28,6 @@ import dagger.hilt.android.testing.HiltAndroidTest;
 import dagger.hilt.android.testing.UninstallModules;
 import es.unican.gasolineras.activities.main.MainView;
 import es.unican.gasolineras.injection.RepositoriesModule;
-import es.unican.gasolineras.model.Orden;
 import es.unican.gasolineras.repository.IGasolinerasRepository;
 
 @HiltAndroidTest
@@ -56,20 +50,17 @@ public class OrdenarPorPrecioDescUITest {
 
     View decorView;
 
-    @After
-    public void tearDown() throws InterruptedException {
-        Thread.sleep(2000);
-    }
+
 
     @Test
     public void ordenarPorPrecioDesc() {
         Espresso.onView(withId(R.id.menuOrdenButton)).perform(click());
         Espresso.onView(withId(R.id.spnOrden)).perform(click());
-        onView(withText(allOf(is("DESCENDENTE"), instanceOf(String.class))))
+        onView(withText(allOf(is("Descendente"), instanceOf(String.class))))
                 .inRoot(isPlatformPopup())
                 .perform(click());
         Espresso.onView(withId(R.id.spnCombustible)).perform(click());
-        onView(withText(allOf(is("BIODIESEL"), instanceOf(String.class))))
+        onView(withText(allOf(is("Gasóleo A"), instanceOf(String.class))))
                 .inRoot(isPlatformPopup())
                 .perform(click());
         Espresso.onView(withText("Ordenar")).perform(click());

@@ -56,7 +56,7 @@ public class BusquedaListaVaciaUITest {
     }
 
     @Test
-    public void testNingunaGasolineras_A3() throws InterruptedException {
+    public void testNingunaGasolineras_A3()   {
 
         //Selecciona filtros y busca
         onView(withId(R.id.menuFilterButton)).perform(click());
@@ -67,7 +67,6 @@ public class BusquedaListaVaciaUITest {
         // Verifica que no haya gasolineras en la lista
         onView(withId(R.id.lvStations)).check(matches(isDisplayed())).check(matches(listSize(0)));
 
-        //Espresso.onView(withText("Cargadas 0 gasolineras")).inRoot(RootMatchers.withDecorView(not(decorView))).check(matches(isDisplayed()));
     }
 
 

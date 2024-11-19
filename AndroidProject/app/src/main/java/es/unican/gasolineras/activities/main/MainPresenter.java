@@ -2,12 +2,11 @@ package es.unican.gasolineras.activities.main;
 
 import java.util.Comparator;
 import java.util.List;
+
 import es.unican.gasolineras.common.IFiltros;
-import es.unican.gasolineras.model.Combustible;
 import es.unican.gasolineras.model.Gasolinera;
 import es.unican.gasolineras.model.IDProvincias;
 import es.unican.gasolineras.model.Municipio;
-import es.unican.gasolineras.model.Orden;
 import es.unican.gasolineras.repository.ICallBack;
 import es.unican.gasolineras.repository.IGasolinerasRepository;
 import lombok.Setter;
@@ -77,6 +76,7 @@ public class MainPresenter implements IMainContract.Presenter {
         String finalMunicipio = ("-".equals(municipio) || municipio.isEmpty()) ? null : municipio;
         String finalCompanhia = "-".equals(companhia) ? null : companhia;
 
+
         if (finalProvincia != null) {
             gasolinerasFiltradas = filtros.filtrarPorProvinciaYMunicipio(gasolinerasFiltradas,
                     finalProvincia, finalMunicipio);
@@ -86,6 +86,10 @@ public class MainPresenter implements IMainContract.Presenter {
         }
         if (abierto) {
             gasolinerasFiltradas = filtros.filtrarPorEstado(gasolinerasFiltradas);
+        }
+        if (combustibles != null && !combustibles.isEmpty()){
+            gasolinerasFiltradas = filtros.filtrarPorCombustibles(gasolinerasFiltradas,combustibles);
+
         }
 
         // Guarda la lista filtrada para utilizarla en la ordenación
@@ -120,11 +124,11 @@ public class MainPresenter implements IMainContract.Presenter {
     public void onOrdenarButtonClicked() { view.showOrdenarPopUp(); }
 
 
-    /**
-     * @see IMainContract.Presenter#ordenarGasolinerasPorPrecio(Combustible combustible, Orden orden)
+    /**s
+     * @see IMainContract.Presenter#ordenarGasolinerasPorPrecio(String combustible, String orden)
      */
     @Override
-    public void ordenarGasolinerasPorPrecio(Combustible combustible, Orden orden) {
+    public void ordenarGasolinerasPorPrecio(String combustible, String orden) {
         // Usa la lista filtrada
         List<Gasolinera> gasolinerasAOrdenar = this.gasolinerasFiltradas;
 
@@ -142,7 +146,7 @@ public class MainPresenter implements IMainContract.Presenter {
         };
 
         // Si el orden es descendente, cambiamos la comparación sin afectar a los 0.0
-        if (orden == Orden.DESCENDENTE) {
+        if (orden.equals("Descendente")) {
             comparator = (g1, g2) -> {
                 double precio1 = getPrecioCombustible(g1, combustible);
                 double precio2 = getPrecioCombustible(g2, combustible);
@@ -160,6 +164,64 @@ public class MainPresenter implements IMainContract.Presenter {
         gasolinerasAOrdenar.sort(comparator);
         // Mostramos la lista ordenada
         view.showStations(gasolinerasAOrdenar);
+
+    }
+
+    @Override
+    public void onCoordinatesButtonClicked() {view.showCoordinatesPopUp();}
+
+    @Override
+    public void searchWithCoordinates(Double longitud, Double latitud, int distancia){
+
+        List<Gasolinera> gasolinerasFiltradas = this.gasolineras;
+
+        for(Gasolinera g: gasolinerasFiltradas){
+
+            String longitudStr = g.getLongitud(); // Obtener longitud como String
+            String latitudStr = g.getLatitud();  // Obtener latitud como String
+            // Convertir a Double
+            Double longitudGasolinera = Double.parseDouble(longitudStr);
+            Double latitudGasolinera = Double.parseDouble(latitudStr);
+
+            if(!estaEnCoordenadas(longitud, latitud, distancia, longitudGasolinera, latitudGasolinera)){
+                gasolinerasFiltradas.remove(g);
+            }
+        }
+
+        this.gasolineras = gasolinerasFiltradas;
+
+        view.showStations(gasolinerasFiltradas);
+
+        view.showLoadCorrect(gasolinerasFiltradas.size());
+
+
+    }
+
+    private boolean estaEnCoordenadas(Double longitudSelec, Double latitudSelec, int distancia, Double longitudGasolinera, Double latitudGasolinera){
+        final double RADIO_TIERRA_KM = 6371.0; // Radio de la Tierra en kilómetros
+
+        // Convertir todas las coordenadas a radianes
+        double latitudSelecRad = Math.toRadians(latitudSelec);
+        double longitudSelecRad = Math.toRadians(longitudSelec);
+        double latitudGasolineraRad = Math.toRadians(latitudGasolinera);
+        double longitudGasolineraRad = Math.toRadians(longitudGasolinera);
+
+        // Diferencias entre las coordenadas
+        double dLat = latitudGasolineraRad - latitudSelecRad;
+        double dLon = longitudGasolineraRad - longitudSelecRad;
+
+        // Fórmula de Haversine
+        double a = Math.sin(dLat / 2) * Math.sin(dLat / 2)
+                + Math.cos(latitudSelecRad) * Math.cos(latitudGasolineraRad)
+                * Math.sin(dLon / 2) * Math.sin(dLon / 2);
+        double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+
+        // Calcular la distancia en kilómetros
+        double distanciaCalculada = RADIO_TIERRA_KM * c;
+
+        // Comprobar si la distancia calculada está dentro del radio especificado
+        return distanciaCalculada <= distancia;
+
     }
 
     /**
@@ -168,14 +230,20 @@ public class MainPresenter implements IMainContract.Presenter {
      * @param combustible el tipo de combustible del que se quiere obtener el precio
      * @return el precio del tipo de combustible seleccionado en la gasolinera seleccionada
      */
-    private double getPrecioCombustible(Gasolinera gasolinera, Combustible combustible) {
+    private double getPrecioCombustible(Gasolinera gasolinera, String combustible) {
         switch (combustible) {
-            case GASOLEOA:
+            case "Gasóleo A":
                 return gasolinera.getGasoleoA();
-            case GASOLINA95E:
+            case "Gasolina 95 E5":
                 return gasolinera.getGasolina95E5();
-            case GASOLINA98E:
+            case "Gasolina 95 E5 Premium":
+                return gasolinera.getGasolina95E5PREM();
+            case "Gasolina 95 E10":
+                return gasolinera.getGasolina95E10();
+            case "Gasolina 98 E5":
                 return gasolinera.getGasolina98E5();
+            case "Gasolina 98 E10":
+                return gasolinera.getGasolina98E10();
             default:
                 return gasolinera.getBiodiesel();
         }
