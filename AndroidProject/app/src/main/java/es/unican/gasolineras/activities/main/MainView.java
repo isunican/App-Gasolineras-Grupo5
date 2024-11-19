@@ -50,6 +50,8 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
     private Combustible combustibleSeleccionado; // guarda la seleccion si se reabre el popup
     private Orden ordenSeleccionada;
     private Spinner spnMunicipios;
+    private Double latitudGuardada = null;
+    private Double longitudGuardada = null;
 
     /** The repository to access the data. This is automatically injected by Hilt in this class */
     @Inject
@@ -297,6 +299,13 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
         Slider slider = view.findViewById(R.id.main_slider);
         TextView tvDistancia = view.findViewById(R.id.tvDistancia);
 
+        if (latitudGuardada != null) {
+            etLatitud.setText(latitudGuardada.toString());
+        }
+        if (longitudGuardada != null) {
+            etLongitud.setText(longitudGuardada.toString());
+        }
+
         // Configurar el listener del Slider
         slider.addOnChangeListener((slider1, value, fromUser) -> {
             // Actualiza el TextView con el valor actual del slider
@@ -307,7 +316,17 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
                 .setTitle("Buscar Por Coordenadas")
                 .setView(view)
                 .setPositiveButton("Buscar", (dialog, which) -> {
-                    applyCoordinates(etLatitud,etLongitud,tvDistancia);
+
+                    try {
+                        latitudGuardada = Double.valueOf(etLatitud.getText().toString());
+                        longitudGuardada = Double.valueOf(etLongitud.getText().toString());
+                    } catch (NumberFormatException e) {
+                        // Si no son valores válidos, no los actualizamos
+                        latitudGuardada = null;
+                        longitudGuardada = null;
+                    }
+
+                    applyCoordinates(etLongitud, etLatitud,tvDistancia);
                     dialog.dismiss();
                 })
                 .setNegativeButton("Cancelar", (dialog, which) -> dialog.dismiss())
@@ -319,9 +338,11 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
     private void applyCoordinates(EditText etLongitud, EditText etLatitud, TextView tvDistancia){
         try {
             // Obtener los valores de los EditText como String
-            String longitudStr = etLongitud.getText().toString().trim();
-            String latitudStr = etLatitud.getText().toString().trim();
+            String longitudStr = etLongitud.getText().toString();
+            String latitudStr = etLatitud.getText().toString();
 
+            longitudStr = longitudStr.replace(",",".");
+            latitudStr = latitudStr.replace(",",".");
             // Convertirlos a double
             double longitud = Double.parseDouble(longitudStr);
             double latitud = Double.parseDouble(latitudStr);
@@ -337,7 +358,6 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
         }
 
     }
-
 
     @Override
     public void updateMunicipiosSpinner(List<Municipio> municipios) {

@@ -1,6 +1,8 @@
 package es.unican.gasolineras.activities.main;
 
+import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.Iterator;
 import java.util.List;
 import es.unican.gasolineras.common.DataAccessException;
 import es.unican.gasolineras.common.IFiltros;
@@ -27,6 +29,8 @@ public class MainPresenter implements IMainContract.Presenter {
     @Setter
     private IFiltros filtros;
     private List<Gasolinera> gasolinerasFiltradas;
+    private List<Gasolinera> gasolinerasCoordenadas;
+    private boolean IsFiltro;
 
     /**
      * @see IMainContract.Presenter#init(IMainContract.View)
@@ -127,7 +131,14 @@ public class MainPresenter implements IMainContract.Presenter {
     @Override
     public void ordenarGasolinerasPorPrecio(Combustible combustible, Orden orden) {
         // Usa la lista filtrada
-        List<Gasolinera> gasolinerasAOrdenar = this.gasolinerasFiltradas;
+        List<Gasolinera> gasolinerasAOrdenar;
+        if(IsFiltro){
+             gasolinerasAOrdenar = this.gasolinerasFiltradas;
+        }else{
+
+            gasolinerasAOrdenar = this.gasolinerasCoordenadas;
+        }
+
 
         // Determinamos el comparador básico según el tipo de combustible
         Comparator<Gasolinera> comparator = (g1, g2) -> {
@@ -170,54 +181,60 @@ public class MainPresenter implements IMainContract.Presenter {
     @Override
     public void searchWithCoordinates(Double longitud, Double latitud, int distancia){
 
-        List<Gasolinera> gasolinerasFiltradas = this.gasolineras;
+        // Crear una nueva lista para almacenar las gasolineras filtradas
+        List<Gasolinera> gasolinerasFiltradasCoordenadas = new ArrayList<>();
 
-        for(Gasolinera g: gasolinerasFiltradas){
-
-            String longitudStr = g.getLongitud(); // Obtener longitud como String
-            String latitudStr = g.getLatitud();  // Obtener latitud como String
-            // Convertir a Double
+        for (Gasolinera g : this.gasolinerasFiltradas) {
+            // Obtener y convertir las coordenadas de la gasolinera
+            String longitudStr = g.getLongitud().replace(",", "."); // Asegurar formato decimal
+            String latitudStr = g.getLatitud().replace(",", ".");
             Double longitudGasolinera = Double.parseDouble(longitudStr);
             Double latitudGasolinera = Double.parseDouble(latitudStr);
 
-            if(!estaEnCoordenadas(longitud, latitud, distancia, longitudGasolinera, latitudGasolinera)){
-                gasolinerasFiltradas.remove(g);
+            // Verificar si la gasolinera está dentro de la distancia
+            if (estaEnCoordenadas(longitud, latitud, distancia, longitudGasolinera, latitudGasolinera)) {
+                gasolinerasFiltradasCoordenadas.add(g); // Añadir si cumple el criterio
             }
         }
 
-        this.gasolineras = gasolinerasFiltradas;
+        this.gasolinerasCoordenadas = gasolinerasFiltradasCoordenadas;
 
-        view.showStations(gasolinerasFiltradas);
-
-        view.showLoadCorrect(gasolinerasFiltradas.size());
+                // Actualizar la vista con las gasolineras filtradas
+        view.showStations(gasolinerasFiltradasCoordenadas);
+        view.showLoadCorrect(gasolinerasFiltradasCoordenadas.size());
 
 
     }
 
     private boolean estaEnCoordenadas(Double longitudSelec, Double latitudSelec, int distancia, Double longitudGasolinera, Double latitudGasolinera){
-        final double RADIO_TIERRA_KM = 6371.0; // Radio de la Tierra en kilómetros
+        final int RADIO_TIERRA = 6371000; // Radio de la Tierra en metros
 
-        // Convertir todas las coordenadas a radianes
+        // Verifica que las coordenadas no sean nulas o extremas
+        if (longitudSelec == null || latitudSelec == null || longitudGasolinera == null || latitudGasolinera == null) {
+            return false; // Coordenadas inválidas
+        }
+
+        // Convertir las coordenadas de grados a radianes
         double latitudSelecRad = Math.toRadians(latitudSelec);
         double longitudSelecRad = Math.toRadians(longitudSelec);
         double latitudGasolineraRad = Math.toRadians(latitudGasolinera);
         double longitudGasolineraRad = Math.toRadians(longitudGasolinera);
 
         // Diferencias entre las coordenadas
-        double dLat = latitudGasolineraRad - latitudSelecRad;
-        double dLon = longitudGasolineraRad - longitudSelecRad;
+        double diferenciaLatitud = latitudGasolineraRad - latitudSelecRad;
+        double diferenciaLongitud = longitudGasolineraRad - longitudSelecRad;
 
-        // Fórmula de Haversine
-        double a = Math.sin(dLat / 2) * Math.sin(dLat / 2)
+        // Fórmula del haversine
+        double a = Math.sin(diferenciaLatitud / 2) * Math.sin(diferenciaLatitud / 2)
                 + Math.cos(latitudSelecRad) * Math.cos(latitudGasolineraRad)
-                * Math.sin(dLon / 2) * Math.sin(dLon / 2);
+                * Math.sin(diferenciaLongitud / 2) * Math.sin(diferenciaLongitud / 2);
         double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
 
-        // Calcular la distancia en kilómetros
-        double distanciaCalculada = RADIO_TIERRA_KM * c;
+        // Distancia en metros
+        double distanciaEntrePuntos = RADIO_TIERRA * c;
 
-        // Comprobar si la distancia calculada está dentro del radio especificado
-        return distanciaCalculada <= distancia;
+        // Comparar la distancia calculada con la distancia permitida (convertida a metros)
+        return distanciaEntrePuntos <= distancia * 1000;
 
     }
 
