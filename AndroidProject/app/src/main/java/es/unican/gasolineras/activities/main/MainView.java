@@ -18,6 +18,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import android.text.TextUtils;
 import androidx.appcompat.widget.Toolbar;
 
 import com.google.android.material.slider.Slider;
@@ -351,7 +352,7 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
             String distanciaStr = tvDistancia.getText().toString().replaceAll("[^\\d]", ""); // Extraer solo números
             int distancia = distanciaStr.isEmpty() ? 0 : Integer.parseInt(distanciaStr);
 
-            presenter.searchWithCoordinates(longitud,latitud,distancia);
+            presenter.searchWithCoordinates(longitud, latitud, distancia);
         } catch (NumberFormatException e) {
             // Manejar casos donde no se pueda convertir
             System.err.println("Error: Entrada no válida.");
@@ -359,6 +360,9 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
 
     }
 
+    /**
+     * @see IMainContract.View#updateMunicipiosSpinner(List municipios)
+     */
     @Override
     public void updateMunicipiosSpinner(List<Municipio> municipios) {
         List<String> nombresMunicipios = new ArrayList<>();
