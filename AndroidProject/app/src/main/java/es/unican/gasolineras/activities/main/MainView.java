@@ -3,6 +3,7 @@ package es.unican.gasolineras.activities.main;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -49,13 +50,16 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
 
     /** The presenter of this view */
     private MainPresenter presenter;
+    // Lista combustibles seleccionada (filtros)
     private List<String> combustiblesSeleccionados;
+    // Combustible seleccionado (ordenar)
     private String combustibleOrdenar;
     private String ordenSeleccionada;
     private Spinner spnMunicipios;
     private static final String CANCELAR = "Cancelar";
     private static final String FILTERSPREFERENCE = "FiltersPreference";
     private static final String MUNICIPIO = "municipio";
+
     /** The repository to access the data. This is automatically injected by Hilt in this class */
     @Inject
     IGasolinerasRepository repository;
@@ -385,7 +389,7 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
     /**
      * Configura un Spinner con un ArrayAdapter basado en un recurso de array de strings.
      *
-     * @param spinner El spinner al que se asignará el adapter.
+     * @param spinner El spinner al que se asignara el adapter.
      * @param arrayResourceId El identificador del recurso del array.
      */
     private void asignaAdapterASpinner (Spinner spinner, int arrayResourceId) {
@@ -418,6 +422,7 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
 
         return filtros;
     }
+
     /**
      * Aplica los filtros seleccionados para realizar la busqueda de gasolineras.
      *
@@ -450,6 +455,7 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
             if (posMunicipio >= 0) spnMunicipios.setSelection(posMunicipio);
         });
     }
+
     /**
      * Aplica los filtros seleccionados al objeto de filtros y ejecuta la busqueda de estaciones
      * con los valores proporcionados en los controles de la interfaz.
@@ -578,5 +584,3 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
         editor.apply();
     }
 }
-
-
