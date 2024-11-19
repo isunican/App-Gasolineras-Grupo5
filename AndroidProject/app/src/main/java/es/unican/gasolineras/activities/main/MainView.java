@@ -22,7 +22,6 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import org.parceler.Parcels;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -47,8 +46,10 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
 
     /** The presenter of this view */
     private MainPresenter presenter;
+    // Lista combustibles seleccionada (filtros)
     private List<String> combustiblesSeleccionados;
-    private Combustible combustibleSeleccionado; // guarda la seleccion si se reabre el popup
+    // Combustible seleccionado (ordenar)
+    private Combustible combustibleSeleccionado;
     private Orden ordenSeleccionada;
     private Spinner spnMunicipios;
 
@@ -61,8 +62,8 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        // Reiniciar filtros
         resetSharedPreferences();
-
         combustiblesSeleccionados = new ArrayList<>();
 
         // The default theme does not include a toolbar.
@@ -299,7 +300,7 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
     }
 
     /**
-     * Obtiene la posición de un valor especifico dentro del adaptador de un Spinner.
+     * Obtiene la posicion de un valor especifico dentro del adaptador de un Spinner.
      *
      * @param spinner El Spinner cuyo adaptador se va a buscar.
      * @param value   El valor a encontrar dentro del adaptador.
