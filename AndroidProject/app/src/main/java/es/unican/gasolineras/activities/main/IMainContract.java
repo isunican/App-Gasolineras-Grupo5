@@ -1,7 +1,6 @@
 package es.unican.gasolineras.activities.main;
 
 import java.util.List;
-
 import es.unican.gasolineras.model.Gasolinera;
 import es.unican.gasolineras.model.Municipio;
 import es.unican.gasolineras.repository.IGasolinerasRepository;
@@ -79,6 +78,16 @@ public interface IMainContract {
          * @param orden the order (ascending or descending)
          */
         public void ordenarGasolinerasPorPrecio(String combustible, String orden);
+
+        /**
+         * Handles the event when the coordinates button is clicked, displaying the coordinates options popup.
+         */
+        public void onCoordinatesButtonClicked();
+
+        public void searchWithCoordinates(Double longitud, Double latitud, int distancia);
+
+
+
     }
 
     /**
@@ -154,6 +163,10 @@ public interface IMainContract {
          */
         public void showOrdenarPopUp();
 
+
+        public void showCoordinatesPopUp();
+
+
         /**
          * Actualiza el spinner de municipios con una lista proporcionada.
          * Anhade una opcion por defecto ("-") y establece el municipio previamente guardado si existe.
@@ -161,7 +174,5 @@ public interface IMainContract {
          * @param municipios La lista de municipios para poblar el spinner.
          */
         public void updateMunicipiosSpinner(List<Municipio> municipios);
-
-
     }
 }

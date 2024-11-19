@@ -3,7 +3,6 @@ package es.unican.gasolineras.activities.main;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -12,6 +11,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
@@ -21,6 +21,9 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+
+import com.google.android.material.slider.Slider;
+
 import org.parceler.Parcels;
 
 import java.util.ArrayList;
@@ -109,6 +112,10 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
         }
         if (itemId == R.id.menuOrdenButton) {
             presenter.onOrdenarButtonClicked();
+            return true;
+        }
+        if (itemId == R.id.menuCoordenadasButton) {
+            presenter.onCoordinatesButtonClicked();
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -276,6 +283,56 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
                 .setNegativeButton(CANCELAR, (dialog, which) -> dialog.dismiss())
                 .create()
                 .show();
+    }
+
+    @Override
+    public void showCoordinatesPopUp(){
+
+        LayoutInflater inflater = LayoutInflater.from(this);
+        View view = inflater.inflate(R.layout.activity_distancia_coordenadas_popup, null);
+
+        EditText etLongitud = view.findViewById(R.id.etLongitud);
+        EditText etLatitud = view.findViewById(R.id.etLatitud);
+        Slider slider = view.findViewById(R.id.main_slider);
+        TextView tvDistancia = view.findViewById(R.id.tvDistancia);
+
+        // Configurar el listener del Slider
+        slider.addOnChangeListener((slider1, value, fromUser) -> {
+            // Actualiza el TextView con el valor actual del slider
+            tvDistancia.setText("Distancia: " + (int) value);
+        });
+
+        new AlertDialog.Builder(this)
+                .setTitle("Buscar Por Coordenadas")
+                .setView(view)
+                .setPositiveButton("Buscar", (dialog, which) -> {
+                    applyCoordinates(etLatitud,etLongitud,tvDistancia);
+                    dialog.dismiss();
+                })
+                .setNegativeButton("Cancelar", (dialog, which) -> dialog.dismiss())
+                .create()
+                .show();
+    }
+
+    private void applyCoordinates(EditText etLongitud, EditText etLatitud, TextView tvDistancia){
+        try {
+            // Obtener los valores de los EditText como String
+            String longitudStr = etLongitud.getText().toString().trim();
+            String latitudStr = etLatitud.getText().toString().trim();
+
+            // Convertirlos a double
+            double longitud = Double.parseDouble(longitudStr);
+            double latitud = Double.parseDouble(latitudStr);
+
+            // Obtener el valor del TextView y convertirlo (si se usa como número)
+            String distanciaStr = tvDistancia.getText().toString().replaceAll("[^\\d]", ""); // Extraer solo números
+            int distancia = distanciaStr.isEmpty() ? 0 : Integer.parseInt(distanciaStr);
+
+            presenter.searchWithCoordinates(longitud, latitud, distancia);
+        } catch (NumberFormatException e) {
+            // Manejar casos donde no se pueda convertir
+            System.err.println("Error: Entrada no válida.");
+        }
     }
 
     /**

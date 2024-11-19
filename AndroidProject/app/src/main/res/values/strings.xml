@@ -13,6 +13,7 @@
     <string name="loadCorrect">Se han cargado %d gasolineras</string>
     <string name="loadError">Ha habido un error cargando las gasolineras</string>
     <string name="info_text">Aplicación creada para el Proyecto Integrado Curso 2024-2025</string>
+    <string name="slider_desc" />
     <string name="selecciona_combustibles">Selecciona combustibles</string>
     <string name="precio_gasolina">Precio Gasolina:</string>
     <string name="precio_diesel">Precio Diesel:</string>
