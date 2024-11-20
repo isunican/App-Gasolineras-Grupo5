@@ -17,7 +17,6 @@ import es.unican.gasolineras.activities.main.MainPresenter;
 import es.unican.gasolineras.model.Gasolinera;
 import es.unican.gasolineras.repository.IGasolinerasRepository;
 
-
 public class OrdenarTest {
 
     private MainPresenter presenter = new MainPresenter();
@@ -77,7 +76,6 @@ public class OrdenarTest {
         when(cepsa.getGasolina98E5()).thenReturn(2.1);
 
         presenter.setGasolineras(gasolineras);
-
     }
 
     @Test
@@ -95,13 +93,9 @@ public class OrdenarTest {
         assertEquals(presenter.getGasolineras().get(6), cepsa);
     }
 
-
-
     @Test
     public void testOrdenarGasolinerasPorPrecioBiodiselDescendente() {
-
-
-        presenter.setGasolinerasFiltradas(gasolineras);
+                presenter.setGasolinerasFiltradas(gasolineras);
         // Test ordenar por precio de gasolina 95 descendente
         presenter.ordenarGasolinerasPorPrecio("Biodiesel", "Descendente");
         assertEquals(presenter.getGasolineras().get(0), cepsa);
@@ -111,7 +105,6 @@ public class OrdenarTest {
         assertEquals(presenter.getGasolineras().get(4), ballenoil);
         assertEquals(presenter.getGasolineras().get(5), carrefour);
         assertEquals(presenter.getGasolineras().get(6), repsol);
-
     }
 
     @Test
@@ -126,14 +119,10 @@ public class OrdenarTest {
         assertEquals(presenter.getGasolineras().get(4), cepsa);
         assertEquals(presenter.getGasolineras().get(5), petronor);
         assertEquals(presenter.getGasolineras().get(6), avia);
-
-
     }
-
 
     @Test
     public void testOrdenarGasolinerasPorPrecioGasoleoADescendente() {
-
         presenter.setGasolinerasFiltradas(gasolineras);
         // Test ordenar por precio de gasolina 98 descendente con precios 0.0 que se colocan al final
         presenter.ordenarGasolinerasPorPrecio("Gasóleo A", "Descendente");
@@ -144,21 +133,14 @@ public class OrdenarTest {
         assertEquals(presenter.getGasolineras().get(4), repsol);
         assertEquals(presenter.getGasolineras().get(5), petronor);
         assertEquals(presenter.getGasolineras().get(6), avia);
-
-
     }
 
     @Test
     public void testOrdenarGasolinerasPorPrecioListaVacia() {
-
-
         // Test ordenar lista vacía
         presenter.setGasolinerasFiltradas(new ArrayList<>());
         presenter.ordenarGasolinerasPorPrecio("Gasóleo A", "Descendente");
         assertTrue(presenter.getGasolinerasFiltradas().isEmpty());
-
-
-
     }
 
     @Test

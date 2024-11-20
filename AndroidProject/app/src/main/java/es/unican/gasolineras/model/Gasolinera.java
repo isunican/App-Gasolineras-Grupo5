@@ -10,12 +10,9 @@ import lombok.Setter;
 
 /**
  * A Gas Station.
- *
  * Properties are defined in the <a href="https://sedeaplicaciones.minetur.gob.es/ServiciosRESTCarburantes/PreciosCarburantes/help/operations/PreciosEESSTerrestres#response-json">API</a>
- *
  * The #SerializedName annotation is a GSON annotation that defines the name of the property
  * as defined in the json response.
- *
  * Getters are automatically generated at compile time by Lombok.
  */
 @Parcel
