@@ -1,15 +1,11 @@
 package es.unican.gasolineras.common;
 
-import static es.unican.gasolineras.common.Horario.estaAbierto;
-
 import java.util.ArrayList;
 import java.util.List;
 
 import es.unican.gasolineras.model.Gasolinera;
 
 public class Generador {
-
-
     private static final String PENACASTILLO = "Peñacastillo";
     private static final String CANTABRIA = "Cantabria";
     private static final String HORARIO24H = "L-D: 24H";
@@ -83,7 +79,6 @@ public class Generador {
     public static List<Gasolinera> generarGasolinerasCerradas() {
         List<Gasolinera> gasolineras = new ArrayList<>();
 
-
         int horaActual = Tiempo.horaActual();
         int minutoActual = Tiempo.minutoActual();
 
@@ -91,7 +86,6 @@ public class Generador {
         String horarioCerrada2 = generarHorarioCerrado(horaActual, minutoActual);
         String horarioCerrada3 = generarHorarioCerrado(horaActual, minutoActual);
         String horarioCerrada4 = generarHorarioCerrado(horaActual, minutoActual);
-
 
         gasolineras.add(crearGasolinera("1", REPSOL, "31001", "Calle O", PENACASTILLO, CANTABRIA, horarioCerrada3, 1.35, 1.40));
         gasolineras.add(crearGasolinera("2", CARREFOUR, "31002", "Calle P", PENACASTILLO, CANTABRIA, horarioCerrada4, 1.30, 1.38));
@@ -140,7 +134,6 @@ public class Generador {
      * @param gasoleoA precio del gasoleo en la gasolinera.
      * @param gasolina95E5 precio del 95 en la gasolinera.
      */
-
     private static Gasolinera crearGasolinera(String id, String rotulo, String cp, String direccion, String municipio, String localidad, String horario, double gasoleoA, double gasolina95E5) {
         Gasolinera gasolinera = new Gasolinera();
         gasolinera.setId(id);

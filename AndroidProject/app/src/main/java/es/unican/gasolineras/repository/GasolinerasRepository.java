@@ -61,7 +61,6 @@ public class GasolinerasRepository implements IGasolinerasRepository {
                 List<Municipio> municipios = response.body();
                 cb.onSuccess(municipios);
             }
-
             @Override
             public void onFailure(@Nonnull Call<List<Municipio>> call, @Nonnull Throwable t) {
                 cb.onFailure(t);

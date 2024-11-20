@@ -61,7 +61,7 @@ public interface IMainContract {
                                                 List<String> combustibles, boolean abierto);
 
         /**
-         * Según el nombre de la provincia, en caso de éxito devuelve los municipios de esta y, en
+         * Segun el nombre de la provincia, en caso de exito devuelve los municipios de esta y, en
          * caso de error lanza un mensaje.
          *
          * @param provinciaNombre El nombre de la provincia por la que se filtraran los municipios.

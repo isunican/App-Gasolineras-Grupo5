@@ -97,82 +97,74 @@ public class GasolinerasArrayAdapter extends BaseAdapter {
             tv.setText(gasolinera.getDireccion());
         }
         if (combustibleSeleccionado == null || combustibleSeleccionado.isEmpty()) {
-            setFuelPrice(convertView, R.id.tv95Label, R.id.tv95, context.getString(R.string.gasolina95E5label),
+            // Mostrar precios por defecto si no hay selección
+            setFuelPrice(convertView, R.id.tvGas1, R.id.tvPrecio1, context.getString(R.string.gasolina95E5label),
                     String.valueOf(gasolinera.getGasolina95E5()), true);
-            setFuelPrice(convertView, R.id.tvDieselALabel, R.id.tvDieselA, context.getString(R.string.dieselAlabel),
+            setFuelPrice(convertView, R.id.tvGas2, R.id.tvPrecio2, context.getString(R.string.dieselAlabel),
                     String.valueOf(gasolinera.getGasoleoA()), true);
-
         } else {
-            int seleccionados = 0;
-            for(String c : combustibleSeleccionado)
-                switch (c) {
-                case "Gasóleo A":
-                    if(seleccionados < 2) {
-                        setFuelPrice(convertView, R.id.tv95Label, R.id.tv95, context.getString(R.string.dieselAlabel),
-                                String.valueOf(gasolinera.getGasoleoA()), true);
-                        setFuelPrice(convertView, R.id.tvDieselALabel, R.id.tvDieselA, context.getString(R.string.dieselAlabel),
-                                String.valueOf(gasolinera.getGasoleoA()), false);
-                        seleccionados++;
-                    }
-                    break;
-                case "Gasolina 95 E5":
-                    if(seleccionados < 2) {
-                        setFuelPrice(convertView, R.id.tv95Label, R.id.tv95, context.getString(R.string.gasolina95E5label),
-                            String.valueOf(gasolinera.getGasolina95E5()), true);
-                        setFuelPrice(convertView, R.id.tvDieselALabel, R.id.tvDieselA, context.getString(R.string.dieselAlabel),
-                            String.valueOf(gasolinera.getGasoleoA()), false);
-                        seleccionados++;
-                    }
-                    break;
-                case "Gasolina 95 E5 Premium":
-                    if(seleccionados < 2) {
-                        setFuelPrice(convertView, R.id.tv95Label, R.id.tv95, context.getString(R.string.gasolina95E5Premlabel),
-                            String.valueOf(gasolinera.getGasolina95E5PREM()), true);
-                        setFuelPrice(convertView, R.id.tvDieselALabel, R.id.tvDieselA, context.getString(R.string.dieselAlabel),
-                            String.valueOf(gasolinera.getGasoleoA()), false);
-                        seleccionados++;
-                    }
-                    break;
-                case "Gasolina 95 E10":
-                    if(seleccionados < 2) {
-                        setFuelPrice(convertView, R.id.tv95Label, R.id.tv95, context.getString(R.string.gasolina95E10label),
-                            String.valueOf(gasolinera.getGasolina95E10()), true);
-                        setFuelPrice(convertView, R.id.tvDieselALabel, R.id.tvDieselA, context.getString(R.string.dieselAlabel),
-                            String.valueOf(gasolinera.getGasoleoA()), false);
-                        seleccionados++;
-                    }
-                    break;
-                case "Gasolina 98 E5":
-                    if(seleccionados < 2) {
-                        setFuelPrice(convertView, R.id.tv95Label, R.id.tv95, context.getString(R.string.gasolina98E5label),
-                            String.valueOf(gasolinera.getGasolina98E5()), true);
-                        setFuelPrice(convertView, R.id.tvDieselALabel, R.id.tvDieselA, context.getString(R.string.dieselAlabel),
-                            String.valueOf(gasolinera.getGasoleoA()), false);
-                        seleccionados++;
-                    }
-                    break;
-                case "Gasolina 98 E10":
-                    if(seleccionados < 2) {
-                        setFuelPrice(convertView, R.id.tv95Label, R.id.tv95, context.getString(R.string.gasolina98E10label),
-                            String.valueOf(gasolinera.getGasolina98E10()), true);
-                        setFuelPrice(convertView, R.id.tvDieselALabel, R.id.tvDieselA, context.getString(R.string.dieselAlabel),
-                            String.valueOf(gasolinera.getGasoleoA()), false);
-                        seleccionados++;
-                    }
-                    break;
-                case "Biodiesel":
-                    if(seleccionados < 2) {
-                        setFuelPrice(convertView, R.id.tv95Label, R.id.tv95, context.getString(R.string.biolabel),
-                            String.valueOf(gasolinera.getGasolina98E10()), true);
-                        setFuelPrice(convertView, R.id.tvDieselALabel, R.id.tvDieselA, context.getString(R.string.dieselAlabel),
-                            String.valueOf(gasolinera.getGasoleoA()), false);
-                        seleccionados++;
-                        }
+            // Inicializa las vistas de Gas y Precio
+            TextView tvGas1 = convertView.findViewById(R.id.tvGas1);
+            TextView tvPrecio1 = convertView.findViewById(R.id.tvPrecio1);
+            TextView tvGas2 = convertView.findViewById(R.id.tvGas2);
+            TextView tvPrecio2 = convertView.findViewById(R.id.tvPrecio2);
+
+            // Mostrar solo uno o dos precios según la selección
+            int maxCombustiblesAMostrar = Math.min(combustibleSeleccionado.size(), 2);
+
+            for (int i = 0; i < maxCombustiblesAMostrar; i++) {
+                String combustible = combustibleSeleccionado.get(i);
+                String label = "";
+                String precio = "";
+
+                // Obtén la etiqueta y el precio según el tipo de combustible
+                switch (combustible) {
+                    case "Gasolina 95 E5":
+                        label = context.getString(R.string.gasolina95E5label);
+                        precio = String.valueOf(gasolinera.getGasolina95E5());
                         break;
+
+                    case "Gasolina 95 E5 Premium":
+                        label = context.getString(R.string.gasolina95E5Premlabel);
+                        precio = String.valueOf(gasolinera.getGasolina95E5PREM());
+                        break;
+
+                    case "Gasolina 95 E10":
+                        label = context.getString(R.string.gasolina95E10label);
+                        precio = String.valueOf(gasolinera.getGasolina95E10());
+                        break;
+
+                    case "Gasolina 98 E5":
+                        label = context.getString(R.string.gasolina98E5label);
+                        precio = String.valueOf(gasolinera.getGasolina98E5());
+                        break;
+
+                    case "Gasolina 98 E10":
+                        label = context.getString(R.string.gasolina98E10label);
+                        precio = String.valueOf(gasolinera.getGasolina98E10());
+                        break;
+
                     default:
+                        label = "Desconocido";
+                        precio = "--";
                         break;
+                }
+
+                // Asigna los valores a las vistas correspondientes
+                if (i == 0) {
+                    setFuelPrice(convertView, R.id.tvGas1, R.id.tvPrecio1, label, precio, true);
+                } else {
+                    setFuelPrice(convertView, R.id.tvGas2, R.id.tvPrecio2, label, precio, true);
+                }
+            }
+
+            // Oculta las vistas no usadas si hay menos de dos combustibles seleccionados
+            if (maxCombustiblesAMostrar < 2) {
+                tvGas2.setVisibility(View.GONE);
+                tvPrecio2.setVisibility(View.GONE);
             }
         }
+
         return convertView;
     }
 

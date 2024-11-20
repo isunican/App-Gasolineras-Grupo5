@@ -69,7 +69,6 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
         setContentView(R.layout.activity_main);
 
         resetSharedPreferences();
-
         combustiblesSeleccionados = new ArrayList<>();
 
         // The default theme does not include a toolbar.
