@@ -170,7 +170,7 @@ public class MainPresenter implements IMainContract.Presenter {
     }
 
     /**
-     * Método auxiliar para obtener el precio del combustible
+     * Metodo auxiliar para obtener el precio del combustible
      * @param gasolinera la gasolinera de la que se queire obtener los precios
      * @param combustible el tipo de combustible del que se quiere obtener el precio
      * @return el precio del tipo de combustible seleccionado en la gasolinera seleccionada

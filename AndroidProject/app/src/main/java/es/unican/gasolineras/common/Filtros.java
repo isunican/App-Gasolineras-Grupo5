@@ -1,4 +1,5 @@
 package es.unican.gasolineras.common;
+
 import static es.unican.gasolineras.common.Horario.estaAbierto;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -160,23 +161,22 @@ public class Filtros implements IFiltros {
         return resultado;
     }
 
+    /**
+     * Verifica si la companhia es es una de las conocidas.
+     *
+     * @param companhia El nombre de la companhia a verificar.
+     * @return true si la companhia es conocida, false en caso contrario.
+     */
+    private boolean esCompanhiaConocida(String companhia){
+        String[] conocidas = {"REPSOL", "CEPSA", "AVIA", "CARREFOUR", "PETRONOR",
+                "BALLENOIL", "GALP", "SHELL", "MEROIL", "PETROPRIX", "BP"};
 
-        /**
-         * Verifica si la companhia es es una de las conocidas.
-         *
-         * @param companhia El nombre de la companhia a verificar.
-         * @return true si la companhia es conocida, false en caso contrario.
-         */
-        private boolean esCompanhiaConocida(String companhia){
-            String[] conocidas = {"REPSOL", "CEPSA", "AVIA", "CARREFOUR", "PETRONOR",
-                    "BALLENOIL", "GALP", "SHELL", "MEROIL", "PETROPRIX", "BP"};
-
-            for (String marca : conocidas) {
-                if (companhia.toLowerCase().contains(marca.toLowerCase())) {
-                    return true;
-                }
+        for (String marca : conocidas) {
+            if (companhia.toLowerCase().contains(marca.toLowerCase())) {
+                return true;
             }
-            return false;
         }
+        return false;
     }
+}
 

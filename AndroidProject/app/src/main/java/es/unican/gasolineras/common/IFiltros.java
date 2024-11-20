@@ -37,11 +37,18 @@ public interface IFiltros {
 
 
     /**
-     * Filtra una lista de gasolineras por companhia.
+     * Filtra una lista de gasolineras segun los combustibles seleccionados.
+     * @param gasolineras la lista completa de gasolineras a filtrar.
+     * @param combustibles una lista de strings que representan los tipos de combustibles seleccionados
+     *                     (por ejemplo, "Gasolina 95 E5", "Gasolina 98 E10"). Si la lista es nula o
+     *                     vacia, se devolverán todas las gasolineras.
+     * @return una lista de gasolineras que ofrecen al menos uno de los combustibles seleccionados.
+     *         Si no se especifican combustibles, se devuelve la lista original completa.
      *
-     * @param gasolineras La lista de gasolineras a filtar.
-     * @param combustibles La lista que contiene los carburantes por los que filtrar.
-     * @return Una lista de gasolineras que contienen al menos uno de los carburantes.
+     * @implNote Este metodo utiliza un bucle para recorrer las gasolineras y evalua cada combustible
+     *           especificado. Si una gasolinera ofrece al menos uno de los combustibles seleccionados,
+     *           se incluye en la lista de resultados. La evaluacion se detiene para cada gasolinera una vez
+     *           que se encuentra un combustible coincidente.
      */
     public List<Gasolinera> filtrarPorCombustibles(List<Gasolinera> gasolineras, List<String> combustibles);
 }

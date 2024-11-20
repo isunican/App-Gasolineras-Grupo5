@@ -1,11 +1,8 @@
 package es.unican.gasolineras.common;
 
-
 import java.util.Calendar;
 
 public class Tiempo {
-
-
 
     private Tiempo() {
         throw new UnsupportedOperationException("Cannot instantiate Tiempo class");

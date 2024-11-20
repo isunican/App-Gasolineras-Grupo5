@@ -61,7 +61,6 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
         setContentView(R.layout.activity_main);
 
         resetSharedPreferences();
-
         combustiblesSeleccionados = new ArrayList<>();
 
         // The default theme does not include a toolbar.
@@ -391,6 +390,7 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
             if (posMunicipio >= 0) spnMunicipios.setSelection(posMunicipio);
         });
     }
+
     /**
      * Aplica los filtros seleccionados al objeto de filtros y ejecuta la busqueda de estaciones
      * con los valores proporcionados en los controles de la interfaz.
