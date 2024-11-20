@@ -345,11 +345,10 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
 
         et.addTextChangedListener(new TextWatcher() {
             private boolean isUpdating = false; // Evita recursividad
-            private int cursorPosition = 0; // Guarda la posición del cursor
 
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-                cursorPosition = et.getSelectionStart(); // Guarda la posición del cursor
+                // No es necesario guardar la posición del cursor aquí
             }
 
             @Override
@@ -398,19 +397,16 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
                     formatted = "-" + formatted;
                 }
 
-                // Calcular nueva posición del cursor
-                int newCursorPosition = cursorPosition + (formatted.length() - input.length());
-                newCursorPosition = Math.max(0, Math.min(newCursorPosition, formatted.length())); // Asegurar que esté dentro de límites
-
                 // Actualiza el texto en el EditText
                 et.removeTextChangedListener(this); // Desactiva temporalmente el listener
                 et.setText(formatted);
-                et.setSelection(newCursorPosition); // Restaurar posición del cursor
+                et.setSelection(formatted.length()); // Coloca el cursor al final del texto
                 et.addTextChangedListener(this); // Reactiva el listener
 
                 isUpdating = false; // Restablece el estado
             }
         });
+
 
     }
 
