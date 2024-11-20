@@ -20,7 +20,6 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import android.text.TextUtils;
 import androidx.appcompat.widget.Toolbar;
 
 import com.google.android.material.slider.Slider;
@@ -34,7 +33,6 @@ import dagger.hilt.android.AndroidEntryPoint;
 import es.unican.gasolineras.R;
 import es.unican.gasolineras.activities.info.InfoView;
 import es.unican.gasolineras.activities.details.DetailsView;
-import es.unican.gasolineras.common.DataAccessException;
 import es.unican.gasolineras.model.Combustible;
 import es.unican.gasolineras.common.Filtros;
 import es.unican.gasolineras.model.Gasolinera;
@@ -233,12 +231,7 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
                             spnMunicipios.getSelectedItem().toString() : "";
                     String companhia = spnCompanhia.getSelectedItem().toString();
                     boolean abierto = checkEstado.isChecked();
-
-                    try {
-                        presenter.onSearchStationsWithFilters(provincia, municipio, companhia, abierto);
-                    } catch (DataAccessException e) {
-                        throw new RuntimeException(e);
-                    }
+                    presenter.onSearchStationsWithFilters(provincia, municipio, companhia, abierto);
                     dialog.dismiss();
                 })
                 .setNegativeButton("Cancelar", (dialog, which) -> {
@@ -290,10 +283,11 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
                 .show();
     }
 
-
+    /**
+     * @see IMainContract.View#showCoordinatesPopUp()
+     */
     @Override
-    public void showCoordinatesPopUp(){
-
+    public void showCoordinatesPopUp() {
         LayoutInflater inflater = LayoutInflater.from(this);
         View view = inflater.inflate(R.layout.activity_distancia_coordenadas_popup, null);
 
@@ -337,12 +331,37 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
                 .setNegativeButton("Cancelar", (dialog, which) -> dialog.dismiss())
                 .create()
                 .show();
-
-
     }
 
-    private void compruebaFormato(EditText et){
+    /**
+     * @see IMainContract.View#updateMunicipiosSpinner(List municipios)
+     */
+    @Override
+    public void updateMunicipiosSpinner(List<Municipio> municipios) {
+        List<String> nombresMunicipios = new ArrayList<>();
+        nombresMunicipios.add("-");
+        for (Municipio municipio : municipios) {
+            nombresMunicipios.add(municipio.getNombre());
+        }
+        ArrayAdapter<String> municipiosAdapter = new ArrayAdapter<>(this,
+                android.R.layout.simple_spinner_item, nombresMunicipios);
+        municipiosAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spnMunicipios.setAdapter(municipiosAdapter);
+    }
 
+    /**
+     * Configura un `TextWatcher` para un `EditText` que valida y formatea la entrada de texto
+     * conforme el usuario escribe, asegurando que la entrada sea un numero con hasta dos digitos enteros
+     * y hasta cuatro digitos decimales. Ademas, permite un signo negativo al principio de la entrada.
+     * La validacion y el formateo se realizan de la siguiente manera:
+     *      El número puede tener un máximo de dos dígitos enteros.
+     *      La parte decimal (si existe) se limita a cuatro dígitos.
+     *      El numero puede comenzar con un signo negativo, que se mantiene durante el formateo.
+     *      El cursor se coloca automaticamente al final del texto despues de cada actualizacion.
+     *
+     * @param et El `EditText` al que se le aplica el `TextWatcher` para validar y formatear la entrada.
+     */
+    private void compruebaFormato(EditText et) {
         et.addTextChangedListener(new TextWatcher() {
             private boolean isUpdating = false; // Evita recursividad
 
@@ -406,12 +425,20 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
                 isUpdating = false; // Restablece el estado
             }
         });
-
-
     }
 
-
-    private void applyCoordinates(EditText etLongitud, EditText etLatitud, TextView tvDistancia){
+    /**
+     * Obtiene las coordenadas de longitud y latitud de los campos EditText proporcionados,
+     * los convierte a valores numericos (de tipo double), y obtiene la distancia desde el campo
+     * TextView. Luego se llama al presenter para realizar la busqueda.
+     * Los valores de longitud y latitud son extraídos de los EditText, y si contienen comas, estas son
+     * reemplazadas por puntos para asegurar que el formato sea válido para la conversión a double.
+     *
+     * @param etLongitud El EditText que contiene la longitud.
+     * @param etLatitud El EditText que contiene la latitud.
+     * @param tvDistancia El TextView que contiene el valor de distancia.
+     */
+    private void applyCoordinates(EditText etLongitud, EditText etLatitud, TextView tvDistancia) {
         try {
             // Obtener los valores de los EditText como String
             String longitudStr = etLongitud.getText().toString();
@@ -432,22 +459,5 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
             // Manejar casos donde no se pueda convertir
             System.err.println("Error: Entrada no válida.");
         }
-
-    }
-
-    /**
-     * @see IMainContract.View#updateMunicipiosSpinner(List municipios)
-     */
-    @Override
-    public void updateMunicipiosSpinner(List<Municipio> municipios) {
-        List<String> nombresMunicipios = new ArrayList<>();
-        nombresMunicipios.add("-");
-        for (Municipio municipio : municipios) {
-            nombresMunicipios.add(municipio.getNombre());
-        }
-        ArrayAdapter<String> municipiosAdapter = new ArrayAdapter<>(this,
-                android.R.layout.simple_spinner_item, nombresMunicipios);
-        municipiosAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spnMunicipios.setAdapter(municipiosAdapter);
     }
 }

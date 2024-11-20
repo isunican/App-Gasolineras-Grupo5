@@ -2,9 +2,8 @@ package es.unican.gasolineras.activities.main;
 
 import java.util.ArrayList;
 import java.util.Comparator;
-import java.util.Iterator;
 import java.util.List;
-import es.unican.gasolineras.common.DataAccessException;
+
 import es.unican.gasolineras.common.IFiltros;
 import es.unican.gasolineras.model.Combustible;
 import es.unican.gasolineras.model.Gasolinera;
@@ -74,7 +73,7 @@ public class MainPresenter implements IMainContract.Presenter {
      */
     @Override
     public void onSearchStationsWithFilters(String provincia, String municipio, String companhia,
-                                            boolean abierto) throws DataAccessException {
+                                            boolean abierto) {
         List<Gasolinera> gasolinerasFiltradas;
         if(IsFiltro) {
              gasolinerasFiltradas = gasolineras;
@@ -105,6 +104,9 @@ public class MainPresenter implements IMainContract.Presenter {
         view.showLoadCorrect(gasolinerasFiltradas.size());
     }
 
+    /**
+     * @see IMainContract.Presenter#onProvinciaSelected(String provinciaNombre)
+     */
     @Override
     public void onProvinciaSelected(String provinciaNombre) {
         String idProvincia = IDProvincias.getCodigoByProvincia(provinciaNombre);
@@ -129,7 +131,6 @@ public class MainPresenter implements IMainContract.Presenter {
     @Override
     public void onOrdenarButtonClicked() { view.showOrdenarPopUp(); }
 
-
     /**
      * @see IMainContract.Presenter#ordenarGasolinerasPorPrecio(Combustible combustible, Orden orden)
      */
@@ -143,7 +144,6 @@ public class MainPresenter implements IMainContract.Presenter {
 
             gasolinerasAOrdenar = this.gasolinerasCoordenadas;
         }
-
 
         // Determinamos el comparador básico según el tipo de combustible
         Comparator<Gasolinera> comparator = (g1, g2) -> {
@@ -177,21 +177,25 @@ public class MainPresenter implements IMainContract.Presenter {
         gasolinerasAOrdenar.sort(comparator);
         // Mostramos la lista ordenada
         view.showStations(gasolinerasAOrdenar);
-
     }
 
+    /**
+     * @see IMainContract.Presenter#onCoordinatesButtonClicked() 
+     */
     @Override
     public void onCoordinatesButtonClicked() {view.showCoordinatesPopUp();}
 
+    /**
+     * @see IMainContract.Presenter#searchWithCoordinates(Double longitud, Double latitud, int distancia)
+     */
     @Override
     public void searchWithCoordinates(Double longitud, Double latitud, int distancia){
-
         // Crear una nueva lista para almacenar las gasolineras filtradas
         List<Gasolinera> gasolinerasFiltradasCoordenadas = new ArrayList<>();
 
         for (Gasolinera g : this.gasolinerasFiltradas) {
             // Obtener y convertir las coordenadas de la gasolinera
-            String longitudStr = g.getLongitud().replace(",", "."); // Asegurar formato decimal
+            String longitudStr = g.getLongitud().replace(",", ".");
             String latitudStr = g.getLatitud().replace(",", ".");
             Double longitudGasolinera = Double.parseDouble(longitudStr);
             Double latitudGasolinera = Double.parseDouble(latitudStr);
@@ -207,11 +211,23 @@ public class MainPresenter implements IMainContract.Presenter {
         // Actualizar la vista con las gasolineras filtradas
         view.showStations(gasolinerasFiltradasCoordenadas);
         view.showLoadCorrect(gasolinerasFiltradasCoordenadas.size());
-
-
     }
 
-    private boolean estaEnCoordenadas(Double longitudSelec, Double latitudSelec, int distancia, Double longitudGasolinera, Double latitudGasolinera){
+    /**
+     * Determina si una ubicacion especificada por las coordenadas de una gasolinera
+     * se encuentra dentro de una distancia especifica desde un punto de seleccion.
+     * Utiliza la formula del haversine para calcular la distancia entre dos puntos
+     * en la superficie de una esfera (aproximadamente la Tierra).
+     *
+     * @param longitudSelec     Longitud del punto de referencia en grados.
+     * @param latitudSelec      Latitud del punto de referencia en grados.
+     * @param distancia         Distancia maxima permitida en kilometros.
+     * @param longitudGasolinera Longitud de la gasolinera en grados.
+     * @param latitudGasolinera Latitud de la gasolinera en grados.
+     * @return true si la gasolinera está dentro de la distancia especificada
+     *         desde el punto de referencia; false de lo contrario.
+     */
+    private boolean estaEnCoordenadas(Double longitudSelec, Double latitudSelec, int distancia, Double longitudGasolinera, Double latitudGasolinera) {
         final int RADIO_TIERRA = 6371000; // Radio de la Tierra en metros
 
         // Verifica que las coordenadas no sean nulas o extremas
@@ -240,7 +256,6 @@ public class MainPresenter implements IMainContract.Presenter {
 
         // Comparar la distancia calculada con la distancia permitida (convertida a metros)
         return distanciaEntrePuntos <= distancia * 1000;
-
     }
 
     /**

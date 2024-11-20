@@ -20,7 +20,6 @@ import org.robolectric.RobolectricTestRunner;
 
 import es.unican.gasolineras.activities.main.IMainContract;
 import es.unican.gasolineras.activities.main.MainPresenter;
-import es.unican.gasolineras.common.DataAccessException;
 import es.unican.gasolineras.common.IFiltros;
 import es.unican.gasolineras.utils.MockRepositories;
 import es.unican.gasolineras.repository.IGasolinerasRepository;
@@ -50,7 +49,7 @@ public class MainPresenterTest {
     }
 
     @Test
-    public void test_UB1A() throws DataAccessException {
+    public void test_UB1A() {
         String provincia = "Cantabria";
         String municipio = "Santander";
 
@@ -62,7 +61,7 @@ public class MainPresenterTest {
     }
 
     @Test
-    public void test_UB1B() throws DataAccessException {
+    public void test_UB1B() {
         String provincia = "Cantabria";
         String municipio = "";
 
@@ -74,7 +73,7 @@ public class MainPresenterTest {
     }
 
     @Test
-    public void test_UB1D() throws DataAccessException {
+    public void test_UB1D() {
         String provincia = "Madrid";
         String municipio = "";
 
@@ -86,7 +85,7 @@ public class MainPresenterTest {
     }
 
     @Test
-    public void test_UB1E() throws DataAccessException {
+    public void test_UB1E() {
         String provincia = "Asturias";
         String municipio = "Tineo";
 
@@ -98,7 +97,7 @@ public class MainPresenterTest {
     }
 
     @Test
-    public void test_UB1G() throws DataAccessException {
+    public void test_UB1G() {
         String provincia = "Asturias";
         String municipio = "Santander";
 
@@ -110,7 +109,7 @@ public class MainPresenterTest {
     }
 
     @Test
-    public void test_UB1H() throws DataAccessException {
+    public void test_UB1H() {
         String provincia = "-";
         String municipio = "";
 

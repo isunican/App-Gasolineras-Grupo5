@@ -4,22 +4,16 @@ import static es.unican.gasolineras.common.Horario.estaAbierto;
 
 import com.google.gson.annotations.SerializedName;
 
-import es.unican.gasolineras.common.DataAccessException;
-import es.unican.gasolineras.common.Horario;
 import org.parceler.Parcel;
-import java.util.Date;
-import java.util.Calendar;
+
 import lombok.Getter;
 import lombok.Setter;
 
 /**
  * A Gas Station.
- *
  * Properties are defined in the <a href="https://sedeaplicaciones.minetur.gob.es/ServiciosRESTCarburantes/PreciosCarburantes/help/operations/PreciosEESSTerrestres#response-json">API</a>
- *
  * The #SerializedName annotation is a GSON annotation that defines the name of the property
  * as defined in the json response.
- *
  * Getters are automatically generated at compile time by Lombok.
  */
 @Parcel

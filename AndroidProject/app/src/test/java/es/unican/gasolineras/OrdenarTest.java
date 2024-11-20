@@ -14,7 +14,6 @@ import java.util.List;
 
 import es.unican.gasolineras.activities.main.IMainContract;
 import es.unican.gasolineras.activities.main.MainPresenter;
-import es.unican.gasolineras.common.DataAccessException;
 import es.unican.gasolineras.model.Combustible;
 import es.unican.gasolineras.model.Gasolinera;
 import es.unican.gasolineras.model.Orden;
@@ -134,7 +133,7 @@ public class OrdenarTest {
     }
 
     @Test
-    public void testInit() throws DataAccessException {
+    public void testInit() {
         when(mockView.getGasolinerasRepository()).thenReturn(repository);
         presenter.init(mockView);
         assertEquals(presenter.getView(), mockView);

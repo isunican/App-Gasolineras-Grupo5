@@ -5,10 +5,9 @@ import java.util.Calendar;
 
 public class Tiempo {
 
-    /*
+    /**
     * Obtiene la hora actual
     * @return la hora actual
-    * @throws DataAccessException si la hora actual no es válida
     */
     public static int horaActual()   {
         // Obtener la hora actual
@@ -18,10 +17,9 @@ public class Tiempo {
         return horaActual;
     }
 
-    /*
+    /**
      * Obtiene el minuto actual
      * @return el minuto actual
-     * @throws DataAccessException si el minuto actual no es válido
      */
     public static int minutoActual()   {
         // Obtener el minuto actual
@@ -31,10 +29,9 @@ public class Tiempo {
         return minutoActual;
     }
 
-    /*
+    /**
      * Obtiene la letra del día actual
      * @return la letra del día actual
-     * @throws DataAccessException si el día actual no es válido
      */
     public static String letraDiaActual ()  {
         // Obtener el día actual
