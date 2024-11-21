@@ -62,25 +62,25 @@ public class OrdenarPorPrecioAscUITest {
     public void ordenarPorPrecioAsc() {
         Espresso.onView(withId(R.id.menuOrdenButton)).perform(click());
         Espresso.onView(withId(R.id.spnOrden)).perform(click());
-        onView(withText(allOf(is("ASCENDENTE"), instanceOf(String.class))))
+        onView(withText(allOf(is("Ascendente"), instanceOf(String.class))))
                 .inRoot(isPlatformPopup())
                 .perform(click());
         Espresso.onView(withId(R.id.spnCombustible)).perform(click());
-        onView(withText(allOf(is("BIODIESEL"), instanceOf(String.class))))
+        onView(withText(allOf(is("Biodiesel"), instanceOf(String.class))))
                 .inRoot(isPlatformPopup())
                 .perform(click());
         Espresso.onView(withText("Ordenar")).perform(click());
         onView(withId(R.id.lvStations)).check(matches(listSize(7)));
         DataInteraction elementoLista1 = onData(anything()).inAdapterView(withId(R.id.lvStations)).atPosition(0);
-        elementoLista1.onChildView(withId(R.id.tvName)).check(matches(withText("REPSOL")));
+        elementoLista1.onChildView(withId(R.id.tvName)).check(matches(withText("PETRONOR")));
         DataInteraction elementoLista2 = onData(anything()).inAdapterView(withId(R.id.lvStations)).atPosition(1);
-        elementoLista2.onChildView(withId(R.id.tvName)).check(matches(withText("CARREFOUR")));
+        elementoLista2.onChildView(withId(R.id.tvName)).check(matches(withText("REPSOL")));
         DataInteraction elementoLista3 = onData(anything()).inAdapterView(withId(R.id.lvStations)).atPosition(2);
-        elementoLista3.onChildView(withId(R.id.tvName)).check(matches(withText("BALLENOIL")));
+        elementoLista3.onChildView(withId(R.id.tvName)).check(matches(withText("CARREFOUR")));
         DataInteraction elementoLista4 = onData(anything()).inAdapterView(withId(R.id.lvStations)).atPosition(3);
-        elementoLista4.onChildView(withId(R.id.tvName)).check(matches(withText("SHELL")));
+        elementoLista4.onChildView(withId(R.id.tvName)).check(matches(withText("BALLENOIL")));
         DataInteraction elementoLista5 = onData(anything()).inAdapterView(withId(R.id.lvStations)).atPosition(4);
-        elementoLista5.onChildView(withId(R.id.tvName)).check(matches(withText("PETRONOR")));
+        elementoLista5.onChildView(withId(R.id.tvName)).check(matches(withText("SHELL")));
         DataInteraction elementoLista6 = onData(anything()).inAdapterView(withId(R.id.lvStations)).atPosition(5);
         elementoLista6.onChildView(withId(R.id.tvName)).check(matches(withText("AVIA")));
         DataInteraction elementoLista7 = onData(anything()).inAdapterView(withId(R.id.lvStations)).atPosition(6);
