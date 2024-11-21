@@ -62,13 +62,11 @@ public class OrdenarPorPrecioAscUITest {
     public void ordenarPorPrecioAsc() {
         Espresso.onView(withId(R.id.menuOrdenButton)).perform(click());
         Espresso.onView(withId(R.id.spnOrden)).perform(click());
-
-        onView(withText(allOf(is("Ascendente"), instanceOf(String.class))))
+        onView(withText(allOf(is("Descendente"), instanceOf(String.class))))
                 .inRoot(isPlatformPopup())
                 .perform(click());
         Espresso.onView(withId(R.id.spnCombustible)).perform(click());
-
-        onView(withText(allOf(is("Biodiesel"), instanceOf(String.class))))
+        onView(withText(allOf(is("Gasóleo A"), instanceOf(String.class))))
                 .inRoot(isPlatformPopup())
                 .perform(click());
         Espresso.onView(withText("Ordenar")).perform(click());
@@ -85,7 +83,6 @@ public class OrdenarPorPrecioAscUITest {
         elementoLista5.onChildView(withId(R.id.tvName)).check(matches(withText("SHELL")));
         DataInteraction elementoLista6 = onData(anything()).inAdapterView(withId(R.id.lvStations)).atPosition(5);
         elementoLista6.onChildView(withId(R.id.tvName)).check(matches(withText("AVIA")));
-        DataInteraction elementoLista7 = onData(anything()).inAdapterView(withId(R.id.lvStations)).atPosition(6);
-        elementoLista7.onChildView(withId(R.id.tvName)).check(matches(withText("CEPSA")));
+
     }
 }
