@@ -1,4 +1,4 @@
-package es.unican.gasolineras;
+package es.unican.gasolineras.common;
 
 import static org.junit.Assert.assertTrue;
 
@@ -7,9 +7,6 @@ import org.junit.After;
 import org.junit.Test;
 
 import org.mockito.MockedStatic;
-
-import es.unican.gasolineras.common.Horario;
-import es.unican.gasolineras.common.Tiempo;
 
 import static org.junit.Assert.*;
 

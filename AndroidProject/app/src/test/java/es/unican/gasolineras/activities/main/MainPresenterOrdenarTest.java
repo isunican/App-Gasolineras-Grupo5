@@ -1,4 +1,4 @@
-package es.unican.gasolineras;
+package es.unican.gasolineras.activities.main;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -17,7 +17,7 @@ import es.unican.gasolineras.activities.main.MainPresenter;
 import es.unican.gasolineras.model.Gasolinera;
 import es.unican.gasolineras.repository.IGasolinerasRepository;
 
-public class OrdenarTest {
+public class MainPresenterOrdenarTest {
 
     private MainPresenter presenter = new MainPresenter();
     private IMainContract.View mockView = Mockito.mock(IMainContract.View.class);
@@ -29,7 +29,7 @@ public class OrdenarTest {
 
     @Before
     public void setUp() {
-        presenter.setView(view);
+
         repsol = Mockito.mock(Gasolinera.class);
         carrefour = Mockito.mock(Gasolinera.class);
         ballenoil = Mockito.mock(Gasolinera.class);
@@ -76,11 +76,11 @@ public class OrdenarTest {
         when(cepsa.getGasolina98E5()).thenReturn(2.1);
 
         presenter.setGasolineras(gasolineras);
+        presenter.setView(view);
     }
 
     @Test
     public void testOrdenarGasolinerasPorPrecioBiodiselAscendente() {
-
         presenter.setGasolinerasFiltradas(gasolineras);
         // Test ordenar por precio de gasolina 95 ascendente
         presenter.ordenarGasolinerasPorPrecio("Biodiesel", "Ascendente");
