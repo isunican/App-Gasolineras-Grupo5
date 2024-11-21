@@ -26,7 +26,7 @@ public class MainPresenter implements IMainContract.Presenter {
     private IFiltros filtros;
     private List<Gasolinera> gasolinerasFiltradas;
     private List<Gasolinera> gasolinerasCoordenadas;
-    private boolean IsFiltro = true;
+    private boolean isFiltro = true;
 
     /**
      * @see IMainContract.Presenter#init(IMainContract.View)
@@ -73,7 +73,7 @@ public class MainPresenter implements IMainContract.Presenter {
                                             List<String> combustibles, boolean abierto) {
 
         List<Gasolinera> gasolinerasFiltradas;
-        if (IsFiltro) {
+        if (isFiltro) {
             gasolinerasFiltradas = gasolineras;
         } else{
             gasolinerasFiltradas = gasolinerasCoordenadas;
@@ -100,7 +100,7 @@ public class MainPresenter implements IMainContract.Presenter {
 
         // Guarda la lista filtrada para utilizarla en la ordenación
         this.gasolinerasFiltradas = gasolinerasFiltradas;
-        IsFiltro = true;
+        isFiltro = true;
         view.showStations(gasolinerasFiltradas);
         view.showLoadCorrect(gasolinerasFiltradas.size());
     }
@@ -139,7 +139,7 @@ public class MainPresenter implements IMainContract.Presenter {
     public void ordenarGasolinerasPorPrecio(String combustible, String orden) {
         // Usa la lista filtrada
         List<Gasolinera> gasolinerasAOrdenar;
-        if(IsFiltro){
+        if(isFiltro){
              gasolinerasAOrdenar = this.gasolinerasFiltradas;
         }else{
 
@@ -208,7 +208,7 @@ public class MainPresenter implements IMainContract.Presenter {
         }
 
         this.gasolinerasCoordenadas = gasolinerasFiltradasCoordenadas;
-        IsFiltro = false;
+        isFiltro = false;
         // Actualizar la vista con las gasolineras filtradas
         view.showStations(gasolinerasFiltradasCoordenadas);
         view.showLoadCorrect(gasolinerasFiltradasCoordenadas.size());
