@@ -1,4 +1,4 @@
-package es.unican.gasolineras;
+package es.unican.gasolineras.common;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
@@ -14,7 +14,6 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-import es.unican.gasolineras.common.Filtros;
 import es.unican.gasolineras.model.Gasolinera;
 
 public class FiltrosTest {

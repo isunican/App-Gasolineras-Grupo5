@@ -1,4 +1,4 @@
-package es.unican.gasolineras;
+package es.unican.gasolineras.activities.main;
 
 import static androidx.test.espresso.Espresso.onData;
 import static androidx.test.espresso.action.ViewActions.click;
@@ -10,10 +10,9 @@ import static org.hamcrest.CoreMatchers.anything;
 import static es.unican.gasolineras.utils.Matchers.listSize;
 import static es.unican.gasolineras.utils.MockRepositories.getTestRepository;
 
-import android.view.View;
-
 import androidx.test.espresso.DataInteraction;
 import androidx.test.espresso.Espresso;
+import androidx.test.espresso.matcher.ViewMatchers;
 import androidx.test.ext.junit.rules.ActivityScenarioRule;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
@@ -26,20 +25,23 @@ import dagger.hilt.android.testing.BindValue;
 import dagger.hilt.android.testing.HiltAndroidRule;
 import dagger.hilt.android.testing.HiltAndroidTest;
 import dagger.hilt.android.testing.UninstallModules;
-import es.unican.gasolineras.activities.main.MainView;
+import es.unican.gasolineras.R;
 import es.unican.gasolineras.common.Generador;
 import es.unican.gasolineras.injection.RepositoriesModule;
 import es.unican.gasolineras.repository.IGasolinerasRepository;
 
+import static org.hamcrest.CoreMatchers.containsString;
+
+
 @HiltAndroidTest
 @UninstallModules(RepositoriesModule.class)
 @RunWith(AndroidJUnit4.class)
-public class BusquedaConDatosVaciosTest {
+public class BusquedaExitosaPorCombustibleUITest {
 
-    View decorView;
+    //Vista
     @BindValue
     IGasolinerasRepository repository = getTestRepository(
-            Generador.generarGasolinerasDatosVacios()
+            Generador.generarGasolineras()
     );
 
     @Rule(order=0)
@@ -50,24 +52,29 @@ public class BusquedaConDatosVaciosTest {
 
     @Before
     public void inicializa() {
+
         hiltRule.inject();
     }
 
     @Test
-    public void testGasolinerasDatosVacios_A4() {
+    public void testBusquedaTipoCombustible_A1() {
         //Selecciona filtros y busca
-        Espresso.onView(withId(R.id.menuFilterButton)).perform(click());
-        Espresso.onView(withId(R.id.cbAbierto)).perform(click());
+        Espresso.onView(ViewMatchers.withId(R.id.menuFilterButton)).perform(click());
+        Espresso.onView(withId(R.id.ivArrow)).perform(click());
+        Espresso.onView(withText("Gasolina 95 E5")).perform(click());
+        Espresso.onView(withText("Aceptar")).perform(click());
         Espresso.onView(withText("Buscar")).perform(click());
 
         //comprueba que aparece el numero de gasolineras correcta
-        Espresso.onView(withId(R.id.lvStations)).check(matches(isDisplayed())).check(matches(listSize(2)));
-        DataInteraction elementoLista1 = onData(anything()).inAdapterView(withId(R.id.lvStations)).atPosition(0);
-        elementoLista1.onChildView(withId(R.id.tvName)).check(matches(withText("Repsol")));
-        DataInteraction elementoLista2 = onData(anything()).inAdapterView(withId(R.id.lvStations)).atPosition(1);
-        elementoLista2.onChildView(withId(R.id.tvName)).check(matches(withText("Carrefour")));
+        Espresso.onView(withId(R.id.lvStations)).check(matches(isDisplayed())).check(matches(listSize(4)));
+        for (int i = 0; i < 4; i++) {
+            DataInteraction elementoLista = onData(anything())
+                    .inAdapterView(withId(R.id.lvStations))
+                    .atPosition(i);
 
-
+            elementoLista.onChildView(withId(R.id.tvGas1))
+                    .check(matches(withText(containsString("Gasolina95E5"))));;
+        }
     }
-
 }
+
