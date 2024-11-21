@@ -3,13 +3,10 @@ package es.unican.gasolineras.activities.main;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
-
 import es.unican.gasolineras.common.IFiltros;
-import es.unican.gasolineras.model.Combustible;
 import es.unican.gasolineras.model.Gasolinera;
 import es.unican.gasolineras.model.IDProvincias;
 import es.unican.gasolineras.model.Municipio;
-import es.unican.gasolineras.model.Orden;
 import es.unican.gasolineras.repository.ICallBack;
 import es.unican.gasolineras.repository.IGasolinerasRepository;
 import lombok.Setter;
@@ -69,16 +66,16 @@ public class MainPresenter implements IMainContract.Presenter {
 
     /**
      * @see IMainContract.Presenter#onSearchStationsWithFilters(String provincia, String municipio,
-     *                                                          String companhia, boolean abierto)
+     *                                                          String companhia, List companhia, boolean abierto)
      */
     @Override
     public void onSearchStationsWithFilters(String provincia, String municipio, String companhia,
-                                            boolean abierto) {
-        List<Gasolinera> gasolinerasFiltradas;
-        if(IsFiltro) {
-             gasolinerasFiltradas = gasolineras;
-        }else{
+                                            List<String> combustibles, boolean abierto) {
 
+        List<Gasolinera> gasolinerasFiltradas;
+        if (IsFiltro) {
+            gasolinerasFiltradas = gasolineras;
+        } else{
             gasolinerasFiltradas = gasolinerasCoordenadas;
         }
 
@@ -95,6 +92,10 @@ public class MainPresenter implements IMainContract.Presenter {
         }
         if (abierto) {
             gasolinerasFiltradas = filtros.filtrarPorEstado(gasolinerasFiltradas);
+        }
+        if (combustibles != null && !combustibles.isEmpty()){
+            gasolinerasFiltradas = filtros.filtrarPorCombustibles(gasolinerasFiltradas,combustibles);
+
         }
 
         // Guarda la lista filtrada para utilizarla en la ordenación
@@ -121,7 +122,7 @@ public class MainPresenter implements IMainContract.Presenter {
                 public void onFailure(Throwable e) {
                     view.showLoadError();
                 }
-                }, idProvincia);
+            }, idProvincia);
         }
     }
 
@@ -132,10 +133,10 @@ public class MainPresenter implements IMainContract.Presenter {
     public void onOrdenarButtonClicked() { view.showOrdenarPopUp(); }
 
     /**
-     * @see IMainContract.Presenter#ordenarGasolinerasPorPrecio(Combustible combustible, Orden orden)
+     * @see IMainContract.Presenter#ordenarGasolinerasPorPrecio(String combustible, String orden)
      */
     @Override
-    public void ordenarGasolinerasPorPrecio(Combustible combustible, Orden orden) {
+    public void ordenarGasolinerasPorPrecio(String combustible, String orden) {
         // Usa la lista filtrada
         List<Gasolinera> gasolinerasAOrdenar;
         if(IsFiltro){
@@ -159,7 +160,7 @@ public class MainPresenter implements IMainContract.Presenter {
         };
 
         // Si el orden es descendente, cambiamos la comparación sin afectar a los 0.0
-        if (orden == Orden.DESCENDENTE) {
+        if (orden.equals("Descendente")) {
             comparator = (g1, g2) -> {
                 double precio1 = getPrecioCombustible(g1, combustible);
                 double precio2 = getPrecioCombustible(g2, combustible);
@@ -180,7 +181,7 @@ public class MainPresenter implements IMainContract.Presenter {
     }
 
     /**
-     * @see IMainContract.Presenter#onCoordinatesButtonClicked() 
+     * @see IMainContract.Presenter#onCoordinatesButtonClicked()
      */
     @Override
     public void onCoordinatesButtonClicked() {view.showCoordinatesPopUp();}
@@ -259,19 +260,25 @@ public class MainPresenter implements IMainContract.Presenter {
     }
 
     /**
-     * Método auxiliar para obtener el precio del combustible
+     * Metodo auxiliar para obtener el precio del combustible
      * @param gasolinera la gasolinera de la que se queire obtener los precios
      * @param combustible el tipo de combustible del que se quiere obtener el precio
      * @return el precio del tipo de combustible seleccionado en la gasolinera seleccionada
      */
-    private double getPrecioCombustible(Gasolinera gasolinera, Combustible combustible) {
+    private double getPrecioCombustible(Gasolinera gasolinera, String combustible) {
         switch (combustible) {
-            case GASOLEOA:
+            case "Gasóleo A":
                 return gasolinera.getGasoleoA();
-            case GASOLINA95E:
+            case "Gasolina 95 E5":
                 return gasolinera.getGasolina95E5();
-            case GASOLINA98E:
+            case "Gasolina 95 E5 Premium":
+                return gasolinera.getGasolina95E5PREM();
+            case "Gasolina 95 E10":
+                return gasolinera.getGasolina95E10();
+            case "Gasolina 98 E5":
                 return gasolinera.getGasolina98E5();
+            case "Gasolina 98 E10":
+                return gasolinera.getGasolina98E10();
             default:
                 return gasolinera.getBiodiesel();
         }

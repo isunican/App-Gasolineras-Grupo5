@@ -22,7 +22,6 @@ import androidx.test.ext.junit.rules.ActivityScenarioRule;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.platform.app.InstrumentationRegistry;
 
-import org.junit.After;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -40,40 +39,35 @@ import es.unican.gasolineras.repository.IGasolinerasRepository;
 @RunWith(AndroidJUnit4.class)
 public class OrdenarPorPrecioAscUITest {
 
-        @Rule(order = 0)  // the Hilt rule must execute first
-        public HiltAndroidRule hiltRule = new HiltAndroidRule(this);
+    @Rule(order = 0)  // the Hilt rule must execute first
+    public HiltAndroidRule hiltRule = new HiltAndroidRule(this);
 
-        @Rule(order = 1)
-        public ActivityScenarioRule<MainView> activityRule = new ActivityScenarioRule<>(MainView.class);
+    @Rule(order = 1)
+    public ActivityScenarioRule<MainView> activityRule = new ActivityScenarioRule<>(MainView.class);
 
-        // I need the context to access resources, such as the json with test gas stations
-        final Context context = InstrumentationRegistry.getInstrumentation().getTargetContext();
+    // I need the context to access resources, such as the json with test gas stations
+    final Context context = InstrumentationRegistry.getInstrumentation().getTargetContext();
 
-        // Mock repository that provides data from a JSON file instead of downloading it from the internet.
-        @BindValue
-        final IGasolinerasRepository repository = getTestRepository(context, R.raw.gasolineras_test);
+    // Mock repository that provides data from a JSON file instead of downloading it from the internet.
+    @BindValue
+    final IGasolinerasRepository repository = getTestRepository(context, R.raw.gasolineras_test);
 
-        View decorView;
+    View decorView;
 
-        @After
-        public void tearDown() throws InterruptedException {
-            Thread.sleep(2000);
-        }
+    @Test
+    public void ordenarPorPrecioAsc() {
+        Espresso.onView(withId(R.id.menuOrdenButton)).perform(click());
+        Espresso.onView(withId(R.id.spnOrden)).perform(click());
+        onView(withText(allOf(is("Ascendente"), instanceOf(String.class))))
+                .inRoot(isPlatformPopup())
+                .perform(click());
+        Espresso.onView(withId(R.id.spnCombustible)).perform(click());
+        onView(withText(allOf(is("Biodiesel"), instanceOf(String.class))))
+                .inRoot(isPlatformPopup())
+                .perform(click());
+        Espresso.onView(withText("Ordenar")).perform(click());
 
-        @Test
-        public void ordenarPorPrecioAsc() {
-                Espresso.onView(withId(R.id.menuOrdenButton)).perform(click());
-                Espresso.onView(withId(R.id.spnOrden)).perform(click());
-                onView(withText(allOf(is("ASCENDENTE"), instanceOf(String.class))))
-                        .inRoot(isPlatformPopup())
-                        .perform(click());
-                Espresso.onView(withId(R.id.spnCombustible)).perform(click());
-                onView(withText(allOf(is("BIODIESEL"), instanceOf(String.class))))
-                        .inRoot(isPlatformPopup())
-                        .perform(click());
-                Espresso.onView(withText("Ordenar")).perform(click());
-
-                DataInteraction elementoLista2 = onData(anything()).inAdapterView(withId(R.id.lvStations)).atPosition(0);
-                elementoLista2.onChildView(withId(R.id.tvName)).check(matches(withText("PETRONOR")));
-        }
+        DataInteraction elementoLista = onData(anything()).inAdapterView(withId(R.id.lvStations)).atPosition(0);
+        elementoLista.onChildView(withId(R.id.tvName)).check(matches(withText("PETRONOR")));
+    }
 }

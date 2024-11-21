@@ -152,7 +152,7 @@ public class FiltrosTest {
     @Test
     public void testUD1I() {
         List<Gasolinera> resultado = filtros.filtrarPorProvinciaYMunicipio(Collections.emptyList(), "Cantabria", "Santander");
-        assertNull(resultado);
+        assertEquals(resultado, Collections.emptyList());
     }
 
 

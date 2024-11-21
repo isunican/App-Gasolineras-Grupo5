@@ -3,7 +3,6 @@ package es.unican.gasolineras.utils;
 import android.view.View;
 import android.widget.ListView;
 
-import androidx.recyclerview.widget.RecyclerView;
 
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;

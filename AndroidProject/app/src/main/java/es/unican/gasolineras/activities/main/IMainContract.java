@@ -2,10 +2,8 @@ package es.unican.gasolineras.activities.main;
 
 import java.util.List;
 
-import es.unican.gasolineras.model.Combustible;
 import es.unican.gasolineras.model.Gasolinera;
 import es.unican.gasolineras.model.Municipio;
-import es.unican.gasolineras.model.Orden;
 import es.unican.gasolineras.repository.IGasolinerasRepository;
 
 /**
@@ -55,12 +53,16 @@ public interface IMainContract {
          *                  debe filtar por municipio.
          * @param companhia La compnhia por la que filtrar. Puede ser "-" para indicar que no se
          *                  debe filtar por companhia.
+         * @param combustibles El conjunto de combustibles por los que filtar. Puede ser "-" para
+         *                    indicar que no se debe filtrar por combustible.
          * @param abierto Un boolean que indica si se debe filtar por gasolineras abiertas.
          */
-        public void onSearchStationsWithFilters(String provincia,String municipio, String companhia, boolean abierto);
+        public void onSearchStationsWithFilters(String provincia,String municipio, String companhia,
+                                                List<String> combustibles, boolean abierto);
 
         /**
-         * Segun el nombre de la provincia, en caso de exito devuelve los municipios de esta y, en caso de error lanza un mensaje.
+         * Segun el nombre de la provincia, en caso de exito devuelve los municipios de esta y, en
+         * caso de error lanza un mensaje.
          *
          * @param provinciaNombre El nombre de la provincia por la que se filtraran los municipios.
          */
@@ -76,7 +78,7 @@ public interface IMainContract {
          * @param combustible the fuel type to sort by
          * @param orden the order (ascending or descending)
          */
-        public void ordenarGasolinerasPorPrecio(Combustible combustible, Orden orden);
+        public void ordenarGasolinerasPorPrecio(String combustible, String orden);
 
         /**
          * Handles the event when the coordinates button is clicked, displaying the coordinates options popup.

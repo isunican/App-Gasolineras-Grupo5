@@ -53,7 +53,6 @@ public class DetailsView extends AppCompatActivity {
         TextView tvPrecioDiesel = findViewById(R.id.tvPrecioDiesel);
         TextView tvPrecioGasolina = findViewById(R.id.tvPrecioGasolina);
 
-
         // Get Gas Station from the intent that triggered this activity
         Gasolinera gasolinera = Parcels.unwrap(getIntent().getExtras().getParcelable(INTENT_STATION));
 
@@ -86,8 +85,6 @@ public class DetailsView extends AppCompatActivity {
             tvPrecioSumario.setText("-");
             Toast.makeText(this, "Error: Datos no disponibles.", Toast.LENGTH_SHORT).show();
         }
-
-
     }
 
     /**

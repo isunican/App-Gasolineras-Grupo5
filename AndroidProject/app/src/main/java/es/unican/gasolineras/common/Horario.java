@@ -12,14 +12,14 @@ public class Horario {
     private static final String CERRADO = "Cerrado";
 
     /**
-    * Obtiene los horarios de una gasolinera
-    * @param horario el horario en formato String
-    *               (ejemplo: "L-D: 06:00-22:00")
-    *              (ejemplo: "L-S: 07:00-22:00; D: 08:00-14:00")
-    *             (ejemplo: "L-V: 07:00-22:00; S: 08:00-14:00"; D: 08:00-14:00")
-    * @return un array con los horarios
-    * @throws IllegalArgumentException si el horario es nulo o vacío
-    */
+     * Obtiene los horarios de una gasolinera
+     * @param horario el horario en formato String
+     *   (ejemplo: "L-D: 06:00-22:00")
+     *   (ejemplo: "L-S: 07:00-22:00; D: 08:00-14:00")
+     *   (ejemplo: "L-V: 07:00-22:00; S: 08:00-14:00"; D: 08:00-14:00")
+     * @return un array con los horarios
+     * @throws IllegalArgumentException si el horario es nulo o vacío
+     */
     public static String[] obtenerHorario (String horario) throws IllegalArgumentException {
         if (horario == null ) {
             throw new IllegalArgumentException("El horario no puede ser nulo o vacío");
@@ -31,14 +31,13 @@ public class Horario {
     /**
      * Comprueba si el horario de la gasolinera está abierto
      * @param horario el horario en formato String
-     *               (ejemplo: "L-D: 06:00-22:00")
-     *              (ejemplo: "L-S: 07:00-22:00; D: 08:00-14:00")
-     *             (ejemplo: "L-V: 07:00-22:00; S: 08:00-14:00"; D: 08:00-14:00")
+     *  (ejemplo: "L-D: 06:00-22:00")
+     *  (ejemplo: "L-S: 07:00-22:00; D: 08:00-14:00")
+     *  (ejemplo: "L-V: 07:00-22:00; S: 08:00-14:00"; D: 08:00-14:00")
      * @return "Abierto" si el horario de la gasolinera está abierto
      * @return "Cerrado" si el horario de la gasolinera está cerrado
      */
     public static String estaAbierto(String horario) throws IllegalArgumentException {
-
         // Caso 24h
         if (horario.contains("L-D: 24H")) {
             return "Abierto 24h";
@@ -107,10 +106,10 @@ public class Horario {
     /**
      * Comprueba si el horario de la gasolinera está abierto
      * @param horario el horario en formato String
-     * (ejemplo: "L-D: 06:00-22:00")
-     * (ejemplo: "L-S: 07:00-22:00; D: 08:00-14:00")
-     * (ejemplo: "L-V: 07:00-22:00; S: 08:00-14:00"; D: 08:00-14:00")
-     * (ejemplo: "L-D: 24H")
+     *  (ejemplo: "L-D: 06:00-22:00")
+     *  (ejemplo: "L-S: 07:00-22:00; D: 08:00-14:00")
+     *  (ejemplo: "L-V: 07:00-22:00; S: 08:00-14:00"; D: 08:00-14:00")
+     *  (ejemplo: "L-D: 24H")
      *
      * @return true si el horario de la gasolinera está abierto
      * @return false si el horario de la gasolinera está cerrado
@@ -234,6 +233,8 @@ public class Horario {
             case "D":
                 dias[6] = 1;
                 break;
+            default:
+                break;
         }
         // Cojo el segundo valor de dias [1] y lo comparo con los dias de la semana, marco a 1 ese dia y todos los anteriories
         switch (diasIniFin[1]) {
@@ -272,14 +273,13 @@ public class Horario {
                     dias[i] = 1;
                 }
                 break;
-
-                // Si el caso es un valor no valido, no pasa nada
+            // Si el caso es un valor no valido, no pasa nada
             default:
                 break;
         }
         // Compruebo si el dia actual esta en la franja horaria
         Calendar calendar = Calendar.getInstance();
         int letraDiaActual = calendar.get(Calendar.DAY_OF_WEEK);
-        return dias[letraDiaActual] == 1;
+        return dias[letraDiaActual - 1] == 1;
     }
 }
