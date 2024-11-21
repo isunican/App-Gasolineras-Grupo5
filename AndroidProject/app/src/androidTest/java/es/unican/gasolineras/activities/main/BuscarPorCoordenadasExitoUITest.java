@@ -82,6 +82,7 @@ public class BuscarPorCoordenadasExitoUITest {
         gasolinera6.onChildView(withId(R.id.tvName)).check(matches(withText("AVIA")));
         DataInteraction gasolinera7 = onData(anything()).inAdapterView(withId(R.id.lvStations)).atPosition(6);
         gasolinera7.onChildView(withId(R.id.tvName)).check(matches(withText("CEPSA")));
+
     }
 }
 
