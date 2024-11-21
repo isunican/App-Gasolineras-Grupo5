@@ -31,4 +31,21 @@ public class MockRepositories {
         }).when(mock).requestGasolineras(any(ICallBack.class));
         return mock;
     }
+
+    /**
+     * Create a mock repository that uses the data in the given json resource and checks on failure
+     *
+     * @param context application context
+     * @param jsonId  json raw file id
+     * @return mock repository
+     */
+    public static IGasolinerasRepository getTestRepositoryFail(Context context, int jsonId) {
+        IGasolinerasRepository mock = mock(IGasolinerasRepository.class);
+        doAnswer(invocation -> {
+            ICallBack callBack = invocation.getArgument(0);
+            callBack.onFailure(new Throwable());
+            return null;
+        }).when(mock).requestGasolineras(any(ICallBack.class));
+        return mock;
+    }
 }

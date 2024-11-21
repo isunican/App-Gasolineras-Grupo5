@@ -4,19 +4,16 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.robolectric.RobolectricTestRunner;
 
 import java.util.List;
 
-import es.unican.gasolineras.R;
 import es.unican.gasolineras.common.Generador;
 import es.unican.gasolineras.common.IFiltros;
 import es.unican.gasolineras.model.Gasolinera;
 import es.unican.gasolineras.repository.ICallBack;
 import es.unican.gasolineras.repository.IGasolinerasRepository;
-import es.unican.gasolineras.utils.MockRepositories;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
@@ -26,11 +23,6 @@ import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.when;
-
-import android.content.Context;
-
-import androidx.test.core.app.ApplicationProvider;
-
 
 @RunWith(RobolectricTestRunner.class)
 public class MainPresenterTest {
@@ -145,7 +137,6 @@ public class MainPresenterTest {
         verify(mockFilters2).filtrarPorCompanhia(anyList(), eq("Otros"));
         verify(mockView2, times(2)).showStations(anyList());
         verify(mockView2, times(2)).showLoadCorrect(anyInt());  // Verificar que se muestra el número correcto de gasolineras
-
     }
 
 }
