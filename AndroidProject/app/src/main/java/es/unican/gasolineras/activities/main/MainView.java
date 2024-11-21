@@ -29,6 +29,9 @@ import org.parceler.Parcels;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import javax.inject.Inject;
 import dagger.hilt.android.AndroidEntryPoint;
 import es.unican.gasolineras.R;
@@ -59,6 +62,7 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
     private static final String MUNICIPIO = "municipio";
     private Double latitudGuardada = null;
     private Double longitudGuardada = null;
+    private static final Logger LOGGER = Logger.getLogger(MainView.class.getName());
 
     /** The repository to access the data. This is automatically injected by Hilt in this class */
     @Inject
@@ -470,7 +474,7 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
             presenter.searchWithCoordinates(longitud, latitud, distancia);
         } catch (NumberFormatException e) {
             // Manejar casos donde no se pueda convertir
-            System.err.println("Error: Entrada no válida.");
+            LOGGER.log(Level.SEVERE, "Error: Entrada no válida.", e);
         }
     }
 

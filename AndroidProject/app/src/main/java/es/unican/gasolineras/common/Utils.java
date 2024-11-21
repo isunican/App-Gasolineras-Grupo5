@@ -40,7 +40,7 @@ public class Utils {
                 .registerTypeAdapter(double.class, deserializer)
                 .create()
                 .fromJson(reader, typeToken);
-        List<Gasolinera> gasolineras = response.getGasolineras();
-        return gasolineras;
+
+        return response.getGasolineras();
     }
 }

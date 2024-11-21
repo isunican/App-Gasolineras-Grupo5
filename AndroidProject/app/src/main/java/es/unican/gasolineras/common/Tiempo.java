@@ -15,9 +15,8 @@ public class Tiempo {
     public static int horaActual()   {
         // Obtener la hora actual
         Calendar calendar = Calendar.getInstance();
-        int horaActual = calendar.get(Calendar.HOUR_OF_DAY);
 
-        return horaActual;
+        return calendar.get(Calendar.HOUR_OF_DAY);
     }
 
     /**
@@ -27,9 +26,8 @@ public class Tiempo {
     public static int minutoActual()   {
         // Obtener el minuto actual
         Calendar calendar = Calendar.getInstance();
-        int minutoActual = calendar.get(Calendar.MINUTE);
 
-        return minutoActual;
+        return calendar.get(Calendar.MINUTE);
     }
 
     /**

@@ -1,7 +1,6 @@
 package es.unican.gasolineras.common;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.when;
 
@@ -19,7 +18,7 @@ import es.unican.gasolineras.model.Gasolinera;
 public class FiltrosTest {
 
     private Filtros filtros;
-    private List<Gasolinera> gasolineras;
+    private List<Gasolinera> listaGasolineras;
     private Gasolinera repsol;
     private Gasolinera carrefour;
     private Gasolinera ballenoil;
@@ -28,7 +27,7 @@ public class FiltrosTest {
     private Gasolinera avia;
     private Gasolinera cepsa;
 
-    private List<Gasolinera> gasolineras2;
+    private List<Gasolinera> listaGasolineras2;
     private Gasolinera repsol1;
     private Gasolinera repsol2;
     private Gasolinera gasofa;
@@ -74,7 +73,7 @@ public class FiltrosTest {
         when(cepsa.getProvincia()).thenReturn("");
         when(cepsa.getMunicipio()).thenReturn("Ferrol");
 
-        gasolineras = new ArrayList<>(Arrays.asList(repsol, carrefour, ballenoil, shell, petronor, avia, cepsa));
+        listaGasolineras = new ArrayList<>(Arrays.asList(repsol, carrefour, ballenoil, shell, petronor, avia, cepsa));
 
         // Mock de las gasolineras filtrarPorCompanhia
         //Mock de los datos
@@ -85,64 +84,64 @@ public class FiltrosTest {
         when(gasofa.getRotulo()).thenReturn("Otros");
         when(sinRotulo.getRotulo()).thenReturn(null);
 
-        gasolineras2 = new ArrayList<>(Arrays.asList(repsol1, repsol2, cepsa, carrefour, gasofa, sinRotulo));
+        listaGasolineras2 = new ArrayList<>(Arrays.asList(repsol1, repsol2, cepsa, carrefour, gasofa, sinRotulo));
     }
 
     //Test filtrarPorProvinciaYMunicipio
     // Caso A: Provincia y municipio válidos
     @Test
     public void testUD1A() {
-        List<Gasolinera> resultado = filtros.filtrarPorProvinciaYMunicipio(gasolineras, "Cantabria", "Santander");
+        List<Gasolinera> resultado = filtros.filtrarPorProvinciaYMunicipio(listaGasolineras, "Cantabria", "Santander");
         assertEquals(Arrays.asList(repsol, carrefour), resultado);
     }
 
     // Caso B: Provincia válida y municipio vacío
     @Test
     public void testUD1B() {
-        List<Gasolinera> resultado = filtros.filtrarPorProvinciaYMunicipio(gasolineras, "Cantabria", null);
+        List<Gasolinera> resultado = filtros.filtrarPorProvinciaYMunicipio(listaGasolineras, "Cantabria", null);
         assertEquals(Arrays.asList(repsol, carrefour, ballenoil, shell), resultado);
     }
 
     // Caso C: Provincia vacía y municipio válido
     @Test
     public void testUD1C() {
-        List<Gasolinera> resultado = filtros.filtrarPorProvinciaYMunicipio(gasolineras, null, "Santander");
+        List<Gasolinera> resultado = filtros.filtrarPorProvinciaYMunicipio(listaGasolineras, null, "Santander");
         assertEquals(Arrays.asList(repsol, carrefour), resultado);
     }
 
     // Caso D: Provincia válida y municipio vacío sin resultados
     @Test
     public void testUD1D() {
-        List<Gasolinera> resultado = filtros.filtrarPorProvinciaYMunicipio(gasolineras, "Madrid", null);
+        List<Gasolinera> resultado = filtros.filtrarPorProvinciaYMunicipio(listaGasolineras, "Madrid", null);
         assertTrue(resultado.isEmpty());
     }
 
     // Caso E: Provincia vacía y municipio válido sin resultados
     @Test
     public void testUD1E() {
-        List<Gasolinera> resultado = filtros.filtrarPorProvinciaYMunicipio(gasolineras, null, "Tineo");
+        List<Gasolinera> resultado = filtros.filtrarPorProvinciaYMunicipio(listaGasolineras, null, "Tineo");
         assertTrue(resultado.isEmpty());
     }
 
     // Caso F: Municipio no perteneciente a la provincia
     @Test
     public void testUD1F() {
-        List<Gasolinera> resultado = filtros.filtrarPorProvinciaYMunicipio(gasolineras, "Asturias", "Santander");
+        List<Gasolinera> resultado = filtros.filtrarPorProvinciaYMunicipio(listaGasolineras, "Asturias", "Santander");
         assertTrue(resultado.isEmpty());
     }
 
     // Caso G: Provincia y municipio válidos sin resultados
     @Test
     public void testUD1G() {
-        List<Gasolinera> resultado = filtros.filtrarPorProvinciaYMunicipio(gasolineras, "Asturias", "Tineo");
+        List<Gasolinera> resultado = filtros.filtrarPorProvinciaYMunicipio(listaGasolineras, "Asturias", "Tineo");
         assertTrue(resultado.isEmpty());
     }
 
     // Caso H: Provincia y municipio vacíos
     @Test
     public void testUD1H() {
-        List<Gasolinera> resultado = filtros.filtrarPorProvinciaYMunicipio(gasolineras, null, null);
-        assertEquals(gasolineras, resultado);
+        List<Gasolinera> resultado = filtros.filtrarPorProvinciaYMunicipio(listaGasolineras, null, null);
+        assertEquals(listaGasolineras, resultado);
     }
 
     // Caso I: Lista de gasolineras vacía
@@ -158,7 +157,7 @@ public class FiltrosTest {
     @Test
     public void testUD2A() {
 
-        List<Gasolinera> resultado = filtros.filtrarPorCompanhia(gasolineras2, "REPSOL");
+        List<Gasolinera> resultado = filtros.filtrarPorCompanhia(listaGasolineras2, "REPSOL");
         assertEquals(Arrays.asList(repsol1, repsol2), resultado);
 
     }
@@ -167,7 +166,7 @@ public class FiltrosTest {
     @Test
     public void testUD2B() {
 
-        List<Gasolinera> resultado = filtros.filtrarPorCompanhia(gasolineras2, "");
+        List<Gasolinera> resultado = filtros.filtrarPorCompanhia(listaGasolineras2, "");
         assertEquals(Arrays.asList(repsol1, repsol2, cepsa, carrefour, gasofa, sinRotulo), resultado);
 
     }
@@ -176,7 +175,7 @@ public class FiltrosTest {
     @Test
     public void testUD2C() {
 
-        List<Gasolinera> resultado = filtros.filtrarPorCompanhia(gasolineras2, "Otros");
+        List<Gasolinera> resultado = filtros.filtrarPorCompanhia(listaGasolineras2, "Otros");
         assertEquals(Arrays.asList(gasofa, sinRotulo), resultado);
 
     }
