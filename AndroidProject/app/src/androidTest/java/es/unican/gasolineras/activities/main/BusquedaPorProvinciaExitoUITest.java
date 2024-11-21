@@ -1,12 +1,11 @@
-package es.unican.gasolineras;
+
+package es.unican.gasolineras.activities.main;
 
 import static androidx.test.espresso.Espresso.onData;
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.action.ViewActions.scrollTo;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
-import static androidx.test.espresso.matcher.ViewMatchers.hasChildCount;
-import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.CoreMatchers.anything;
@@ -26,7 +25,6 @@ import androidx.test.espresso.matcher.RootMatchers;
 import androidx.test.ext.junit.rules.ActivityScenarioRule;
 import androidx.test.platform.app.InstrumentationRegistry;
 
-import org.junit.After;
 import org.junit.Rule;
 import org.junit.Test;
 
@@ -34,14 +32,13 @@ import dagger.hilt.android.testing.BindValue;
 import dagger.hilt.android.testing.HiltAndroidRule;
 import dagger.hilt.android.testing.HiltAndroidTest;
 import dagger.hilt.android.testing.UninstallModules;
-import es.unican.gasolineras.activities.main.MainView;
+import es.unican.gasolineras.R;
 import es.unican.gasolineras.injection.RepositoriesModule;
 import es.unican.gasolineras.repository.IGasolinerasRepository;
 
 @UninstallModules(RepositoriesModule.class)
 @HiltAndroidTest
-public class BusquedaConAusenciaDeDatosUITest {
-
+public class BusquedaPorProvinciaExitoUITest {
     @Rule(order = 0)  // the Hilt rule must execute first
     public HiltAndroidRule hiltRule = new HiltAndroidRule(this);
 
@@ -57,21 +54,27 @@ public class BusquedaConAusenciaDeDatosUITest {
 
     @Test
     public void test() {
-        // TEST_UI7
+        // TEST_UI2
         onView(withId(R.id.menuFilterButton)).perform(click());
 
         Espresso.onView(withId(R.id.spnProvincias)).perform(click());
 
-        Espresso.onData(allOf(is(instanceOf(String.class)), is("CORUÑA (A)")))
+        Espresso.onData(allOf(is(instanceOf(String.class)), is("CANTABRIA")))
                 .inRoot(RootMatchers.isPlatformPopup())
                 .perform(scrollTo(), click());
 
         onView(withText("Buscar")).perform(click());
 
-        onView(withId(R.id.lvStations)).check(matches(listSize(1)));
-        DataInteraction elementoLista = onData(anything()).inAdapterView(withId(R.id.lvStations)).atPosition(0);
-        elementoLista.onChildView(withId(R.id.tvName)).check(matches(withText("AVIA")));
+        onView(withId(R.id.lvStations)).check(matches(listSize(4)));
+        DataInteraction elementoLista1 = onData(anything()).inAdapterView(withId(R.id.lvStations)).atPosition(0);
+        elementoLista1.onChildView(withId(R.id.tvName)).check(matches(withText("REPSOL")));
+        DataInteraction elementoLista2 = onData(anything()).inAdapterView(withId(R.id.lvStations)).atPosition(1);
+        elementoLista2.onChildView(withId(R.id.tvName)).check(matches(withText("CARREFOUR")));
+        DataInteraction elementoLista3 = onData(anything()).inAdapterView(withId(R.id.lvStations)).atPosition(2);
+        elementoLista3.onChildView(withId(R.id.tvName)).check(matches(withText("BALLENOIL")));
+        DataInteraction elementoLista4 = onData(anything()).inAdapterView(withId(R.id.lvStations)).atPosition(3);
+        elementoLista4.onChildView(withId(R.id.tvName)).check(matches(withText("SHELL")));
 
-        //onView(withText("Cargadas 1 gasolineras")).inRoot(RootMatchers.withDecorView(not(decorView))).check(matches(isDisplayed()));
+        //onView(withText("Cargadas 4 gasolineras")).inRoot(RootMatchers.withDecorView(not(decorView))).check(matches(isDisplayed()));
     }
 }
