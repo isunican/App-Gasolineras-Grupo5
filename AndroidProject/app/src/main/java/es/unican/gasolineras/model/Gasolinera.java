@@ -10,12 +10,9 @@ import lombok.Setter;
 
 /**
  * A Gas Station.
- *
  * Properties are defined in the <a href="https://sedeaplicaciones.minetur.gob.es/ServiciosRESTCarburantes/PreciosCarburantes/help/operations/PreciosEESSTerrestres#response-json">API</a>
- *
  * The #SerializedName annotation is a GSON annotation that defines the name of the property
  * as defined in the json response.
- *
  * Getters are automatically generated at compile time by Lombok.
  */
 @Parcel
@@ -31,6 +28,8 @@ public class Gasolinera {
     @SerializedName("Municipio")                    protected String municipio;
     @SerializedName("Provincia")                    protected String provincia;
     @SerializedName("Horario")                      protected String horario;
+    @SerializedName("Latitud")                      protected String latitud;
+    @SerializedName("Longitud (WGS84)")             protected String longitud;
 
     @SerializedName("Precio Gasoleo A")                     protected double gasoleoA;
     @SerializedName("Precio Gasolina 95 E5")                protected double gasolina95E5;

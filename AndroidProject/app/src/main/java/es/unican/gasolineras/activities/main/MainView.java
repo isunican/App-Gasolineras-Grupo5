@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -12,6 +14,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
@@ -21,6 +24,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import com.google.android.material.slider.Slider;
 import org.parceler.Parcels;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -44,13 +48,18 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
 
     /** The presenter of this view */
     private MainPresenter presenter;
+    // Lista combustibles seleccionada (filtros)
     private List<String> combustiblesSeleccionados;
+    // Combustible seleccionado (ordenar)
     private String combustibleOrdenar;
     private String ordenSeleccionada;
     private Spinner spnMunicipios;
     private static final String CANCELAR = "Cancelar";
     private static final String FILTERSPREFERENCE = "FiltersPreference";
     private static final String MUNICIPIO = "municipio";
+    private Double latitudGuardada = null;
+    private Double longitudGuardada = null;
+
     /** The repository to access the data. This is automatically injected by Hilt in this class */
     @Inject
     IGasolinerasRepository repository;
@@ -107,6 +116,10 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
         }
         if (itemId == R.id.menuOrdenButton) {
             presenter.onOrdenarButtonClicked();
+            return true;
+        }
+        if (itemId == R.id.menuCoordenadasButton) {
+            presenter.onCoordinatesButtonClicked();
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -277,6 +290,54 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
     }
 
     /**
+     * @see IMainContract.View#showCoordinatesPopUp()
+     */
+    @Override
+    public void showCoordinatesPopUp() {
+        LayoutInflater inflater = LayoutInflater.from(this);
+        View view = inflater.inflate(R.layout.activity_distancia_coordenadas_popup, null);
+
+        EditText etLongitud = view.findViewById(R.id.etLongitud);
+        EditText etLatitud = view.findViewById(R.id.etLatitud);
+        compruebaFormato(etLongitud);
+        compruebaFormato(etLatitud);
+        Slider slider = view.findViewById(R.id.main_slider);
+        TextView tvDistancia = view.findViewById(R.id.tvDistancia);
+
+        if (latitudGuardada != null) {
+            etLatitud.setText(latitudGuardada.toString());
+        }
+        if (longitudGuardada != null) {
+            etLongitud.setText(longitudGuardada.toString());
+        }
+
+        // Configurar el listener del Slider
+        slider.addOnChangeListener((slider1, value, fromUser) -> {
+            // Actualiza el TextView con el valor actual del slider
+            tvDistancia.setText("Distancia: " + (int) value);
+        });
+
+        new AlertDialog.Builder(this)
+                .setTitle("Buscar Por Coordenadas")
+                .setView(view)
+                .setPositiveButton("Buscar", (dialog, which) -> {
+                    try {
+                        latitudGuardada = Double.valueOf(etLatitud.getText().toString());
+                        longitudGuardada = Double.valueOf(etLongitud.getText().toString());
+                    } catch (NumberFormatException e) {
+                        // Si no son valores válidos, no los actualizamos
+                        latitudGuardada = null;
+                        longitudGuardada = null;
+                    }
+                    applyCoordinates(etLongitud, etLatitud,tvDistancia);
+                    dialog.dismiss();
+                })
+                .setNegativeButton("Cancelar", (dialog, which) -> dialog.dismiss())
+                .create()
+                .show();
+    }
+
+    /**
      * @see IMainContract.View#updateMunicipiosSpinner(List municipios)
      */
     @Override
@@ -298,6 +359,118 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
         int municipioPosition = getPositionInSpinner(spnMunicipios, municipioGuardado);
         if (municipioPosition >= 0) {
             spnMunicipios.setSelection(municipioPosition);
+        }
+    }
+
+    /**
+     * Configura un `TextWatcher` para un `EditText` que valida y formatea la entrada de texto
+     * conforme el usuario escribe, asegurando que la entrada sea un numero con hasta dos digitos enteros
+     * y hasta cuatro digitos decimales. Ademas, permite un signo negativo al principio de la entrada.
+     * La validacion y el formateo se realizan de la siguiente manera:
+     *      El número puede tener un máximo de dos dígitos enteros.
+     *      La parte decimal (si existe) se limita a cuatro dígitos.
+     *      El numero puede comenzar con un signo negativo, que se mantiene durante el formateo.
+     *      El cursor se coloca automaticamente al final del texto despues de cada actualizacion.
+     *
+     * @param et El `EditText` al que se le aplica el `TextWatcher` para validar y formatear la entrada.
+     */
+    private void compruebaFormato(EditText et) {
+        et.addTextChangedListener(new TextWatcher() {
+            private boolean isUpdating = false; // Evita recursividad
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                // No es necesario guardar la posición del cursor aquí
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                // No acción necesaria durante el cambio
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (isUpdating) return; // Evita bucles infinitos
+                isUpdating = true;
+
+                String input = s.toString();
+
+                // Si el input está vacío, salir
+                if (input.isEmpty()) {
+                    isUpdating = false;
+                    return;
+                }
+
+                // Verifica si comienza con un signo negativo
+                boolean isNegative = input.startsWith("-");
+                if (isNegative) input = input.substring(1); // Remueve el signo para validar el resto
+
+                // Divide la entrada en partes (entero y decimal)
+                String[] parts = input.split("\\.", -1); // -1 para incluir un punto al final si lo hay
+                String integerPart = parts[0];
+                String decimalPart = parts.length > 1 ? parts[1] : "";
+
+                // Limita la parte entera a 2 dígitos
+                if (integerPart.length() > 2) {
+                    integerPart = integerPart.substring(0, 2);
+                }
+
+                // Limita la parte decimal a 4 dígitos
+                if (decimalPart.length() > 4) {
+                    decimalPart = decimalPart.substring(0, 4);
+                }
+
+                // Reconstruye el número formateado
+                String formatted = integerPart;
+                if (parts.length > 1) { // Si había un punto, preservarlo
+                    formatted += "." + decimalPart;
+                }
+                if (isNegative) {
+                    formatted = "-" + formatted;
+                }
+
+                // Actualiza el texto en el EditText
+                et.removeTextChangedListener(this); // Desactiva temporalmente el listener
+                et.setText(formatted);
+                et.setSelection(formatted.length()); // Coloca el cursor al final del texto
+                et.addTextChangedListener(this); // Reactiva el listener
+
+                isUpdating = false; // Restablece el estado
+            }
+        });
+    }
+
+    /**
+     * Obtiene las coordenadas de longitud y latitud de los campos EditText proporcionados,
+     * los convierte a valores numericos (de tipo double), y obtiene la distancia desde el campo
+     * TextView. Luego se llama al presenter para realizar la busqueda.
+     * Los valores de longitud y latitud son extraídos de los EditText, y si contienen comas, estas son
+     * reemplazadas por puntos para asegurar que el formato sea válido para la conversión a double.
+     *
+     * @param etLongitud El EditText que contiene la longitud.
+     * @param etLatitud El EditText que contiene la latitud.
+     * @param tvDistancia El TextView que contiene el valor de distancia.
+     */
+    private void applyCoordinates(EditText etLongitud, EditText etLatitud, TextView tvDistancia){
+        try {
+            // Obtener los valores de los EditText como String
+            String longitudStr = etLongitud.getText().toString();
+            String latitudStr = etLatitud.getText().toString();
+
+            longitudStr = longitudStr.replace(",",".");
+            latitudStr = latitudStr.replace(",",".");
+            // Convertirlos a double
+            double longitud = Double.parseDouble(longitudStr);
+            double latitud = Double.parseDouble(latitudStr);
+
+            // Obtener el valor del TextView y convertirlo (si se usa como número)
+            String distanciaStr = tvDistancia.getText().toString().replaceAll("[^\\d]", ""); // Extraer solo números
+            int distancia = distanciaStr.isEmpty() ? 0 : Integer.parseInt(distanciaStr);
+
+            presenter.searchWithCoordinates(longitud, latitud, distancia);
+        } catch (NumberFormatException e) {
+            // Manejar casos donde no se pueda convertir
+            System.err.println("Error: Entrada no válida.");
         }
     }
 
@@ -325,7 +498,7 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
     /**
      * Configura un Spinner con un ArrayAdapter basado en un recurso de array de strings.
      *
-     * @param spinner El spinner al que se asignará el adapter.
+     * @param spinner El spinner al que se asignara el adapter.
      * @param arrayResourceId El identificador del recurso del array.
      */
     private void asignaAdapterASpinner (Spinner spinner, int arrayResourceId) {
@@ -358,6 +531,7 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
 
         return filtros;
     }
+
     /**
      * Aplica los filtros seleccionados para realizar la busqueda de gasolineras.
      *
@@ -519,5 +693,3 @@ public class MainView extends AppCompatActivity implements IMainContract.View {
         editor.apply();
     }
 }
-
-

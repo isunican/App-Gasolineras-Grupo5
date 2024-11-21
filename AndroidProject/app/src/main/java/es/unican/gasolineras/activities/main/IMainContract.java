@@ -79,6 +79,23 @@ public interface IMainContract {
          * @param orden the order (ascending or descending)
          */
         public void ordenarGasolinerasPorPrecio(String combustible, String orden);
+
+        /**
+         * Handles the event when the coordinates button is clicked, displaying the coordinates options popup.
+         */
+        public void onCoordinatesButtonClicked();
+
+        /**
+         * Filtra una lista de gasolineras segun su proximidad a un punto de referencia
+         * especificado por coordenadas y una distancia maxima. Las gasolineras que cumplan
+         * con el criterio se almacenan en una nueva lista y se actualiza la vista con
+         * los resultados.
+         *
+         * @param longitud Longitud del punto de referencia en grados.
+         * @param latitud  Latitud del punto de referencia en grados.
+         * @param distancia Distancia máxima permitida en kilómetros para incluir una gasolinera.
+         */
+        public void searchWithCoordinates(Double longitud, Double latitud, int distancia);
     }
 
     /**
@@ -155,12 +172,18 @@ public interface IMainContract {
         public void showOrdenarPopUp();
 
         /**
+         * Muestra un cuadro de dialogo emergente que permite al usuario ingresar las coordenadas
+         * de longitud y latitud, asi como seleccionar una distancia mediante un slider.
+         * El dialog tambien muestra las coordenadas guardadas previamente si estan disponibles.
+         */
+         public void showCoordinatesPopUp();
+
+        /**
          * Actualiza el spinner de municipios con una lista proporcionada.
          * Anhade una opcion por defecto ("-") y establece el municipio previamente guardado si existe.
          *
          * @param municipios La lista de municipios para poblar el spinner.
          */
         public void updateMunicipiosSpinner(List<Municipio> municipios);
-
     }
 }

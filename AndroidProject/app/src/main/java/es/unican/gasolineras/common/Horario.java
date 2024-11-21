@@ -273,7 +273,6 @@ public class Horario {
                     dias[i] = 1;
                 }
                 break;
-
             // Si el caso es un valor no valido, no pasa nada
             default:
                 break;
