@@ -36,7 +36,6 @@ public class FiltrosTest {
     private Gasolinera sinRotulo;
 
 
-
     @Before
     public void setUp() {
         filtros = new Filtros();
@@ -88,8 +87,6 @@ public class FiltrosTest {
         when(sinRotulo.getRotulo()).thenReturn(null);
 
         gasolineras2 = new ArrayList<>(Arrays.asList(repsol1, repsol2, cepsa, carrefour, gasofa, sinRotulo));
-
-
     }
 
     //Test filtrarPorProvinciaYMunicipio
@@ -160,38 +157,113 @@ public class FiltrosTest {
     //Test filtrarPorCompanhia
     //Caso A: Compañia conocida
     @Test
-    public void testUD2A(){
+    public void testUD2A() {
 
-        List<Gasolinera> resultado = filtros.filtrarPorCompanhia(gasolineras2,"REPSOL");
+        List<Gasolinera> resultado = filtros.filtrarPorCompanhia(gasolineras2, "REPSOL");
         assertEquals(Arrays.asList(repsol1, repsol2), resultado);
 
     }
 
     //CASO B: Compañía vacia
     @Test
-    public void testUD2B(){
+    public void testUD2B() {
 
-        List<Gasolinera> resultado = filtros.filtrarPorCompanhia(gasolineras2,"");
+        List<Gasolinera> resultado = filtros.filtrarPorCompanhia(gasolineras2, "");
         assertEquals(Arrays.asList(repsol1, repsol2, cepsa, carrefour, gasofa, sinRotulo), resultado);
 
     }
 
     //CASO C: COMPAÑÍA "OTROS"
     @Test
-    public void testUD2C(){
+    public void testUD2C() {
 
-        List<Gasolinera> resultado = filtros.filtrarPorCompanhia(gasolineras2,"Otros");
+        List<Gasolinera> resultado = filtros.filtrarPorCompanhia(gasolineras2, "Otros");
         assertEquals(Arrays.asList(gasofa, sinRotulo), resultado);
 
     }
 
-    //CASO C: LISTA GASOLINERAS VACIA
+    //CASO D: LISTA GASOLINERAS VACIA
     @Test
-    public void testUD2D(){
-        List<Gasolinera> resultado = filtros.filtrarPorCompanhia(Collections.emptyList(),"-");
-        assertEquals(Collections.emptyList(),resultado);
+    public void testUD2D() {
+        List<Gasolinera> resultado = filtros.filtrarPorCompanhia(Collections.emptyList(), "-");
+        assertEquals(Collections.emptyList(), resultado);
 
     }
 
+    // test filtrarPorCombustibles
+    // A. Prueba con solo un tipo de combustible valido
+    @Test
+    public void testFiltrarPorUnTipoDeCombustible() {
+        List<Gasolinera> gasolineras = List.of(
+                crearGasolinera(1.35, 0, 0, 0, 0), // Gasolina 95 E5
+                crearGasolinera(0, 1.45, 0, 0, 0)  // Gasolina 95 E5 Premium
+        );
+        List<String> combustibles = List.of("Gasolina 95 E5");
 
+        List<Gasolinera> resultado = filtros.filtrarPorCombustibles(gasolineras, combustibles);
+
+        assertEquals(1, resultado.size());
+        assertEquals(1.35, resultado.get(0).getGasolina95E5(), 0.001); // Delta = 0.001
+    }
+
+    // B. Prueba con solo mas de un tipo de combustible valido
+    @Test
+    public void testFiltrarPorMultiplesTiposDeCombustible() {
+        List<Gasolinera> gasolineras = List.of(
+                crearGasolinera(1.35, 0, 0, 0, 0), // Gasolina 95 E5
+                crearGasolinera(0, 0, 1.75, 0, 0), // Gasolina 95 E10
+                crearGasolinera(0, 0, 0, 1.65, 0)   // Gasolina 95 E5 Premium
+        );
+        List<String> combustibles = List.of("Gasolina 95 E5", "Gasolina 95 E10");
+
+        List<Gasolinera> resultado = filtros.filtrarPorCombustibles(gasolineras, combustibles);
+
+        assertEquals(2, resultado.size());
+        assertEquals(1.35, resultado.get(0).getGasolina95E5(), 0.001); // Gasolina 95 E5
+        assertEquals(1.75, resultado.get(1).getGasolina95E10(), 0.001); // Gasolina 95 E10
+    }
+
+    // C. Prueba con solo tipo de combustible vacio
+    @Test
+    public void testFiltrarPorCombustiblesVacio() {
+        List<Gasolinera> gasolineras = List.of(
+                crearGasolinera(1.35, 0, 0, 0, 0), // Gasolina 95 E5
+                crearGasolinera(0, 0, 1.75, 0, 0), // Gasolina 95 E10
+                crearGasolinera(0, 0, 0, 1.65, 0)   // Gasolina 95 E5 Premium
+        );
+        List<String> combustibles = List.of();  // Lista vacía de combustibles
+
+        List<Gasolinera> resultado = filtros.filtrarPorCombustibles(gasolineras, combustibles);
+
+        assertEquals(3, resultado.size());  // Todas las gasolineras deben ser incluidas
+    }
+
+    // D. Prueba con solo una lista de salida vacia
+    @Test
+    public void testFiltrarPorCombustiblesNoEncontrados() {
+        List<Gasolinera> gasolineras = List.of(
+                crearGasolinera(0, 0, 0, 0, 0),  // Sin combustibles válidos
+                crearGasolinera(0, 0, 0, 0, 0),  // Sin combustibles válidos
+                crearGasolinera(0, 0, 0, 0, 0)   // Sin combustibles válidos
+        );
+        List<String> combustibles = List.of("Gasolina 98 E5");
+
+        List<Gasolinera> resultado = filtros.filtrarPorCombustibles(gasolineras, combustibles);
+
+        assertEquals(0, resultado.size());  // Ninguna gasolinera tiene Gasolina 98 E5
+    }
+
+
+    // Método auxiliar para crear gasolineras
+    private Gasolinera crearGasolinera(double gasolina95E5, double gasolina95E5PREM, double gasolina95E10,
+                                       double gasolina98E5, double gasolina98E10) {
+        Gasolinera gasolinera = new Gasolinera();
+        gasolinera.setGasolina95E5(gasolina95E5);
+        gasolinera.setGasolina95E5PREM(gasolina95E5PREM);
+        gasolinera.setGasolina95E10(gasolina95E10);
+        gasolinera.setGasolina98E5(gasolina98E5);
+        gasolinera.setGasolina98E10(gasolina98E10);
+        return gasolinera;
+    }
 }
+

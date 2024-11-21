@@ -30,11 +30,16 @@ public class OnSearchStationsWithFiltersTest {
     private IMainContract.View mockView;
     @Mock
     private IMainContract.View mockView2;
+    @Mock
+    private IMainContract.View mockView3;
 
     @Mock
     private IGasolinerasRepository mockRepository;
     @Mock
     private IGasolinerasRepository mockRepository2;
+    @Mock
+    private IGasolinerasRepository mockRepository3;
+
 
 
 
@@ -43,11 +48,16 @@ public class OnSearchStationsWithFiltersTest {
     @Mock
     private IFiltros mockFilters2;
     @Mock
+    private IFiltros mockFilters3;
+    @Mock
     private MainPresenter sut;
     @Mock
     private MainPresenter sut2;
+    @Mock
+    private MainPresenter sut3;
     private List<Gasolinera> gasolineras;
     private List<Gasolinera> gasolineras2;
+    private List<Gasolinera> gasolineras3;
 
 
 
@@ -85,6 +95,20 @@ public class OnSearchStationsWithFiltersTest {
         sut2 = new MainPresenter();
         sut2.init(mockView2);
         sut2.setFiltros(mockFilters2);
+
+        gasolineras3 = Generador.generarGasolinerasCompanhia();
+
+        doAnswer(invocation -> {
+            ICallBack callBack = invocation.getArgument(0);
+            callBack.onSuccess(gasolineras3);
+            return null;
+        }).when(mockRepository3).requestGasolineras(any(ICallBack.class));
+
+        when(mockView3.getGasolinerasRepository()).thenReturn(mockRepository3);
+
+        sut3 = new MainPresenter();
+        sut3.init(mockView3);
+        sut3.setFiltros(mockFilters3);
 
     }
 
@@ -158,5 +182,74 @@ public class OnSearchStationsWithFiltersTest {
         verify(mockView2, times(2)).showLoadCorrect(anyInt());  // Verificar que se muestra el número correcto de gasolineras
 
     }
+
+    // Test onSearchStationsWithFilters con combustibles
+    // Test para el caso UD.1A
+    @Test
+    public void testUD1A() throws Exception {
+        sut3.onSearchStationsWithFilters("Cantabria", "Santander", "Repsol", List.of("Gasolina 95 E5", "Gasolina 95 E10", "Gasolina 95 E5 Premium"), true);
+        verify(mockFilters3).filtrarPorProvinciaYMunicipio(anyList(), eq("Cantabria"), eq("Santander"));
+        verify(mockFilters3).filtrarPorCompanhia(anyList(), eq("Repsol"));
+        verify(mockFilters3).filtrarPorCombustibles(anyList(), eq(List.of("Gasolina 95 E5", "Gasolina 95 E10", "Gasolina 95 E5 Premium")));
+
+        // Si se pidió filtrar por estado, se verifica que el filtro fue aplicado
+        verify(mockFilters3).filtrarPorEstado(anyList());
+
+        // Se verifica que las gasolineras resultantes se muestran correctamente en la vista
+        verify(mockView3, times(2)).showStations(anyList());
+        verify(mockView3, times(2)).showLoadCorrect(anyInt());
+    }
+
+    // Test para el caso UD.1B
+    @Test
+    public void testUD1B() throws Exception {
+        // Ejecutar el método bajo prueba con los parámetros de entrada especificados
+        sut3.onSearchStationsWithFilters("Cantabria", "Santander", "", null, false);
+
+        // Verificar que filtrarPorProvinciaYMunicipio se llama con finalProvincia=Cantabria y finalMunicipio=Santander
+        verify(mockFilters3).filtrarPorProvinciaYMunicipio(anyList(), eq("Cantabria"), eq("Santander"));
+
+        // Verificar que las gasolineras resultantes se muestran correctamente en la vista
+        verify(mockView3, times(2)).showStations(anyList());
+        verify(mockView3, times(2)).showLoadCorrect(anyInt());
+    }
+
+    // Test para el caso UD.1C
+    @Test
+    public void testUD1C() throws Exception {
+        // Configuración de los parámetros del filtro
+        sut3.onSearchStationsWithFilters("Madrid", "", "Shell", List.of("Gasolina 98 E5"), false);
+
+        // Verificar que los métodos de filtro son llamados con los valores esperados
+        verify(mockFilters3).filtrarPorProvinciaYMunicipio(anyList(), eq("Madrid"), eq(null)); // Municipio vacío
+        verify(mockFilters3).filtrarPorCompanhia(anyList(), eq("Shell"));
+        verify(mockFilters3).filtrarPorCombustibles(anyList(), eq(List.of("Gasolina 98 E5")));
+
+        // Verificar que las gasolineras resultantes se muestran correctamente en la vista
+        verify(mockView3, times(2)).showStations(anyList());
+        verify(mockView3, times(2)).showLoadCorrect(anyInt());
+    }
+
+
+    // Test para el caso UD.1D
+    @Test
+    public void testUD1D() throws Exception {
+        // Configuración de los parámetros del filtro
+        sut3.onSearchStationsWithFilters("Cantabria", "Santander", "Campsa", List.of("Gasolin 95 E5"), true);
+
+        // Verificar que los métodos de filtro son llamados con los valores esperados
+        verify(mockFilters3).filtrarPorProvinciaYMunicipio(anyList(), eq("Cantabria"), eq("Santander"));
+        verify(mockFilters3).filtrarPorCompanhia(anyList(), eq("Campsa"));
+        verify(mockFilters3).filtrarPorCombustibles(anyList(), eq(List.of("Gasolin 95 E5")));
+
+        // Si se pidió filtrar por estado, se verifica que el filtro fue aplicado
+        verify(mockFilters3).filtrarPorEstado(anyList());
+
+        // Verificar que las gasolineras resultantes se muestran correctamente en la vista
+        verify(mockView3, times(2)).showStations(anyList());
+        verify(mockView3, times(2)).showLoadCorrect(anyInt());
+    }
+
+
 
 }
