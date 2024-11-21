@@ -4,7 +4,6 @@ import static androidx.test.espresso.Espresso.onData;
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.action.ViewActions.closeSoftKeyboard;
-import static androidx.test.espresso.action.ViewActions.scrollTo;
 import static androidx.test.espresso.action.ViewActions.swipeRight;
 import static androidx.test.espresso.action.ViewActions.typeText;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
@@ -12,8 +11,7 @@ import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.CoreMatchers.anything;
-import static org.hamcrest.Matchers.allOf;
-import static org.hamcrest.Matchers.is;
+
 import static es.unican.gasolineras.utils.Matchers.listSize;
 import static es.unican.gasolineras.utils.MockRepositories.getTestRepository;
 
@@ -26,7 +24,6 @@ import androidx.test.ext.junit.rules.ActivityScenarioRule;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.platform.app.InstrumentationRegistry;
 
-import org.junit.After;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -58,11 +55,6 @@ public class BuscarPorCoordenadasExitoUITest {
     final IGasolinerasRepository repository = getTestRepository(context, R.raw.gasolineras_test);
 
     View decorView;
-
-    @After
-    public void tearDown() throws InterruptedException {
-        Thread.sleep(2000);
-    }
 
     @Test
     public void test_AT1A() {

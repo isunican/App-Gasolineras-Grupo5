@@ -25,7 +25,7 @@ public enum IDProvincias {
     CEUTA("51", "Ceuta"),
     CIUDAD_REAL("13", "Ciudad Real"),
     CORDOBA("14", "Córdoba"),
-    CORUÑA("15", "Coruña (A)"),
+    CORUNA("15", "Coruña (A)"),
     CUENCA("16", "Cuenca"),
     GIPUZKOA("20", "Gipuzkoa"),
     GIRONA("17", "Girona"),

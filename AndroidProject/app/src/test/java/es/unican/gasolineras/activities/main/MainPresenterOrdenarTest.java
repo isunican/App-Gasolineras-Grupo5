@@ -4,30 +4,42 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.when;
 
+import android.content.Context;
+
+import androidx.test.core.app.ApplicationProvider;
+
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.mockito.Mockito;
+import org.robolectric.RobolectricTestRunner;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import es.unican.gasolineras.R;
 import es.unican.gasolineras.model.Gasolinera;
 import es.unican.gasolineras.repository.IGasolinerasRepository;
+import es.unican.gasolineras.utils.MockRepositories;
 
+@RunWith(RobolectricTestRunner.class)
 public class MainPresenterOrdenarTest {
 
     private MainPresenter presenter = new MainPresenter();
     private IMainContract.View mockView = Mockito.mock(IMainContract.View.class);
+    private IMainContract.View mockViewFail = Mockito.mock(IMainContract.View.class);
     private IGasolinerasRepository repository = Mockito.mock(IGasolinerasRepository.class);
     private Gasolinera repsol, carrefour, ballenoil, shell, petronor, avia, cepsa;
     private List<Gasolinera> gasolineras;
     // mockea la main view
     private IMainContract.View view = Mockito.mock(IMainContract.View.class);
 
+    private Context context;
+
     @Before
     public void setUp() {
-
+        presenter.setView(view);
         repsol = Mockito.mock(Gasolinera.class);
         carrefour = Mockito.mock(Gasolinera.class);
         ballenoil = Mockito.mock(Gasolinera.class);
@@ -35,6 +47,8 @@ public class MainPresenterOrdenarTest {
         petronor = Mockito.mock(Gasolinera.class);
         avia = Mockito.mock(Gasolinera.class);
         cepsa = Mockito.mock(Gasolinera.class);
+
+        context = ApplicationProvider.getApplicationContext();
 
         gasolineras = new ArrayList<>(Arrays.asList(repsol, carrefour, ballenoil, shell, petronor, avia, cepsa));
 
@@ -74,7 +88,7 @@ public class MainPresenterOrdenarTest {
         when(cepsa.getGasolina98E5()).thenReturn(2.1);
 
         presenter.setGasolineras(gasolineras);
-        presenter.setView(view);
+
     }
 
     @Test
@@ -143,8 +157,14 @@ public class MainPresenterOrdenarTest {
 
     @Test
     public void testInit() {
+        IGasolinerasRepository repository = MockRepositories.getTestRepository(context, R.raw.gasolineras_test);
+        IGasolinerasRepository repositoryFail = MockRepositories.getTestRepositoryFail(context, R.raw.gasolineras_test);
         when(mockView.getGasolinerasRepository()).thenReturn(repository);
+        when(mockViewFail.getGasolinerasRepository()).thenReturn(repositoryFail);
         presenter.init(mockView);
         assertEquals(presenter.getView(), mockView);
+        presenter.init(mockViewFail);
+        when(mockViewFail.getGasolinerasRepository()).thenReturn(repositoryFail);
+        assertEquals(presenter.getView(), mockViewFail);
     }
 }

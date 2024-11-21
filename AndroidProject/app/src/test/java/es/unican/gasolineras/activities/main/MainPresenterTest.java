@@ -137,7 +137,6 @@ public class MainPresenterTest {
         verify(mockFilters2).filtrarPorCompanhia(anyList(), eq("Otros"));
         verify(mockView2, times(2)).showStations(anyList());
         verify(mockView2, times(2)).showLoadCorrect(anyInt());  // Verificar que se muestra el número correcto de gasolineras
-
     }
 
 }

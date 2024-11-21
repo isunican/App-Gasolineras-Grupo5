@@ -62,7 +62,7 @@ public class MainPresenterCombustiblesTest {
     // Test onSearchStationsWithFilters con combustibles
     // Test para el caso UD.1A
     @Test
-    public void testUD1A() throws Exception {
+    public void testUD1A() {
         presenter.onSearchStationsWithFilters("Cantabria", "Santander", "Repsol", List.of("Gasolina 95 E5", "Gasolina 95 E10", "Gasolina 95 E5 Premium"), true);
         verify(mockFilters).filtrarPorProvinciaYMunicipio(anyList(), eq("Cantabria"), eq("Santander"));
         verify(mockFilters).filtrarPorCompanhia(anyList(), eq("Repsol"));
@@ -78,7 +78,7 @@ public class MainPresenterCombustiblesTest {
 
     // Test para el caso UD.1B
     @Test
-    public void testUD1B() throws Exception {
+    public void testUD1B() {
         // Ejecutar el método bajo prueba con los parámetros de entrada especificados
         presenter.onSearchStationsWithFilters("Cantabria", "Santander", "", null, false);
 
@@ -92,7 +92,7 @@ public class MainPresenterCombustiblesTest {
 
     // Test para el caso UD.1C
     @Test
-    public void testUD1C() throws Exception {
+    public void testUD1C() {
         // Configuración de los parámetros del filtro
         presenter.onSearchStationsWithFilters("Madrid", "", "Shell", List.of("Gasolina 98 E5"), false);
 
@@ -109,7 +109,7 @@ public class MainPresenterCombustiblesTest {
 
     // Test para el caso UD.1D
     @Test
-    public void testUD1D() throws Exception {
+    public void testUD1D() {
         // Configuración de los parámetros del filtro
         presenter.onSearchStationsWithFilters("Cantabria", "Santander", "Campsa", List.of("Gasolin 95 E5"), true);
 

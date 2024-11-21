@@ -11,10 +11,10 @@ import static org.hamcrest.CoreMatchers.anything;
 import static org.hamcrest.Matchers.allOf;
 import static org.hamcrest.Matchers.instanceOf;
 import static org.hamcrest.Matchers.is;
+import static es.unican.gasolineras.utils.Matchers.listSize;
 import static es.unican.gasolineras.utils.MockRepositories.getTestRepository;
 
 import android.content.Context;
-import android.view.View;
 
 import androidx.test.espresso.DataInteraction;
 import androidx.test.espresso.Espresso;
@@ -22,6 +22,7 @@ import androidx.test.ext.junit.rules.ActivityScenarioRule;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.platform.app.InstrumentationRegistry;
 
+import org.junit.After;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -52,22 +53,37 @@ public class OrdenarPorPrecioAscUITest {
     @BindValue
     final IGasolinerasRepository repository = getTestRepository(context, R.raw.gasolineras_test);
 
-    View decorView;
+    @After
+    public void tearDown() throws InterruptedException {
+        Thread.sleep(2000);
+    }
 
     @Test
     public void ordenarPorPrecioAsc() {
         Espresso.onView(withId(R.id.menuOrdenButton)).perform(click());
         Espresso.onView(withId(R.id.spnOrden)).perform(click());
-        onView(withText(allOf(is("Ascendente"), instanceOf(String.class))))
+        onView(withText(allOf(is("ASCENDENTE"), instanceOf(String.class))))
                 .inRoot(isPlatformPopup())
                 .perform(click());
         Espresso.onView(withId(R.id.spnCombustible)).perform(click());
-        onView(withText(allOf(is("Biodiesel"), instanceOf(String.class))))
+        onView(withText(allOf(is("BIODIESEL"), instanceOf(String.class))))
                 .inRoot(isPlatformPopup())
                 .perform(click());
         Espresso.onView(withText("Ordenar")).perform(click());
-
-        DataInteraction elementoLista = onData(anything()).inAdapterView(withId(R.id.lvStations)).atPosition(0);
-        elementoLista.onChildView(withId(R.id.tvName)).check(matches(withText("PETRONOR")));
+        onView(withId(R.id.lvStations)).check(matches(listSize(7)));
+        DataInteraction elementoLista1 = onData(anything()).inAdapterView(withId(R.id.lvStations)).atPosition(0);
+        elementoLista1.onChildView(withId(R.id.tvName)).check(matches(withText("REPSOL")));
+        DataInteraction elementoLista2 = onData(anything()).inAdapterView(withId(R.id.lvStations)).atPosition(1);
+        elementoLista2.onChildView(withId(R.id.tvName)).check(matches(withText("CARREFOUR")));
+        DataInteraction elementoLista3 = onData(anything()).inAdapterView(withId(R.id.lvStations)).atPosition(2);
+        elementoLista3.onChildView(withId(R.id.tvName)).check(matches(withText("BALLENOIL")));
+        DataInteraction elementoLista4 = onData(anything()).inAdapterView(withId(R.id.lvStations)).atPosition(3);
+        elementoLista4.onChildView(withId(R.id.tvName)).check(matches(withText("SHELL")));
+        DataInteraction elementoLista5 = onData(anything()).inAdapterView(withId(R.id.lvStations)).atPosition(4);
+        elementoLista5.onChildView(withId(R.id.tvName)).check(matches(withText("PETRONOR")));
+        DataInteraction elementoLista6 = onData(anything()).inAdapterView(withId(R.id.lvStations)).atPosition(5);
+        elementoLista6.onChildView(withId(R.id.tvName)).check(matches(withText("AVIA")));
+        DataInteraction elementoLista7 = onData(anything()).inAdapterView(withId(R.id.lvStations)).atPosition(6);
+        elementoLista7.onChildView(withId(R.id.tvName)).check(matches(withText("CEPSA")));
     }
 }
