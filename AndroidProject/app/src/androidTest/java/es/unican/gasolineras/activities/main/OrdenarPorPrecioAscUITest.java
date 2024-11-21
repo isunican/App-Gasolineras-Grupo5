@@ -62,10 +62,12 @@ public class OrdenarPorPrecioAscUITest {
     public void ordenarPorPrecioAsc() {
         Espresso.onView(withId(R.id.menuOrdenButton)).perform(click());
         Espresso.onView(withId(R.id.spnOrden)).perform(click());
+
         onView(withText(allOf(is("Ascendente"), instanceOf(String.class))))
                 .inRoot(isPlatformPopup())
                 .perform(click());
         Espresso.onView(withId(R.id.spnCombustible)).perform(click());
+
         onView(withText(allOf(is("Biodiesel"), instanceOf(String.class))))
                 .inRoot(isPlatformPopup())
                 .perform(click());
