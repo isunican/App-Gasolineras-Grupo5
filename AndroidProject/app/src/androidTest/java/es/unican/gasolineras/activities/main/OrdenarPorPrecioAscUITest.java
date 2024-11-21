@@ -83,6 +83,5 @@ public class OrdenarPorPrecioAscUITest {
         elementoLista5.onChildView(withId(R.id.tvName)).check(matches(withText("SHELL")));
         DataInteraction elementoLista6 = onData(anything()).inAdapterView(withId(R.id.lvStations)).atPosition(5);
         elementoLista6.onChildView(withId(R.id.tvName)).check(matches(withText("AVIA")));
-
     }
 }
