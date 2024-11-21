@@ -227,7 +227,7 @@ public class MainPresenter implements IMainContract.Presenter {
      * @return true si la gasolinera está dentro de la distancia especificada
      *         desde el punto de referencia; false de lo contrario.
      */
-    private boolean estaEnCoordenadas(Double longitudSelec, Double latitudSelec, int distancia, Double longitudGasolinera, Double latitudGasolinera) {
+    public boolean estaEnCoordenadas(Double longitudSelec, Double latitudSelec, int distancia, Double longitudGasolinera, Double latitudGasolinera) {
         final int RADIO_TIERRA = 6371000; // Radio de la Tierra en metros
 
         // Verifica que las coordenadas no sean nulas o extremas

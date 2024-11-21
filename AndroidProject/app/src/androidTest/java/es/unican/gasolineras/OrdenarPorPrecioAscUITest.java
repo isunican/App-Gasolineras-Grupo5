@@ -75,7 +75,5 @@ public class OrdenarPorPrecioAscUITest {
                         .inRoot(isPlatformPopup())
                         .perform(click());
                 Espresso.onView(withText("Ordenar")).perform(click());
-
-
         }
 }
