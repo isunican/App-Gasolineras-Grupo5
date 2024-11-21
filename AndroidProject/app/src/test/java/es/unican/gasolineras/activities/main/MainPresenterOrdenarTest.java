@@ -12,8 +12,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import es.unican.gasolineras.activities.main.IMainContract;
-import es.unican.gasolineras.activities.main.MainPresenter;
 import es.unican.gasolineras.model.Gasolinera;
 import es.unican.gasolineras.repository.IGasolinerasRepository;
 
@@ -95,7 +93,7 @@ public class MainPresenterOrdenarTest {
 
     @Test
     public void testOrdenarGasolinerasPorPrecioBiodiselDescendente() {
-                presenter.setGasolinerasFiltradas(gasolineras);
+        presenter.setGasolinerasFiltradas(gasolineras);
         // Test ordenar por precio de gasolina 95 descendente
         presenter.ordenarGasolinerasPorPrecio("Biodiesel", "Descendente");
         assertEquals(presenter.getGasolineras().get(0), cepsa);
