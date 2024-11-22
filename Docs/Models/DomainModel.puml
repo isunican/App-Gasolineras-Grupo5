@@ -8,26 +8,44 @@ class Gasolinera {
     #  String cp
     #  String direccion
     #  String municipio
-    #  String localidad
+    #  String provincia
     #  String horario
+    #  String latitud
+    #  String longitud
     #  double gasoleoA
     #  double gasolina95E5
+    #  double gasolina95E10
+    #  double gasolina95E5PREM
     #  double gasolina98E5
+    #  double gasolina98E10
     #  double biodiesel
     -  String estado
     +  calculateSummarizedPrice(): double
     +  compruebaEstado(String horario): String
-    
-    
+}
+
+class Municipio {
+    #  String idMunicipio
+    #  String idProvincia
+    #  String idCCAA
+    #  String nombre
+    #  String provincia
+    #  String ccaa
+}
+
+class FiltrosSeleccionados {
+    -  String provincia
+    -  String mucipio
+    -  String companhia
+    -  List<String> combustibles
+    -  Boolean estadoAbierto
 }
 
 class GasolinerasResponse {
     -  String fecha
     -  String nota
     -  String consulta
-  
 }
-
 
 GasolinerasResponse *-- "*" Gasolinera : gasolineras
 
