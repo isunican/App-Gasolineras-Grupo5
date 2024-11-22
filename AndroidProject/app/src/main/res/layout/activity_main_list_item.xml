@@ -6,13 +6,13 @@
     android:layout_height="128dp">
 
     <TextView
-        android:id="@+id/tv95Label2"
+        android:id="@+id/tvGas1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         app:layout_constraintBottom_toBottomOf="@+id/ivLogo"
         app:layout_constraintStart_toEndOf="@+id/ivLogo"
-        tools:text="Label 95" />
+        tools:text="Label Gas1" />
 
     <ImageView
         android:id="@+id/ivLogo"
@@ -41,45 +41,35 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         tools:text="Direccion"
-        app:layout_constraintBottom_toTopOf="@+id/tv95"
+        app:layout_constraintBottom_toTopOf="@+id/tvPrecio1"
         app:layout_constraintStart_toEndOf="@+id/ivLogo"
         app:layout_constraintTop_toBottomOf="@+id/tvName" />
 
     <TextView
-        android:id="@+id/tv95Label"
+        android:id="@+id/tvPrecio1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        tools:text="Label 95"
+        android:layout_marginStart="4dp"
         app:layout_constraintBottom_toBottomOf="@+id/ivLogo"
-        app:layout_constraintStart_toEndOf="@+id/ivLogo" />
+        app:layout_constraintStart_toEndOf="@+id/tvGas1"
+        tools:text="Precio 1" />
 
     <TextView
-        android:id="@+id/tv95"
+        android:id="@+id/tvGas2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="2dp"
-        app:layout_constraintBottom_toBottomOf="@+id/ivLogo"
-        app:layout_constraintStart_toEndOf="@+id/tv95Label"
-        tools:text="Precio 95" />
+        app:layout_constraintStart_toStartOf="@+id/tvGas1"
+        app:layout_constraintTop_toBottomOf="@+id/tvGas1"
+        tools:text="Label Gas2" />
 
     <TextView
-        android:id="@+id/tvDieselALabel"
+        android:id="@+id/tvPrecio2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        tools:text="Label Diesel"
-        app:layout_constraintBottom_toBottomOf="@+id/tv95"
-        app:layout_constraintStart_toEndOf="@+id/tv95" />
-
-    <TextView
-        android:id="@+id/tvDieselA"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="2dp"
-        app:layout_constraintBottom_toBottomOf="@+id/tvDieselALabel"
-        app:layout_constraintStart_toEndOf="@+id/tvDieselALabel"
-        tools:text="Precio Diesel" />
+        android:layout_marginStart="4dp"
+        app:layout_constraintBottom_toBottomOf="@+id/tvGas2"
+        app:layout_constraintStart_toEndOf="@+id/tvGas2"
+        tools:text="Precio 2" />
 
     <TextView
         android:id="@+id/tvEstado"

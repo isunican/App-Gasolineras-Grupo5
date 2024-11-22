@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Filtrar por coordenadas - Manual de usuario</title>
+    <!-- AOS CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.1/aos.css">
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh; /* Altura mínima de la página completa */
+            margin: 0;
+            padding: 0;
+            background-color: #2c2c2c; /* Gris oscuro */
+            color: #fff;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        h1, h2, h3 {
+            text-align: center;
+            margin-top: 40px;
+        }
+        h1 {
+            font-size: 2.8em;
+            border-bottom: 3px solid #fff;
+            padding-bottom: 15px;
+        }
+        h2 {
+            font-size: 2.3em;
+            border-bottom: 2px solid #fff;
+            padding-bottom: 10px;
+        }
+        h3 {
+            font-size: 2em;
+            border-bottom: 1px solid #fff;
+            padding-bottom: 8px;
+        }
+        p {
+            font-size: 1.05em;
+            text-align: justify;
+            margin: 20px auto;
+            max-width: 900px;
+            padding: 0 20px;
+        }
+        a {
+            color: #00d1b2; /* Color de los hipervínculos */
+            text-decoration: none;
+            transition: color 0.3s, border-bottom 0.3s;
+        }
+        a:hover {
+            color: #ffeb3b; /* Color al pasar el mouse sobre el hipervínculo */
+            border-bottom: 1px solid #ffeb3b; /* Subrayado en hover */
+        }
+        .container {
+            margin: 0 auto;
+            max-width: 1200px;
+            padding: 0 20px;
+            flex: 1;
+        }
+        .section {
+            margin-bottom: 50px;
+        }
+        img {
+            max-width: 100%;
+            border-radius: 8px;
+            box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.5);
+        }
+        .img-wrapper {
+            text-align: center;
+            margin: 30px 0;
+        }
+        pre {
+            background-color: #444;
+            color: #fff;
+            padding: 10px;
+            font-size: 1.2em;
+            overflow-x: auto;
+            border-radius: 8px;
+            margin: 20px auto;
+            max-width: 400px;
+            text-align: center;
+        }
+        hr {
+            border: none;
+            height: 1px;
+            background-color: #fff;
+            margin: 40px 0;
+        }
+        .card {
+            background-color: #393939;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+            margin: 20px auto;
+            max-width: 900px;
+        }
+        footer {
+            width: 100%; /* Asegura que el footer cubra todo el ancho de la página */
+            text-align: center;
+            padding: 20px 0;
+            background-color: #1b1b1b;
+            color: #888;
+            font-size: 0.9em;
+            margin: 0; /* Elimina márgenes */
+            position: relative; /* Asegura su posición */
+            left: 0; /* Alinea al inicio */
+        }
+    </style>
+</head>
+
+<body>
+<div class="container">
+    <h1 data-aos="fade-up">Filtrar por coordenadas</h1>
+    <div class="section" data-aos="fade-up">
+        <p>
+            Actualmente, usted podrá ver en la interfaz principal todas las características comentadas en la Introducción a las interfaces básicas de la aplicación, si desea conocer más información sobre estas interfaces pinche <a href="../Introduccion/IntroduccionEInterfacesBasicas.html">aquí</a>. Además de estas características previamente comentadas, se ha implementado un nuevo botón en la parte superior derecha con forma de marcador de ubicación. Este botón será utilizado para que usted como usuario pueda filtrar las gasolineras en función de sus coordenadas.
+        </p>
+        <div class="img-wrapper">
+            <img src="./Imagenes/mainView.png" alt="Vista menu principal">
+        </div>
+    </div>
+    <hr>
+    <div class="section" data-aos="fade-up">
+        <h2>Pop Up filtrar por coordenadas 🔎</h2>
+        <p>
+            Debe tener en cuenta que la lista de gasolineras que aparece en la <a href="../Introduccion/IntroduccionEInterfacesBasicas.html">interfaz principal</a>, previamente explicada, muestra todas las gasolineras existentes en España. Es por esto por lo que se ha desarrollado un Pop Up para filtrar la lista de gasolineras por sus coordenadas, para que sea mucho más cómodo para el usuario la búsqueda de una gasolinera deseada.
+        </p>
+        <p>
+            A partir de este Pop Up, usted podrá determinar las coordenadas en latitud y longitud, y con la barra vertical podrá determinar el radio de búsqueda de 0 a 100 km.
+        </p>
+        <p>
+            En el siguiente ejemplo podrá ver cómo actúa este filtro de organización de la lista, al filtrar las gasolineras en las coordenadas 43,-3 dentro de un radio de 50 km:
+        </p>
+        <div class="img-wrapper">
+            <img src="./Imagenes/PopUpFiltrarPorCoordenadasInput.png" alt="Pop Up filtrar por coordenadas input">
+            <img src="./Imagenes/PopUpFiltrarPorCoordenadasRadio.png" alt="Pop Up filtrar por coordenadas radio">
+            <img src="./Imagenes/PopUpFiltrarPorCoordenadas.gif" alt="Pop Up filtrar por coordenadas">
+        </div>
+        <div class="card">
+            <h3>¿Qué sucede si no se encuentran gasolineras dentro del radio especificado? 🤔</h3>
+            <p>
+                En caso de no encontrar gasolineras que cumplan el criterio se mostrará una lista vacía de 0 resultados.
+            </p>
+            <div class="img-wrapper">
+                <img src="./Imagenes/PopUpFiltrarPorCoordenadasSinResultado.png" alt="No resultados">
+            </div>
+        </div>
+    </div>
+</div>
+<footer>
+    &copy; 2024 QuickGasofa - Todos los derechos reservados.
+</footer>
+
+<!-- AOS JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.1/aos.js"></script>
+<script>
+    AOS.init({
+        duration: 800, // Duración de la animación
+        offset: 100, // Cuánto desplazarse desde el borde del viewport
+    });
+</script>
+</body>
+</html>

@@ -23,16 +23,38 @@ class Filtros {
 
 }
 
+class MainView {
+
+     -updateMunicipiosSpinner(List<Municipio> municipios) : void
+     -getPositionInSpinner(Spinner spinner, String value) : int
+     -asignaAdapterASpinner (Spinner spinner, int arrayResourceId) : void
+     -cargarFiltros() : FiltrosSeleccionados
+     -configurarFiltros(FiltrosSeleccionados filtros, Spinner spnProvincias, Spinner spnMunicipios,Spinner spnCompanhia, CheckBox checkEstado, TextView tvCombustible) : void
+     -aplicarFiltros(FiltrosSeleccionados filtros, Spinner spnProvincias,Spinner spnCompanhia, CheckBox checkEstado) : void
+     -guardarFiltros(FiltrosSeleccionados filtros) : void
+     -configureFuelSelection(RelativeLayout rlCombustible, TextView tvCombustible, List<String> tempCombustiblesSeleccionados) : void
+     -updateFuelText(TextView tvCombustible) : void
+     -clearSelection(boolean[] seleccionados, List<String> tempCombustiblesSeleccionados, TextView tvCombustible) : void
+     -resetSharedPreferences() : void
+     -compruebaFormato(EditText et) :void
+     -applyCoordinates(EditText etLongitud, EditText etLatitud, TextView tvDistancia) : void
+     -getPositionInSpinner(Spinner spinner, String value) : void
+     -asignaAdapterASpinner (Spinner spinner, int arrayResourceId) : void
+
+}
+
 interface IMainContract#View {
-    + init()
+    + init() : void
     + getGasolinerasRepository() : IGasolinerasRepository
-    + showStations(List<Gasolinera> stations)
-    + showLoadCorrect(int stations)
-    + showLoadError()
-    + showStationDetails(Gasolinera station)
-    + showInfoActivity()
-    + showFiltersPopUp()
-    + showOrdenarPopUp()
+    + showStations(List<Gasolinera> stations) : void
+    + showLoadCorrect(int stations) : void
+    + showLoadError() : void
+    + showStationDetails(Gasolinera station) : void
+    + showInfoActivity() : void
+    + showFiltersPopUp() : void
+    + showCoordinatesPopUp() : void
+    + showOrdenarPopUp() : void
+    + updateMunicipiosSpinner(List<Municipio> municipios) : void
 }
 
 interface IFiltros {
@@ -42,11 +64,16 @@ interface IFiltros {
 }
 
 interface IMainContract#Presenter {
-    + init(IMainContract.View view)
-    + onStationClicked(Gasolinera station)
-    + onMenuInfoClicked()
-    + onFilterButtonClicked()
-    + onSearchStationsWithFilters(String provincia, String municipio,boolean abierto,String companhia)
+    + init(IMainContract.View view) : void
+    + onStationClicked(Gasolinera station) : void
+    + onMenuInfoClicked() : void
+    + onFilterButtonClicked() : void
+    + onSearchStationsWithFilters(String provincia, String municipio,List<String> combustibles,boolean abierto,String companhia) : void
+    + onProvinciaSelected(String provinciaNombre) : void
+    + onOrdenarButtonClicked() : void
+    + ordenarGasolinerasPorPrecio(String combustible, String orden) : void
+    + onCoordinatesButtonClicked() : void
+    + searchWithCoordinates(Double longitud, Double latitud, int distancia) : void
  
 }
 

@@ -5,36 +5,34 @@ import java.util.Calendar;
 
 public class Tiempo {
 
-    /*
+    private Tiempo() {
+        throw new UnsupportedOperationException("Cannot instantiate Tiempo class");
+    }
+    /**
     * Obtiene la hora actual
     * @return la hora actual
-    * @throws DataAccessException si la hora actual no es válida
-    */
+     */
     public static int horaActual()   {
         // Obtener la hora actual
         Calendar calendar = Calendar.getInstance();
-        int horaActual = calendar.get(Calendar.HOUR_OF_DAY);
 
-        return horaActual;
+        return calendar.get(Calendar.HOUR_OF_DAY);
     }
 
-    /*
+    /**
      * Obtiene el minuto actual
      * @return el minuto actual
-     * @throws DataAccessException si el minuto actual no es válido
      */
     public static int minutoActual()   {
         // Obtener el minuto actual
         Calendar calendar = Calendar.getInstance();
-        int minutoActual = calendar.get(Calendar.MINUTE);
 
-        return minutoActual;
+        return calendar.get(Calendar.MINUTE);
     }
 
-    /*
+    /**
      * Obtiene la letra del día actual
      * @return la letra del día actual
-     * @throws DataAccessException si el día actual no es válido
      */
     public static String letraDiaActual ()  {
         // Obtener el día actual
@@ -63,6 +61,8 @@ public class Tiempo {
                 break;
             case Calendar.SUNDAY:
                 letraletraDiaActual = "D";
+                break;
+            default:
                 break;
         }
         return letraletraDiaActual;

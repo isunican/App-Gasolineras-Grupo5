@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/padd"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="top|center"
+    android:orientation="vertical">
+
+    <EditText
+        android:id="@+id/etLatitud"
+        android:layout_width="111dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:gravity="center"
+        android:hint="Latitud"
+        android:inputType="number|numberDecimal|numberSigned"
+        android:maxLength="8"
+        android:paddingHorizontal="20dp" />
+
+    <EditText
+        android:id="@+id/etLongitud"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"
+        android:gravity="center"
+        android:hint="Longitud"
+        android:inputType="number|numberDecimal|numberSigned"
+        android:maxLength="8"
+        android:paddingHorizontal="20dp" />
+
+    <TextView
+        android:id="@+id/tvDistancia"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="0"
+        android:textSize="24sp" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="0"
+            android:textSize="20sp" />
+
+        <com.google.android.material.slider.Slider
+            android:id="@+id/main_slider"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:stepSize="1.0"
+            android:valueFrom="0"
+            android:valueTo="100" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="100"
+            android:textSize="20sp" />
+
+    </LinearLayout>
+
+</LinearLayout>

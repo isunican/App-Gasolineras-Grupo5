@@ -1,13 +1,18 @@
 package es.unican.gasolineras.common;
 
-import static es.unican.gasolineras.common.Horario.estaAbierto;
-
 import java.util.ArrayList;
 import java.util.List;
 
 import es.unican.gasolineras.model.Gasolinera;
 
 public class Generador {
+    private static final String PENACASTILLO = "Peñacastillo";
+    private static final String CANTABRIA = "Cantabria";
+    private static final String HORARIO24H = "L-D: 24H";
+    private static final String REPSOL = "Repsol";
+    private static final String CARREFOUR = "Carrefour";
+    private static final String SHELL = "Shell";
+    private static final String PETRONOR = "Petronor";
 
     /**
      * Genera una lista de gasolineras.
@@ -18,13 +23,14 @@ public class Generador {
         int horaActual = Tiempo.horaActual();
         int minutoActual = Tiempo.minutoActual();
 
+
         String horarioCerrada1 = generarHorarioCerrado(horaActual, minutoActual);
         String horarioCerrada2 = generarHorarioCerrado(horaActual, minutoActual);
 
-        gasolineras.add(crearGasolinera("1", "Repsol", "28001", "Calle A", "Peñacastillo", "Cantabria", "L-D: 24H", 1.35, 1.40));
-        gasolineras.add(crearGasolinera("2", "Carrefour", "28002", "Calle B", "Peñacastillo", "Cantabria", "L-D: 24H", 1.30, 1.38));
-        gasolineras.add(crearGasolinera("3", "Shell", "28003", "Calle C", "Peñacastillo", "Cantabria", horarioCerrada1, 1.32, 1.37));
-        gasolineras.add(crearGasolinera("4", "Petronor", "28004", "Calle D", "Peñacastillo", "Cantabria", horarioCerrada2, 1.28, 1.36));
+        gasolineras.add(crearGasolinera("1", REPSOL, "28001", "Calle A", PENACASTILLO, CANTABRIA, HORARIO24H, 1.35, 1.40));
+        gasolineras.add(crearGasolinera("2", CARREFOUR, "28002", "Calle B", PENACASTILLO, CANTABRIA, HORARIO24H, 1.30, 1.38));
+        gasolineras.add(crearGasolinera("3", SHELL, "28003", "Calle C", PENACASTILLO, CANTABRIA, horarioCerrada1, 1.32, 1.37));
+        gasolineras.add(crearGasolinera("4", PETRONOR, "28004", "Calle D", PENACASTILLO, CANTABRIA, horarioCerrada2, 1.28, 1.36));
 
         return gasolineras;
     }
@@ -34,12 +40,12 @@ public class Generador {
      */
     public static List<Gasolinera> generarGasolinerasCompanhia(){
         List<Gasolinera> gasolineras = new ArrayList<>();
-        gasolineras.add(crearGasolinera("Repsol1", "Repsol1", "28001", "Calle A", "Santander", "Cantabria", "L-D: 24H", 1.35, 1.40));
-        gasolineras.add(crearGasolinera("Repsol2", "Repsol2", "28002", "Calle B", "Santander", "Cantabria", "L-D: 24H", 1.30, 1.38));
-        gasolineras.add(crearGasolinera("Cepsa", "Cepsa", "28004", "Calle D", "Las Rozas", "Madrid", "L-D: 24H", 1.28, 1.36));
-        gasolineras.add(crearGasolinera("Carrefour", "Carrefour", "28003", "Calle C", "Sestao", "Bilbao", "L-D: 24H", 1.32, 1.37));
-        gasolineras.add(crearGasolinera("Gasofa", "Otros", "28003", "Calle C", "Maliaño", "Cantabria", "L-D: 24H", 1.32, 1.37));
-        gasolineras.add(crearGasolinera("SinRotulo", "", "28004", "Calle D", "Oviedo", "Asturias", "L-D: 24H", 1.28, 1.36));
+        gasolineras.add(crearGasolinera("Repsol1", "Repsol1", "29001", "Calle D", "Santander", CANTABRIA, HORARIO24H, 1.35, 1.40));
+        gasolineras.add(crearGasolinera("Repsol2", "Repsol2", "29002", "Calle E", "Santander", CANTABRIA, HORARIO24H, 1.30, 1.38));
+        gasolineras.add(crearGasolinera("Cepsa", "Cepsa", "29004", "Calle F", "Las Rozas", "Madrid", HORARIO24H, 1.28, 1.36));
+        gasolineras.add(crearGasolinera(CARREFOUR, CARREFOUR, "29003", "Calle G", "Sestao", "Bilbao", HORARIO24H, 1.32, 1.37));
+        gasolineras.add(crearGasolinera("Gasofa", "Otros", "29003", "Calle H", "Maliaño", CANTABRIA, HORARIO24H, 1.32, 1.37));
+        gasolineras.add(crearGasolinera("SinRotulo", "", "29004", "Calle I", "Oviedo", "Asturias", HORARIO24H, 1.28, 1.36));
         return gasolineras;
     }
 
@@ -58,11 +64,11 @@ public class Generador {
         String horarioCerrada2 = generarHorarioCerrado(horaActual, minutoActual);
 
 
-        gasolineras.add(crearGasolinera("1", "Repsol", "28001", "Calle A", "Peñacastillo", "Cantabria", "L-D: 24H", 1.35, 1.40));
-        gasolineras.add(crearGasolinera("2", "Carrefour", "28002", "Calle B", "Peñacastillo", "Cantabria", "L-D: 24H", 1.30, 1.38));
-        gasolineras.add(crearGasolinera("3", "Shell", "28003", "Calle C", "Peñacastillo", "Cantabria", horarioCerrada1, 1.32, 1.37));
-        gasolineras.add(crearGasolinera("4", "Petronor", "28004", "Calle D", "Peñacastillo", "Cantabria", horarioCerrada2, 1.28, 1.36));
-        gasolineras.add(crearGasolinera("5", "BP", "28004", "Calle D", "Peñacastillo", "Cantabria", "", 1.28, 1.36));
+        gasolineras.add(crearGasolinera("1", REPSOL, "30001", "Calle J", PENACASTILLO, CANTABRIA, HORARIO24H, 1.35, 1.40));
+        gasolineras.add(crearGasolinera("2", CARREFOUR, "30002", "Calle K", PENACASTILLO, CANTABRIA, HORARIO24H, 1.30, 1.38));
+        gasolineras.add(crearGasolinera("3", SHELL, "30003", "Calle L", PENACASTILLO, "", horarioCerrada1, 1.32, 1.37));
+        gasolineras.add(crearGasolinera("4", PETRONOR, "30004", "Calle M", PENACASTILLO, CANTABRIA, horarioCerrada2, 1.28, 1.36));
+        gasolineras.add(crearGasolinera("5", "BP", "30004", "Calle N", PENACASTILLO, CANTABRIA, "", 1.28, 1.36));
 
         return gasolineras;
     }
@@ -73,7 +79,6 @@ public class Generador {
     public static List<Gasolinera> generarGasolinerasCerradas() {
         List<Gasolinera> gasolineras = new ArrayList<>();
 
-
         int horaActual = Tiempo.horaActual();
         int minutoActual = Tiempo.minutoActual();
 
@@ -82,11 +87,10 @@ public class Generador {
         String horarioCerrada3 = generarHorarioCerrado(horaActual, minutoActual);
         String horarioCerrada4 = generarHorarioCerrado(horaActual, minutoActual);
 
-
-        gasolineras.add(crearGasolinera("1", "Repsol", "28001", "Calle A", "Peñacastillo", "Cantabria", horarioCerrada3, 1.35, 1.40));
-        gasolineras.add(crearGasolinera("2", "Carrefour", "28002", "Calle B", "Peñacastillo", "Cantabria", horarioCerrada4, 1.30, 1.38));
-        gasolineras.add(crearGasolinera("3", "Shell", "28003", "Calle C", "Peñacastillo", "Cantabria", horarioCerrada1, 1.32, 1.37));
-        gasolineras.add(crearGasolinera("4", "Petronor", "28004", "Calle D", "Peñacastillo", "Cantabria", horarioCerrada2, 1.28, 1.36));
+        gasolineras.add(crearGasolinera("1", REPSOL, "31001", "Calle O", PENACASTILLO, CANTABRIA, horarioCerrada3, 1.35, 1.40));
+        gasolineras.add(crearGasolinera("2", CARREFOUR, "31002", "Calle P", PENACASTILLO, CANTABRIA, horarioCerrada4, 1.30, 1.38));
+        gasolineras.add(crearGasolinera("3", SHELL, "31003", "Calle Q", PENACASTILLO, CANTABRIA, horarioCerrada1, 1.32, 1.37));
+        gasolineras.add(crearGasolinera("4", PETRONOR, "31004", "Calle R", PENACASTILLO, CANTABRIA, horarioCerrada2, 1.28, 1.36));
 
         return gasolineras;
     }
@@ -130,7 +134,6 @@ public class Generador {
      * @param gasoleoA precio del gasoleo en la gasolinera.
      * @param gasolina95E5 precio del 95 en la gasolinera.
      */
-
     private static Gasolinera crearGasolinera(String id, String rotulo, String cp, String direccion, String municipio, String localidad, String horario, double gasoleoA, double gasolina95E5) {
         Gasolinera gasolinera = new Gasolinera();
         gasolinera.setId(id);

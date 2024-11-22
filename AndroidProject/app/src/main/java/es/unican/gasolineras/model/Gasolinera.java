@@ -4,22 +4,15 @@ import static es.unican.gasolineras.common.Horario.estaAbierto;
 
 import com.google.gson.annotations.SerializedName;
 
-import es.unican.gasolineras.common.DataAccessException;
-import es.unican.gasolineras.common.Horario;
 import org.parceler.Parcel;
-import java.util.Date;
-import java.util.Calendar;
 import lombok.Getter;
 import lombok.Setter;
 
 /**
  * A Gas Station.
- *
  * Properties are defined in the <a href="https://sedeaplicaciones.minetur.gob.es/ServiciosRESTCarburantes/PreciosCarburantes/help/operations/PreciosEESSTerrestres#response-json">API</a>
- *
  * The #SerializedName annotation is a GSON annotation that defines the name of the property
  * as defined in the json response.
- *
  * Getters are automatically generated at compile time by Lombok.
  */
 @Parcel
@@ -35,11 +28,16 @@ public class Gasolinera {
     @SerializedName("Municipio")                    protected String municipio;
     @SerializedName("Provincia")                    protected String provincia;
     @SerializedName("Horario")                      protected String horario;
+    @SerializedName("Latitud")                      protected String latitud;
+    @SerializedName("Longitud (WGS84)")             protected String longitud;
 
-    @SerializedName("Precio Gasoleo A")             protected double gasoleoA;
-    @SerializedName("Precio Gasolina 95 E5")        protected double gasolina95E5;
-    @SerializedName("Precio Gasolina 98 E5")        protected double gasolina98E5;
-    @SerializedName("Precio Biodiesel")             protected double biodiesel;
+    @SerializedName("Precio Gasoleo A")                     protected double gasoleoA;
+    @SerializedName("Precio Gasolina 95 E5")                protected double gasolina95E5;
+    @SerializedName("Precio Gasolina 95 E10")               protected double gasolina95E10;
+    @SerializedName("Precio Gasolina 95 E5 Premium")        protected double gasolina95E5PREM;
+    @SerializedName("Precio Gasolina 98 E5")                protected double gasolina98E5;
+    @SerializedName("Precio Gasolina 98 E10")               protected double gasolina98E10;
+    @SerializedName("Precio Biodiesel")                     protected double biodiesel;
 
     private String estado;
 
