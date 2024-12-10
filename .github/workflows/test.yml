@@ -79,7 +79,7 @@ jobs:
           target: google_apis
           disable-animations: true
           emulator-options: -no-window -gpu off -no-snapshot -noaudio -no-boot-anim
-          script: ./gradlew clean jacocoTestReport
+          script: ./gradlew clean jacocoTestReport sonar
 
       - name: Android tests reports
         if: always()
